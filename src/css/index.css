@@ -1,0 +1,16 @@
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+main {
+  margin-top: 70px;
+}
+
+footer {
+  margin-top: auto;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
