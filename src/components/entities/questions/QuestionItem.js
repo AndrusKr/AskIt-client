@@ -1,6 +1,6 @@
-import React, { Fragment, useState, useEffect } from "react"
+import React, {Fragment, useState,} from "react"
 import PropTypes from "prop-types"
-import { makeStyles } from "@material-ui/core/styles"
+import {makeStyles} from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import Button from "@material-ui/core/Button"
 import ListItem from "@material-ui/core/ListItem"
@@ -35,22 +35,20 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const QuestionItem = ({ question }) => {
+const QuestionItem = ({question, getArrQuestions}) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
   const {
-    author: { id: authorID, name: authorName },
+    author: {id: authorID, name: authorName},
     text,
     likes,
     asked,
     answered,
-    edited,
+    // edited,
   } = question
-
   const getLiked = () => likes.includes("CURRENT_USER_ID")
-  const [isLiked, setIsLiked] = useState(getLiked())
-  const isOwner = authorID === "CURRENT_USER_ID" ? true : false
+  const isOwner = authorID === "CURRENT_USER_ID"
 
   const handleOpen = () => {
     setOpen(true)
@@ -59,11 +57,16 @@ const QuestionItem = ({ question }) => {
     setOpen(false)
   }
 
+  const fmtTime = (timeStr) => new Intl.DateTimeFormat("be", {
+    hour: "numeric", minute: "numeric", second: "numeric", hourCycle: "h23"
+  }).format(new Date(timeStr));
+
   const onLike = () => {
     getLiked()
       ? likes.splice(likes.indexOf("CURRENT_USER_ID"), 1)
       : likes.push("CURRENT_USER_ID")
-    setIsLiked(getLiked())
+    question.likes = likes
+    getArrQuestions()
   }
 
   return (
@@ -81,7 +84,7 @@ const QuestionItem = ({ question }) => {
                 primary={<b>{authorName}</b>}
                 secondary={
                   <Typography variant="caption" color="textSecondary">
-                    {answered !== null ? `Answered: ${answered}` : asked}
+                    {answered !== null ? `Answered: ${fmtTime(answered)}` : fmtTime(asked)}
                   </Typography>
                 }
               />
@@ -90,11 +93,11 @@ const QuestionItem = ({ question }) => {
             {isOwner && !answered && (
               <Grid item>
                 <IconButton edge="end" aria-label="edit">
-                  <EditIcon />
+                  <EditIcon/>
                   {/* https://github.com/mui-org/material-ui/blob/master/docs/src/pages/components/dialogs/FullScreenDialog.js */}
                 </IconButton>
                 <IconButton edge="end" aria-label="delete" onClick={handleOpen}>
-                  <DeleteIcon />
+                  <DeleteIcon/>
                 </IconButton>
                 <Dialog
                   open={open}
@@ -130,11 +133,11 @@ const QuestionItem = ({ question }) => {
               disabled={isOwner}
               variant="outlined"
               className={
-                isLiked
+                likes.includes("CURRENT_USER_ID")
                   ? `${classes.likeButton} ${classes.likeButtonClicked}`
                   : classes.likeButton
               }
-              startIcon={<ThumbUpIcon />}
+              startIcon={<ThumbUpIcon/>}
               onClick={onLike}
             >
               {likes.length}
@@ -142,7 +145,7 @@ const QuestionItem = ({ question }) => {
           </Grid>
         </Grid>
       </ListItem>
-      <Divider variant="inset" />
+      <Divider variant="inset"/>
     </Fragment>
   )
 }

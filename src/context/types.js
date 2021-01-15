@@ -5,3 +5,4 @@ export const USER_LOADED = "USER_LOADED";
 export const AUTH_SUCCESS = "SIGNIN_SUCCESS";
 export const AUTH_ERROR = "AUTH_ERROR";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const IS_LOADING = "IS_LOADING";

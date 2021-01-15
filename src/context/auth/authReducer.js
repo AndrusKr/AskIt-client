@@ -1,7 +1,4 @@
-import {
-  AUTH_ERROR,
-  AUTH_SUCCESS,
-} from "../types";
+import {AUTH_ERROR, AUTH_SUCCESS,} from "../types";
 
 export default (state, action) => {
   switch (action.type) {

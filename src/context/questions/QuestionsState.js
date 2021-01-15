@@ -1,6 +1,5 @@
-import React, { useReducer, useEffect } from "react"
-import SockJS from "sockjs-client"
-import { Stomp } from "@stomp/stompjs"
+import React, {useEffect, useReducer} from "react"
+
 // import axios from "axios"
 import QuestionsContext from "./questionsContext"
 import questionsReducer from "./questionsReducer"
@@ -24,83 +23,49 @@ import questionsReducer from "./questionsReducer"
 //     }
 //   }
 // ]
-import questions from "./questions.json"
+import socketClient from "../../utils/socketClient";
 
-import {
-  GET_LATEST_QUESTIONS,
-  QUESTIONS_ERROR,
-  RECEIVED_QUESTION,
-} from "../types"
+import {IS_LOADING, QUESTIONS_ERROR, RECEIVED_QUESTION} from "../types"
 
 const QuestionsState = (props) => {
-  let stompClient
   const initialState = {
-    stompClient: null,
-    questions: null,
-    activeQuestions: null,
-    answeredQuestions: null,
+    questions: [],
+    activeQuestions: [],
+    answeredQuestions: [],
     current: null,
+    loading: true,
     error: null,
   }
   const [state, dispatch] = useReducer(questionsReducer, initialState)
   useEffect(() => {
-    questionsConnect()
-    // sendQuestion("Hello Andrus!")
-    // eslint-disable-next-line
-  }, [])
+      (async () => {
+        try {
+          await questionsTopicSubscribe()
+        } catch (err) {
+          dispatch({
+            type: QUESTIONS_ERROR,
+            payload: err.message,
+          })
+        } finally {
+          dispatch({
+            type: IS_LOADING,
+            payload: false,
+          })
+        }
+      })();
+      // eslint-disable-next-line
+    }, []
+  )
 
-  const questionsConnect = () => {
-    let headers = {
-      // { Authorization: "Bearer " + localStorage.getItem("jwt") },
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE2MDI5NjgzNTgsImV4cCI6MTYwMzA1NDc1OH0.sMEAomRATx9mAgQ0w4h_SOlyQYCEFu5JUjaFOpuzVaw",
-    }
-    const socket = new SockJS("http://localhost:8080/ws/", null, headers)
-    stompClient = Stomp.over(socket)
-    console.log(headers)
-    stompClient.connect(headers, onConnected, onConnectionError)
-  }
+  const questionsTopicSubscribe = async () => await socketClient.subscribeTopic("questions", onReceivedQuestion)
+  const sendQuestion = (question) => socketClient.sendMsg("process-question", question)
 
-  const onConnected = (frame) => {
-    console.log("Questions WS Connected: " + frame)
-    stompClient.subscribe("/topic/questions", onReceivedQuestion)
-  }
-
-  const onReceivedQuestion = (question) => {
-    console.log(question)
+  const onReceivedQuestion = (receivedQuestion) => {
+    console.log("RECEIVED question " + receivedQuestion.body)
     dispatch({
       type: RECEIVED_QUESTION,
-      payload: question,
+      payload: JSON.parse(receivedQuestion.body),
     })
-  }
-
-  const onConnectionError = (err) => {
-    console.log(err)
-  }
-
-  const questionsDisconnect = () => {
-    if (stompClient !== null) stompClient.disconnect()
-    console.log("Questions WS disconnected.")
-  }
-
-  const sendQuestion = (question) => {
-    stompClient.send("app/sendMessage", {}, JSON.stringify(question))
-  }
-
-  const getLatestQuestions = async () => {
-    try {
-      // const res = await axios.get("/api/questions");
-      dispatch({
-        type: GET_LATEST_QUESTIONS,
-        // payload: res.data,
-        payload: questions,
-      })
-    } catch (err) {
-      dispatch({
-        type: QUESTIONS_ERROR,
-        payload: err.response.msg,
-      })
-    }
   }
 
   return (
@@ -111,10 +76,9 @@ const QuestionsState = (props) => {
         answeredQuestions: state.answeredQuestions,
         current: state.current,
         error: state.error,
-        questionsConnect,
-        questionsDisconnect,
+        loading: state.loading,
         sendQuestion,
-        getLatestQuestions,
+        // getLatestQuestions,
       }}
     >
       {props.children}
