@@ -17,6 +17,8 @@ const ActiveQuestionsLists = ({activeQuestions, loading}) => {
     )
   }
 
+  console.log([...activeQuestions])
+
   return [...activeQuestions]
     .sort((q1, q2) => {
       const q1Time = Date.parse(q1.asked)
