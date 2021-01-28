@@ -1,0 +1,24 @@
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /*background-color: white;*/
+}
+
+input {
+    background-color: #ffffff !important;
+}
+
+h4 {
+    margin: 10px;
+}
+
+main {
+    margin-top: 70px;
+}
+
+.icon-sun {
+    color: #fff;
+}
+
+

@@ -1,0 +1,1 @@
+export const getThemeMode = (state) => state.get('common').themeMode

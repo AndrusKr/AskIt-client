@@ -19,6 +19,8 @@ import DialogContent from "@material-ui/core/DialogContent"
 import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import Slide from "@material-ui/core/Slide"
+import {useDispatch} from "react-redux";
+import {changeQuestionLikes} from "../../../actions/questions";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
@@ -35,12 +37,13 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const QuestionItem = ({question, getArrQuestions}) => {
+const QuestionItem = ({question}) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const [open, setOpen] = useState(false)
 
   const {
-    author: {id: authorID, name: authorName},
+    author: {id: authorID, nickname: authorNickname},
     text,
     likes,
     asked,
@@ -66,7 +69,7 @@ const QuestionItem = ({question, getArrQuestions}) => {
       ? likes.splice(likes.indexOf("CURRENT_USER_ID"), 1)
       : likes.push("CURRENT_USER_ID")
     question.likes = likes
-    getArrQuestions()
+    dispatch(changeQuestionLikes(question))
   }
 
   return (
@@ -76,12 +79,12 @@ const QuestionItem = ({question, getArrQuestions}) => {
           <Grid container wrap="nowrap">
             <Grid item>
               <ListItemAvatar>
-                <Avatar>{authorName.charAt(0)}</Avatar>
+                <Avatar>{authorNickname.charAt(0)}</Avatar>
               </ListItemAvatar>
             </Grid>
             <Grid item>
               <ListItemText
-                primary={<b>{authorName}</b>}
+                primary={<b>{authorNickname}</b>}
                 secondary={
                   <Typography variant="caption" color="textSecondary">
                     {answered !== null ? `Answered: ${fmtTime(answered)}` : fmtTime(asked)}

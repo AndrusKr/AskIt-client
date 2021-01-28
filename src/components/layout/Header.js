@@ -8,6 +8,10 @@ import useScrollTrigger from "@material-ui/core/useScrollTrigger"
 import Slide from "@material-ui/core/Slide"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import translatorService from "../../services/translatorService";
+import {BY, EN, RU, supportedLanguages} from "../../constants/language";
+import {useDispatch} from "react-redux";
+import {setLanguage} from "../../actions/language";
+import DarkModeToggle from "./DarkModeToggle";
 
 const useStyles = makeStyles(() => ({
   appBar: {
@@ -32,12 +36,14 @@ const HideOnScroll = ({trigger, children}) => (
 )
 
 export default function Header(props) {
-  const [lang, setLang] = useState('');
   const classes = useStyles()
   const trigger = useScrollTrigger()
+  const dispatch = useDispatch()
+  const [lang, setLang] = useState('');
 
   async function changeLanguage(language) {
     setLang(language.target.value)
+    dispatch(setLanguage(language.target.value))
     await translatorService.changeLanguage(language.target.value);
   }
 
@@ -46,16 +52,17 @@ export default function Header(props) {
       <CssBaseline/>
       <HideOnScroll trigger={trigger}>
         <AppBar className={classes.appBar}>
-          <Toolbar>
+          <Toolbar className={'header'}>
+            <DarkModeToggle/>
             <Typography variant="h3" className={classes.title}>
               <HelpIcon className={classes.icon}/>
               AskIt!
             </Typography>
             <select value={lang} onChange={changeLanguage}>
               <option value={lang}>--Please choose a lang--</option>
-              <option value="en">En</option>
-              <option value="ru">Ru</option>
-              <option value="by">By</option>
+              <option value={EN}>{supportedLanguages[EN]}</option>
+              <option value={RU}>{supportedLanguages[RU]}</option>
+              <option value={BY}>{supportedLanguages[BY]}</option>
             </select>
           </Toolbar>
         </AppBar>

@@ -1,20 +1,4 @@
-#root {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-}
-
-h4 {
-    margin: 10px;
-}
-
-main {
-    margin-top: 70px;
-}
-
-footer {
-    margin-top: auto;
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
+@import "./alerts.css";
+@import "./footer.css";
+@import "./questions.css";
+@import "./main.css";

@@ -1,0 +1,21 @@
+.error-message {
+    z-index: 100;
+    width: 90%;
+    position: absolute;
+    top: 70px;
+    left: 5%;
+}
+
+.error-active {
+    opacity: 1;
+}
+
+.error-disappearing {
+    opacity: 0;
+    transition: opacity 1000ms ease-in-out !important;
+}
+
+.error-disappearing:hover {
+    opacity: 1;
+    transition: opacity !important;
+}

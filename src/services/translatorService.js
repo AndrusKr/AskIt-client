@@ -3,6 +3,7 @@ import {initReactI18next} from 'react-i18next';
 import by from '../languages/by.json';
 import en from '../languages/en.json';
 import ru from '../languages/ru.json';
+import {BY, EN, RU} from "../constants/language";
 
 class TranslatorService {
 
@@ -14,17 +15,17 @@ class TranslatorService {
   async init(defaultLanguage) {
     return i18next.use(initReactI18next).init({
       resources: {
-        en: {
+        [EN]: {
           translation: {
             ...en
           },
         },
-        ru: {
+        [RU]: {
           translation: {
             ...ru
           },
         },
-        by: {
+        [BY]: {
           translation: {
             ...by
           },

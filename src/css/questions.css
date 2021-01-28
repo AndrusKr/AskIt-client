@@ -1,0 +1,7 @@
+.questions-pane {
+    margin-top: 40px;
+}
+
+.questions-pane-trans {
+    transition: margin-top 500ms;
+}

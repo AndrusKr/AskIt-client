@@ -1,27 +1,45 @@
-import React, {useContext, useEffect, useState} from "react"
+import React, {useState} from "react"
 import {useTranslation} from 'react-i18next';
-import AuthContext from "../../context/auth/authContext"
+import {useDispatch, useSelector} from "react-redux";
+import {Redirect} from "react-router-dom";
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 import Typography from "@material-ui/core/Typography"
 import Grid from "@material-ui/core/Grid"
+import {makeAuthRequest} from "../../actions/auth";
+import {getJwt} from "../../selectors/auth";
+import {
+  MAX_NAME_LENGTH,
+  MAX_NAME_LENGTH_ERROR_MESSAGE,
+  MIN_NAME_LENGTH,
+  MIN_NAME_LENGTH_ERROR_MESSAGE
+} from "../../constants/errors";
+import {ERROR} from "../../constants/alerts";
+import {useAlert} from "../hooks/useAlert";
 
-const SignInPage = (props) => {
+const SignUpPage = (props) => {
   const {t} = useTranslation();
-  const authContext = useContext(AuthContext)
-  const {signIn, isAuthenticated} = authContext
+  const dispatch = useDispatch();
+  const jwt = useSelector(getJwt);
   const [nickname, setNickname] = useState("")
+  const showAlert = useAlert();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      props.history.push("/")
-    }
-    // eslint-disable-next-line
-  }, [isAuthenticated, props.history])
+  if (jwt) {
+    return <Redirect to="/"/>
+  }
 
   const onSubmit = (e) => {
     e.preventDefault()
-    signIn(nickname)
+
+    if (nickname.length < MIN_NAME_LENGTH) {
+      return showAlert(ERROR, MIN_NAME_LENGTH_ERROR_MESSAGE)
+    }
+
+    if (nickname.length > MAX_NAME_LENGTH) {
+      return showAlert(ERROR, MAX_NAME_LENGTH_ERROR_MESSAGE)
+    }
+
+    dispatch(makeAuthRequest(nickname))
   }
 
   return (
@@ -46,7 +64,7 @@ const SignInPage = (props) => {
             label={t("pleaseEnterYourNickname")}
             onChange={(e) => setNickname(e.target.value)}
             type="text"
-            name="nickname"
+            nickname="nickname"
             value={nickname}
             autoFocus
           />
@@ -58,4 +76,4 @@ const SignInPage = (props) => {
     </Grid>
   )
 }
-export default SignInPage
+export default SignUpPage

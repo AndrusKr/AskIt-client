@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {v4 as uuid} from 'uuid';
+import PropTypes from 'prop-types';
 import {makeStyles} from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
@@ -7,6 +8,11 @@ import Grid from "@material-ui/core/Grid"
 import TextField from "@material-ui/core/TextField"
 import IconButton from "@material-ui/core/IconButton"
 import TelegramIcon from "@material-ui/icons/Telegram"
+import {useSelector} from "react-redux";
+import {getFooter} from "../../selectors/language";
+import {MIN_QUESTION_LENGTH_ERROR_MESSAGE} from "../../constants/errors";
+import {ERROR} from "../../constants/alerts";
+import {useAlert} from "../hooks/useAlert";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -29,12 +35,15 @@ const useStyles = makeStyles((theme) => ({
 
 const BottomInput = ({sendQuestion, loading}) => {
   const classes = useStyles()
-  useEffect(() => {
-    let footer = document.getElementsByTagName("footer")[0]
-    footer.style.paddingBottom = "90px"
-    // eslint-disable-next-line
-  }, [])
+  const footer = useSelector(getFooter);
   const [questionText, setQuestionText] = useState('')
+  const showAlert = useAlert();
+
+  useEffect(() => {
+    if (footer) {
+      footer.style.paddingBottom = "90px"
+    }
+  }, [footer])
 
   const onQuestionTextChange = (e) => {
     setQuestionText(e.target.value)
@@ -42,11 +51,16 @@ const BottomInput = ({sendQuestion, loading}) => {
 
   const onSubmit = (e) => {
     e.preventDefault()
+
+    if (!questionText) {
+      return showAlert(ERROR, MIN_QUESTION_LENGTH_ERROR_MESSAGE)
+    }
+
     sendQuestion({
       "id": uuid(),
       "author": {
         "id": "5f6686aa845cbd520ceb599a",
-        "name": "Jayne"
+        "nickname": "Jayne"
       },
       text: questionText,
       asked: new Date(),
@@ -108,5 +122,10 @@ const BottomInput = ({sendQuestion, loading}) => {
     </AppBar>
   )
 }
+
+BottomInput.propTypes = {
+  sendQuestion: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+};
 
 export default BottomInput

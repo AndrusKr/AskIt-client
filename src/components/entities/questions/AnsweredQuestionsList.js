@@ -8,7 +8,7 @@ const AnsweredQuestionsLists = ({answeredQuestions, loading}) => {
     return <Spinner/>
   }
 
-  if (answeredQuestions.length === 0) {
+  if (!answeredQuestions.size) {
     return (
       <h4>
         <span>
@@ -19,7 +19,7 @@ const AnsweredQuestionsLists = ({answeredQuestions, loading}) => {
     );
   }
 
-  return answeredQuestions
+  return [...answeredQuestions]
     .sort((q1, q2) => Date.parse(q1.answered) - Date.parse(q2.answered))
     .map((q) => <QuestionItem question={q} key={q.id}/>)
 };

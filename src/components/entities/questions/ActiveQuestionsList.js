@@ -1,30 +1,23 @@
-import React, {useState} from "react"
+import React from "react"
 import Spinner from "../../layout/Spinner"
 import QuestionItem from "./QuestionItem"
 
 const ActiveQuestionsLists = ({activeQuestions, loading}) => {
-  const [isUpdated, setIsUpdated] = useState(false);
-
-  function getArrQuestions() {
-    isUpdated ? setIsUpdated(false) : setIsUpdated(true)
-  }
 
   if (loading) {
     return <Spinner/>
   }
 
-  if (activeQuestions.length === 0) {
+  if (!activeQuestions.size) {
     return (
       <h4>
-        <span>
-          There is NO active questions yet 🤷🏻‍♂️ <br/>
-          -> Hey;) Be the first one to add!
-        </span>
+        There is NO active questions yet 🤷🏻‍♂️ <br/>
+        -> Hey;) Be the first one to add!
       </h4>
     )
   }
 
-  return activeQuestions
+  return [...activeQuestions]
     .sort((q1, q2) => {
       const q1Time = Date.parse(q1.asked)
       const q2Time = Date.parse(q2.asked)
@@ -42,7 +35,7 @@ const ActiveQuestionsLists = ({activeQuestions, loading}) => {
         }
       }
     })
-    .map((q) => <QuestionItem question={q} key={q.id} getArrQuestions={getArrQuestions}/>)
+    .map((q) => <QuestionItem question={q} key={q.id}/>)
 }
 
 export default ActiveQuestionsLists

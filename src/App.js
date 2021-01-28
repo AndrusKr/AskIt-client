@@ -1,33 +1,35 @@
 import React, {useEffect, useState} from "react";
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {ThemeProvider} from 'styled-components';
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 
-import SignInPage from "./components/pages/SignInPage";
+import SignUpPage from "./components/pages/SignUpPage";
 import HomePage from "./components/pages/HomePage";
 import AdminPage from "./components/pages/AdminPage";
 import SlidePage from "./components/pages/SlidePage";
 
-import AuthState from "./context/auth/AuthState";
-import setJwtToAxios from "./utils/setJwtToAxios";
-import socketClient from "./utils/socketClient";
 import translatorService from "./services/translatorService";
 import Spinner from "./components/layout/Spinner";
+import {EN} from "./constants/language";
+import {getLanguage} from "./selectors/language";
+import AlertMessage from "./components/layout/Alerts";
 
-if (localStorage.token) {
-  setJwtToAxios(localStorage.token); // add jwt to axios on page reload
-}
 
-const isAuth = localStorage.getItem("token");
-const currentLang = localStorage.getItem("language");
+import {GlobalStyles} from './components/themes/global';
+import {darkTheme, lightTheme} from './components/themes/themes';
+import {getThemeMode} from "./selectors/common";
 
 const App = () => {
+  const currentLang = useSelector(getLanguage);
+  const theme = useSelector(getThemeMode);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     (async () => {
-      await socketClient.connect();
-      await translatorService.init(currentLang ? currentLang : 'en')
+      await translatorService.init(currentLang ? currentLang : EN)
       setLoading(false);
     })();
   }, [loading])
@@ -37,40 +39,22 @@ const App = () => {
     return <Spinner/>
   }
 
-  console.log('isAuth APP', isAuth)
-
   return (
-    <AuthState>
-      <Router>
+    <Router>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+        <GlobalStyles/>
         <Header/>
+        <AlertMessage/>
         <Switch>
-          {/*<Route exact path="/sing-in" component={SignInPage}/>*/}
-          <Route path="/sing-in" exact render={() =>
-            isAuth ? (
-              <Redirect to={"/"}/>
-            ) : (
-              <SignInPage path="/sing-in"/>
-            )
-          }
-          />
-          <Route
-            path="/"
-            exact
-            render={() =>
-              isAuth ? (
-                <HomePage path="/"/>
-              ) : (
-                <Redirect to={"/sing-in"}/>
-              )
-            }
-          />
+          <Route exact path="/sign-up" component={SignUpPage}/>
+          <PrivateRoute exact path="/" component={HomePage}/>
           <PrivateRoute exact path="/admin" component={AdminPage}/>
           <PrivateRoute exact path="/slide" component={SlidePage}/>
           <Redirect to={'/'}/>
         </Switch>
         <Footer/>
-      </Router>
-    </AuthState>
+      </ThemeProvider>
+    </Router>
   );
 }
 
