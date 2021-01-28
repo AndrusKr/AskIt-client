@@ -36,8 +36,10 @@ const QuestionsPane = () => {
     }
 
     (async () => {
-      await socketClient.subscribeTopic("questions", onReceivedQuestion)
-      dispatch(setQuestionLoading(false));
+      if (loading) {
+        await socketClient.subscribeTopic("questions", onReceivedQuestion)
+        dispatch(setQuestionLoading(false));
+      }
     })();
   }, [])
 
