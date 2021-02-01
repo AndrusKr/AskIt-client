@@ -1,0 +1,26 @@
+.slide-sights {
+    display: flex;
+    margin: 20px !important;
+    justify-content: space-between;
+}
+
+.slide-sights-sides {
+    display: flex;
+    align-items: center;
+}
+
+.left-slide-icon {
+    margin-right: 8px;
+}
+
+.right-slide-icon {
+    margin-left: 8px;
+}
+
+.slide-side-content {
+    padding-top: 5px;
+}
+
+.slide-text {
+    margin: 20px !important;
+}

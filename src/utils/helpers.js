@@ -1,14 +1,5 @@
 import {ERROR, INFO, severityStatuses, SUCCESS, WARNING} from "../constants/alerts";
 
-// TODO: it seems, that we can remove this function
-// export function showErrorMessage(alertData, severityStatus, message) {
-//   const { dispatch, setErrorMessage, setErrorShowed, setSeverityStatus, setErrorCounter, errorCounter } = alertData;
-//   dispatch(setErrorMessage(message))
-//   dispatch(setErrorShowed(true))
-//   dispatch(setSeverityStatus(severityStatus))
-//   dispatch(setErrorCounter(errorCounter + 1))
-// }
-
 export const setSeverity = (severity) => {
   switch (severity) {
     case ERROR:
@@ -25,5 +16,42 @@ export const setSeverity = (severity) => {
 
     default:
       return severityStatuses[ERROR];
+  }
+}
+
+const checkQuestionTime = (q1Time, q2Time, displayedOption) => {
+  if (displayedOption === 'Recent') {
+    if (q1Time < q2Time) {
+      return -1
+    } else if (q1Time > q2Time) {
+      return 1
+    }
+  }
+
+  if (displayedOption === 'Oldest') {
+    if (q1Time > q2Time) {
+      return -1
+    } else if (q1Time < q2Time) {
+      return 1
+    }
+  }
+
+  return 0;
+}
+
+export function questionFilter(q1, q2, displayedOption) {
+  const q1Time = Date.parse(q1.asked)
+  const q2Time = Date.parse(q2.asked)
+
+  if (['Oldest', 'Recent'].includes(displayedOption)) {
+    return checkQuestionTime(q1Time, q2Time, displayedOption)
+  }
+
+  if (q1.likes.length < q2.likes.length) {
+    return 1
+  } else if (q1.likes.length > q2.likes.length) {
+    return -1
+  } else {
+    return checkQuestionTime(q1Time, q2Time);
   }
 }

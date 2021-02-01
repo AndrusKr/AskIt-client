@@ -7,6 +7,7 @@ import alert, {defaultState as defaultStateAlert} from './reducers/alert';
 import questions, {defaultState as defaultStateQuestions} from './reducers/questions';
 import languages, {defaultState as defaultStateLanguages} from './reducers/language';
 import common, {defaultState as defaultStateCommon} from './reducers/common';
+import slide, {defaultState as defaultStateSlide} from './reducers/slide';
 import saga from './saga'
 
 const sagaMiddleware = createSagaMiddleware();
@@ -20,6 +21,7 @@ export const initialState = Map({
   questions: new Record(defaultStateQuestions)(),
   languages: new Record(defaultStateLanguages)(),
   common: new Record(defaultStateCommon)(),
+  slide: new Record(defaultStateSlide)(),
 });
 
 const rootReducer = combineReducers({
@@ -28,6 +30,7 @@ const rootReducer = combineReducers({
   questions,
   languages,
   common,
+  slide,
 });
 
 export default () => ({

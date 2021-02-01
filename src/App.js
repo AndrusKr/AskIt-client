@@ -21,6 +21,7 @@ import AlertMessage from "./components/layout/Alerts";
 import {GlobalStyles} from './components/themes/global';
 import {darkTheme, lightTheme} from './components/themes/themes';
 import {getThemeMode} from "./selectors/common";
+import {ADMIN, INDEX, SIGN_UP, SLIDE} from "./constants/routes";
 
 const App = () => {
   const currentLang = useSelector(getLanguage);
@@ -32,7 +33,7 @@ const App = () => {
       await translatorService.init(currentLang ? currentLang : EN)
       setLoading(false);
     })();
-  }, [loading])
+  }, [loading, currentLang])
 
 
   if (loading) {
@@ -46,10 +47,10 @@ const App = () => {
         <Header/>
         <AlertMessage/>
         <Switch>
-          <Route exact path="/sign-up" component={SignUpPage}/>
-          <PrivateRoute exact path="/" component={HomePage}/>
-          <PrivateRoute exact path="/admin" component={AdminPage}/>
-          <PrivateRoute exact path="/slide" component={SlidePage}/>
+          <Route exact path={SIGN_UP} component={SignUpPage}/>
+          <PrivateRoute exact path={INDEX} component={HomePage}/>
+          <PrivateRoute exact path={ADMIN} component={AdminPage}/>
+          <PrivateRoute exact path={SLIDE} component={SlidePage}/>
           <Redirect to={'/'}/>
         </Switch>
         <Footer/>
