@@ -5,3 +5,15 @@
 .questions-pane-trans {
     transition: margin-top 500ms;
 }
+
+.symbols-amount-counter {
+    display: flex;
+    align-items: flex-end;
+    margin-left: 8px;
+    font-size: 15px;
+    color: #000000;
+}
+
+.max-question-text-error {
+    color: #ff0000;
+}

@@ -10,9 +10,10 @@ import IconButton from "@material-ui/core/IconButton"
 import TelegramIcon from "@material-ui/icons/Telegram"
 import {useSelector} from "react-redux";
 import {getFooter} from "../../selectors/language";
-import {MIN_QUESTION_LENGTH_ERROR_MESSAGE} from "../../constants/errors";
+import {MAX_QUESTION_LENGTH_ERROR_MESSAGE, MIN_QUESTION_LENGTH_ERROR_MESSAGE} from "../../constants/errors";
 import {ERROR} from "../../constants/alerts";
 import {useAlert} from "../hooks/useAlert";
+import {MAX_MESSAGE_LIMIT} from "../../constants/message";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -37,6 +38,7 @@ const BottomInput = ({sendQuestion, loading}) => {
   const classes = useStyles()
   const footer = useSelector(getFooter);
   const [questionText, setQuestionText] = useState('')
+  const [symbolsAmount, setSymbolsAmount] = useState(MAX_MESSAGE_LIMIT)
   const showAlert = useAlert();
 
   useEffect(() => {
@@ -47,6 +49,7 @@ const BottomInput = ({sendQuestion, loading}) => {
 
   const onQuestionTextChange = (e) => {
     setQuestionText(e.target.value)
+    setSymbolsAmount(MAX_MESSAGE_LIMIT - e.target.value.length)
   }
 
   const onSubmit = (e) => {
@@ -54,6 +57,10 @@ const BottomInput = ({sendQuestion, loading}) => {
 
     if (!questionText) {
       return showAlert(ERROR, MIN_QUESTION_LENGTH_ERROR_MESSAGE)
+    }
+
+    if (symbolsAmount < 0) {
+      return showAlert(ERROR, MAX_QUESTION_LENGTH_ERROR_MESSAGE)
     }
 
     sendQuestion({
@@ -79,6 +86,7 @@ const BottomInput = ({sendQuestion, loading}) => {
       "edited": false
     })
     setQuestionText("")
+    setSymbolsAmount(MAX_MESSAGE_LIMIT)
   }
 
   const onKeyPress = (e) => {
@@ -107,11 +115,15 @@ const BottomInput = ({sendQuestion, loading}) => {
                 autoFocus
               />
             </Grid>
+            <div
+              className={symbolsAmount < 0 ? 'symbols-amount-counter max-question-text-error' : 'symbols-amount-counter'}>
+              {symbolsAmount}
+            </div>
             <IconButton
               type="submit"
               onClick={onSubmit}
               edge="end"
-              disabled={loading}
+              disabled={symbolsAmount < 0}
               aria-label="send"
             >
               <TelegramIcon/>
@@ -128,4 +140,4 @@ BottomInput.propTypes = {
   loading: PropTypes.bool.isRequired,
 };
 
-export default BottomInput
+export default BottomInput;

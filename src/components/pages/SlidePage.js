@@ -11,7 +11,6 @@ const SlidePage = (props) => {
   // TODO: when we have the server - use data from the server instead of the mock
   const activeQuestionsPrepared = [...activeQuestions].length ? [...activeQuestions] : getMockActiveQuestions();
   const lastQuestion = activeQuestionsPrepared.length > 3 ? activeQuestionsPrepared[activeQuestionsPrepared.length - 1] : '';
-  // console.log('activeQuestionsPrepared', activeQuestionsPrepared)
 
   return (
     <>
