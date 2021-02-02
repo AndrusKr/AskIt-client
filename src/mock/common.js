@@ -14,7 +14,7 @@ export const authResponse = {
   },
 };
 
-export const singIn = () => fetchData(authResponse);
+export const signUp = () => fetchData(authResponse);
 
 export const currentUser = {
   id: 1,

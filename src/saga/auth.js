@@ -1,5 +1,4 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
-import { AUTH_REQUEST, GET_AUTH_USER } from "../constants/types";
 import {
   getAuthUserFailed,
   getAuthUserSuccess,
@@ -7,19 +6,18 @@ import {
   setAuthSuccess,
 } from "../actions/auth";
 // real API calls
-// import {singIn} from "../api/questions";
+import { getUserData, signUp } from "../api/auth";
+import { AUTH_REQUEST, GET_AUTH_USER } from "../constants/types";
 // there are mock API calls
-import { getUserData, singIn } from "../mock/common";
+// import {getUserData, signUp} from "../mock/common";
 import { getJwt } from "../selectors/auth";
 
 export function* authSuccessSaga() {
   yield takeEvery(AUTH_REQUEST, function* (action) {
     try {
-      const response = yield call(singIn, action.payload);
-      // TODO: remove the next line after server will work
-      response.currentUser.nickname = action.payload;
-      yield put(setAuthSuccess(response));
-      localStorage.setItem("jwt", "qweqweqwe");
+      const response = yield call(signUp, action.payload);
+      yield put(setAuthSuccess(response.data));
+      localStorage.setItem("jwt", response.data.jwt);
     } catch (err) {
       console.log("err", err);
       yield put(setAuthFailed(err));

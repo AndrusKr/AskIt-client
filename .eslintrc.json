@@ -41,7 +41,7 @@
     "prefer-template": ["warn"],
     "no-useless-concat": ["warn"],
     "dot-notation": ["warn"],
-    "space-before-function-paren": ["warn", "never"],
+//    "space-before-function-paren": ["warn", "never"],
     "no-cond-assign": ["error"],
     "no-constant-condition": ["off"],
     "no-dupe-args": ["error"],

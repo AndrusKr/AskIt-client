@@ -4,13 +4,13 @@ import socketClient from "../../utils/socketClient";
 import { getAuthUser } from "../../actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { SUCCESS } from "../../constants/alerts";
-import { getCurrentUser } from "../../selectors/auth";
+import { getCurrentUserNickname } from "../../selectors/auth";
 import Spinner from "../layout/Spinner";
 import { useAlert } from "../hooks/useAlert";
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(getCurrentUser);
+  const nickname = useSelector(getCurrentUserNickname());
   const [loading, setLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const showAlert = useAlert();
@@ -19,22 +19,22 @@ const HomePage = () => {
     (async () => {
       setLoading(true);
       await socketClient.connect();
-      if (currentUser.nickname) {
+      if (nickname) {
         setIsLogin(true);
       }
-      if (!currentUser.nickname) {
+      if (!nickname) {
         dispatch(getAuthUser());
       }
     })();
   }, []);
 
   useEffect(() => {
-    if (currentUser.nickname) {
+    if (nickname) {
       const greetings = isLogin ? "Hello for the newcomer" : "Welcome back";
-      showAlert(SUCCESS, `${greetings}, ${currentUser.nickname}!!!`);
+      showAlert(SUCCESS, `${greetings}, ${nickname}!!!`);
       setLoading(false);
     }
-  }, [currentUser.nickname, isLogin]);
+  }, [nickname, isLogin]);
 
   if (loading) {
     return <Spinner />;
