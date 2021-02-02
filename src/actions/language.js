@@ -1,4 +1,4 @@
-import {SET_FOOTER, SET_LANGUAGE} from "../constants/types";
+import { SET_FOOTER, SET_LANGUAGE } from "../constants/types";
 
 export const setLanguage = (lang) => ({
   type: SET_LANGUAGE,

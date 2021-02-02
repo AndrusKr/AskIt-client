@@ -1,19 +1,22 @@
-import React, {useEffect, useState} from "react"
-import {v4 as uuid} from 'uuid';
-import PropTypes from 'prop-types';
-import {makeStyles} from "@material-ui/core/styles"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import Grid from "@material-ui/core/Grid"
-import TextField from "@material-ui/core/TextField"
-import IconButton from "@material-ui/core/IconButton"
-import TelegramIcon from "@material-ui/icons/Telegram"
-import {useSelector} from "react-redux";
-import {getFooter} from "../../selectors/language";
-import {MAX_QUESTION_LENGTH_ERROR_MESSAGE, MIN_QUESTION_LENGTH_ERROR_MESSAGE} from "../../constants/errors";
-import {ERROR} from "../../constants/alerts";
-import {useAlert} from "../hooks/useAlert";
-import {MAX_MESSAGE_LIMIT} from "../../constants/message";
+import React, { useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import IconButton from "@material-ui/core/IconButton";
+import TelegramIcon from "@material-ui/icons/Telegram";
+import { useSelector } from "react-redux";
+import { getFooter } from "../../selectors/language";
+import {
+  MAX_QUESTION_LENGTH_ERROR_MESSAGE,
+  MIN_QUESTION_LENGTH_ERROR_MESSAGE,
+} from "../../constants/errors";
+import { ERROR } from "../../constants/alerts";
+import { useAlert } from "../hooks/useAlert";
+import { MAX_MESSAGE_LIMIT } from "../../constants/message";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -32,46 +35,46 @@ const useStyles = makeStyles((theme) => ({
   inputText: {
     width: "100%",
   },
-}))
+}));
 
-const BottomInput = ({sendQuestion, loading}) => {
-  const classes = useStyles()
+const BottomInput = ({ sendQuestion, loading }) => {
+  const classes = useStyles();
   const footer = useSelector(getFooter);
-  const [questionText, setQuestionText] = useState('')
-  const [symbolsAmount, setSymbolsAmount] = useState(MAX_MESSAGE_LIMIT)
+  const [questionText, setQuestionText] = useState("");
+  const [symbolsAmount, setSymbolsAmount] = useState(MAX_MESSAGE_LIMIT);
   const showAlert = useAlert();
 
   useEffect(() => {
     if (footer) {
-      footer.style.paddingBottom = "90px"
+      footer.style.paddingBottom = "90px";
     }
-  }, [footer])
+  }, [footer]);
 
   const onQuestionTextChange = (e) => {
-    setQuestionText(e.target.value)
-    setSymbolsAmount(MAX_MESSAGE_LIMIT - e.target.value.length)
-  }
+    setQuestionText(e.target.value);
+    setSymbolsAmount(MAX_MESSAGE_LIMIT - e.target.value.length);
+  };
 
   const onSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!questionText) {
-      return showAlert(ERROR, MIN_QUESTION_LENGTH_ERROR_MESSAGE)
+      return showAlert(ERROR, MIN_QUESTION_LENGTH_ERROR_MESSAGE);
     }
 
     if (symbolsAmount < 0) {
-      return showAlert(ERROR, MAX_QUESTION_LENGTH_ERROR_MESSAGE)
+      return showAlert(ERROR, MAX_QUESTION_LENGTH_ERROR_MESSAGE);
     }
 
     sendQuestion({
-      "id": uuid(),
-      "author": {
-        "id": "5f6686aa845cbd520ceb599a",
-        "nickname": "Jayne"
+      id: uuid(),
+      author: {
+        id: "5f6686aa845cbd520ceb599a",
+        nickname: "Jayne",
       },
       text: questionText,
       asked: new Date(),
-      "likes": [
+      likes: [
         "5f6686aa75ad25fac6f523e8",
         "5f6686aad7ec91be5633b806",
         "5f6686aa149973deb1774e76",
@@ -80,21 +83,21 @@ const BottomInput = ({sendQuestion, loading}) => {
         "5f6686aa70020dce89700680",
         "5f6686aae92b06b1f1b7c69b",
         "5f6686aa8634ff8b9f0ed389",
-        "5f6686aa7e7b176a20e3c6ec"
+        "5f6686aa7e7b176a20e3c6ec",
       ],
-      "answered": null,
-      "edited": false
-    })
-    setQuestionText("")
-    setSymbolsAmount(MAX_MESSAGE_LIMIT)
-  }
+      answered: null,
+      edited: false,
+    });
+    setQuestionText("");
+    return setSymbolsAmount(MAX_MESSAGE_LIMIT);
+  };
 
   const onKeyPress = (e) => {
     // check if enter is pressed
     if (e.charCode === 13 && !e.shiftKey) {
-      onSubmit(e)
+      onSubmit(e);
     }
-  }
+  };
 
   return (
     <AppBar position="fixed" color="primary" className={classes.appBar}>
@@ -116,7 +119,12 @@ const BottomInput = ({sendQuestion, loading}) => {
               />
             </Grid>
             <div
-              className={symbolsAmount < 0 ? 'symbols-amount-counter max-question-text-error' : 'symbols-amount-counter'}>
+              className={
+                symbolsAmount < 0
+                  ? "symbols-amount-counter max-question-text-error"
+                  : "symbols-amount-counter"
+              }
+            >
               {symbolsAmount}
             </div>
             <IconButton
@@ -126,14 +134,14 @@ const BottomInput = ({sendQuestion, loading}) => {
               disabled={symbolsAmount < 0}
               aria-label="send"
             >
-              <TelegramIcon/>
+              <TelegramIcon />
             </IconButton>
           </Grid>
         </form>
       </Toolbar>
     </AppBar>
-  )
-}
+  );
+};
 
 BottomInput.propTypes = {
   sendQuestion: PropTypes.func.isRequired,

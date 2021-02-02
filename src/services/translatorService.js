@@ -1,12 +1,11 @@
-import i18next from 'i18next';
-import {initReactI18next} from 'react-i18next';
-import by from '../languages/by.json';
-import en from '../languages/en.json';
-import ru from '../languages/ru.json';
-import {BY, EN, RU} from "../constants/language";
+import i18next from "i18next";
+import { initReactI18next } from "react-i18next";
+import by from "../languages/by.json";
+import en from "../languages/en.json";
+import ru from "../languages/ru.json";
+import { BY, EN, RU } from "../constants/language";
 
 class TranslatorService {
-
   /**
    * Init
    * @param {string} defaultLanguage
@@ -17,24 +16,24 @@ class TranslatorService {
       resources: {
         [EN]: {
           translation: {
-            ...en
+            ...en,
           },
         },
         [RU]: {
           translation: {
-            ...ru
+            ...ru,
           },
         },
         [BY]: {
           translation: {
-            ...by
+            ...by,
           },
         },
       },
       lng: defaultLanguage,
       fallbackLng: en,
       react: {
-        transKeepBasicHtmlNodesFor: ['br', 'i', 'span', 'b'],
+        transKeepBasicHtmlNodesFor: ["br", "i", "span", "b"],
       },
     });
   }
@@ -46,9 +45,8 @@ class TranslatorService {
    */
   async changeLanguage(language) {
     await i18next.changeLanguage(language);
-    localStorage.setItem('language', language);
+    localStorage.setItem("language", language);
   }
-
 }
 
 export default new TranslatorService();

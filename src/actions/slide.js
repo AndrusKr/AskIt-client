@@ -1,4 +1,7 @@
-import {SET_DISPLAYED_OPTION, SET_OPEN_DISPLAY_OPTIONS} from "../constants/types";
+import {
+  SET_DISPLAYED_OPTION,
+  SET_OPEN_DISPLAY_OPTIONS,
+} from "../constants/types";
 
 export const setDisplayedOption = (option) => ({
   type: SET_DISPLAYED_OPTION,

@@ -1,4 +1,8 @@
-import {CHANGE_QUESTIONS_LIKES, IS_LOADING, RECEIVED_QUESTION,} from '../constants/types';
+import {
+  CHANGE_QUESTIONS_LIKES,
+  IS_LOADING,
+  RECEIVED_QUESTION,
+} from "../constants/types";
 
 export const putQuestions = (questions) => ({
   type: RECEIVED_QUESTION,

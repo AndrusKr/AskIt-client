@@ -1,13 +1,13 @@
-import React, { Fragment } from "react"
-import {makeStyles} from "@material-ui/core/styles"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import useScrollTrigger from "@material-ui/core/useScrollTrigger"
-import Slide from "@material-ui/core/Slide"
-import CssBaseline from "@material-ui/core/CssBaseline"
+import React, { Fragment } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import useScrollTrigger from "@material-ui/core/useScrollTrigger";
+import Slide from "@material-ui/core/Slide";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import SlideHeader from "./headerContent/SlideContent";
 import UserHeader from "./headerContent/UserHeader";
-import {SLIDE} from "../../constants/routes";
+import { SLIDE } from "../../constants/routes";
 
 const useStyles = makeStyles(() => ({
   appBar: {
@@ -25,39 +25,36 @@ const useStyles = makeStyles(() => ({
   },
   slideHeader: {
     flexGrow: 1,
-    color: 'fff',
-    cursor: 'pointer',
-  }
-}))
+    color: "fff",
+    cursor: "pointer",
+  },
+}));
 
-const HideOnScroll = ({trigger, children}) => (
+const HideOnScroll = ({ trigger, children }) => (
   <Slide direction="down" in={!trigger}>
     {children}
   </Slide>
-)
+);
 
 export default function Header(props) {
-  const classes = useStyles()
-  const trigger = useScrollTrigger()
+  const classes = useStyles();
+  const trigger = useScrollTrigger();
 
   const showHeader = () => {
     if (window.location.pathname === SLIDE) {
-      return <SlideHeader classes={classes} />
-    } else {
-      return <UserHeader classes={classes} />
+      return <SlideHeader classes={classes} />;
     }
-  }
+    return <UserHeader classes={classes} />;
+  };
 
   return (
     <Fragment>
-      <CssBaseline/>
+      <CssBaseline />
       <HideOnScroll trigger={trigger}>
         <AppBar className={classes.appBar}>
-          <Toolbar className={'header'}>
-            {showHeader()}
-          </Toolbar>
+          <Toolbar className={"header"}>{showHeader()}</Toolbar>
         </AppBar>
       </HideOnScroll>
     </Fragment>
-  )
+  );
 }

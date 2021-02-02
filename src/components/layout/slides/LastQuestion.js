@@ -1,21 +1,19 @@
 import React from "react";
 import SlideQuestion from "./SlideQuestion";
 
-function LastQuestion({lastQuestion}) {
+function LastQuestion({ lastQuestion }) {
+  if (!lastQuestion) {
+    return "";
+  }
 
-    if (!lastQuestion) {
-        return '';
-    }
-
-    return (
-        <>
-            <h2 className={'last-question-title'}>The latest question:</h2>
-            <div className={'slide last-slide'}>
-                <SlideQuestion question={lastQuestion}/>
-            </div>
-        </>
-    )
+  return (
+    <>
+      <h2 className={"last-question-title"}>The latest question:</h2>
+      <div className={"slide last-slide"}>
+        <SlideQuestion question={lastQuestion} />
+      </div>
+    </>
+  );
 }
 
-export default LastQuestion
-
+export default LastQuestion;

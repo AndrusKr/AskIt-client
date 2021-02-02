@@ -1,7 +1,7 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import AlertTitle from "@material-ui/lab/AlertTitle";
 import Alert from "@material-ui/lab/Alert";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getDurationContinuing,
   getErrorCounter,
@@ -9,75 +9,100 @@ import {
   getErrorMessage,
   getErrorShowed,
   getErrorTimer,
-  getSeverityStatus
+  getSeverityStatus,
 } from "../../selectors/alert";
-import {setDurationContinuing, setErrorDurationTimer, setErrorShowed, setErrorTimer} from "../../actions/alert";
-import {setSeverity} from "../../utils/helpers";
+import {
+  setDurationContinuing,
+  setErrorDurationTimer,
+  setErrorShowed,
+  setErrorTimer,
+} from "../../actions/alert";
+import { setSeverity } from "../../utils/helpers";
 
 const AlertMessage = () => {
-  const dispatch = useDispatch()
-  const isDurationContinuing = useSelector(getDurationContinuing)
-  const isErrorShowed = useSelector(getErrorShowed)
-  const errorTimer = useSelector(getErrorTimer)
-  const timerErrorDuration = useSelector(getErrorDurationTimer)
-  const errorMessage = useSelector(getErrorMessage)
-  const severityStatus = useSelector(getSeverityStatus)
-  const errorCounter = useSelector(getErrorCounter)
+  const dispatch = useDispatch();
+  const isDurationContinuing = useSelector(getDurationContinuing);
+  const isErrorShowed = useSelector(getErrorShowed);
+  const errorTimer = useSelector(getErrorTimer);
+  const timerErrorDuration = useSelector(getErrorDurationTimer);
+  const errorMessage = useSelector(getErrorMessage);
+  const severityStatus = useSelector(getSeverityStatus);
+  const errorCounter = useSelector(getErrorCounter);
 
-  const clearTimers = (errorTimer, timerErrorDuration) => {
-    clearTimeout(errorTimer)
-    clearTimeout(timerErrorDuration)
-  }
+  const clearTimers = () => {
+    clearTimeout(errorTimer);
+    clearTimeout(timerErrorDuration);
+  };
 
   const closeErrorsAndDurations = () => {
-    dispatch(setErrorShowed(false))
-    dispatch(setDurationContinuing(false))
-  }
+    dispatch(setErrorShowed(false));
+    dispatch(setDurationContinuing(false));
+  };
 
   useEffect(() => {
-    clearTimers(errorTimer, timerErrorDuration)
+    clearTimers();
 
     if (isErrorShowed && isDurationContinuing) {
-      dispatch(setDurationContinuing(false))
+      dispatch(setDurationContinuing(false));
     }
 
     if (isErrorShowed) {
-      dispatch(setErrorTimer(setTimeout(() => {
-        closeErrorsAndDurations()
-      }, 2000)))
-      dispatch(setErrorDurationTimer(setTimeout(() => {
-        dispatch(setDurationContinuing(true))
-      }, 1000)))
+      dispatch(
+        setErrorTimer(
+          setTimeout(() => {
+            closeErrorsAndDurations();
+          }, 2000)
+        )
+      );
+      dispatch(
+        setErrorDurationTimer(
+          setTimeout(() => {
+            dispatch(setDurationContinuing(true));
+          }, 1000)
+        )
+      );
     }
 
     return () => {
-      clearTimers(errorTimer, timerErrorDuration)
-    }
-  }, [isErrorShowed, errorCounter])
+      clearTimers();
+    };
+  }, [isErrorShowed, errorCounter]);
 
   const onMouseLeave = () => {
-    dispatch(setDurationContinuing(false))
-    dispatch(setErrorDurationTimer(setTimeout(() => {
-      dispatch(setDurationContinuing(true))
-    }, 1000)))
+    dispatch(setDurationContinuing(false));
+    dispatch(
+      setErrorDurationTimer(
+        setTimeout(() => {
+          dispatch(setDurationContinuing(true));
+        }, 1000)
+      )
+    );
 
-    clearTimeout(errorTimer)
-    dispatch(setErrorTimer(setTimeout(() => {
-      closeErrorsAndDurations()
-    }, 2000)))
-  }
+    clearTimeout(errorTimer);
+    dispatch(
+      setErrorTimer(
+        setTimeout(() => {
+          closeErrorsAndDurations();
+        }, 2000)
+      )
+    );
+  };
 
   const onMouseOver = () => {
-    clearTimers(errorTimer, timerErrorDuration)
-    dispatch(setDurationContinuing(true))
-  }
+    clearTimers();
+    dispatch(setDurationContinuing(true));
+  };
 
   if (isErrorShowed) {
     return (
       <Alert
         severity={setSeverity(severityStatus)}
         onClose={closeErrorsAndDurations}
-        className={isDurationContinuing ? 'error-message error-disappearing' : 'error-message error-active'}
+        className={
+          isDurationContinuing
+            ? "error-message error-disappearing"
+            : "error-message error-active"
+        }
         onMouseLeave={onMouseLeave}
         onMouseOver={onMouseOver}
       >
@@ -86,7 +111,7 @@ const AlertMessage = () => {
     );
   }
 
-  return '';
+  return "";
 };
 
 export default AlertMessage;

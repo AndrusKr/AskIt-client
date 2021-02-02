@@ -7,19 +7,19 @@ function fetchData(data) {
 }
 
 export const authResponse = {
-  jwt: 'qweqweqwe',
+  jwt: "qweqweqwe",
   currentUser: {
     id: 1,
     nickname: "Andrus",
   },
-}
+};
 
 export const singIn = () => fetchData(authResponse);
 
 export const currentUser = {
   id: 1,
   nickname: "Andrus",
-}
+};
 
 export const getUserData = () => fetchData(currentUser);
 
@@ -29,7 +29,7 @@ const activeQuestions = [
   {
     answered: null,
     asked: "2021-01-28T10:24:43.162Z",
-    author: {id: "5f6686aa845cbd520ceb599a", nickname: "Jayne"},
+    author: { id: "5f6686aa845cbd520ceb599a", nickname: "Jayne" },
     edited: "false",
     id: "81eeb0c9-b188-41b9-af8e-6b6a03aa49c8",
     likes: [
@@ -43,12 +43,13 @@ const activeQuestions = [
       "5f6686aa8634ff8b9f0ed389",
       "5f6686aa7e7b176a20e3c6ec",
     ],
-    text: "111 111111111111111  111111111111111 111111111111111 111111111111111 111111111111111 111111111111111 111111111111111 111111111111111 111111111111111 111111111111111 ",
+    text:
+      "111 111111111111111  111111111111111 111111111111111 111111111111111 111111111111111 111111111111111 111111111111111 111111111111111 111111111111111 111111111111111 ",
   },
   {
     answered: null,
     asked: "2021-01-28T14:11:47.498Z",
-    author: {id: "5f6686aa845cbd520ceb599a", nickname: "Jayne"},
+    author: { id: "5f6686aa845cbd520ceb599a", nickname: "Jayne" },
     edited: "false",
     id: "81eeb0c9-b188-41b9-af8e-6b6a03aa49c8",
     likes: [
@@ -67,7 +68,7 @@ const activeQuestions = [
   {
     answered: null,
     asked: "2021-01-28T14:12:43.162Z",
-    author: {id: "5f6686aa845cbd520ceb599a", nickname: "Jayne"},
+    author: { id: "5f6686aa845cbd520ceb599a", nickname: "Jayne" },
     edited: "false",
     id: "81eeb0c9-b188-41b9-af8e-6b6a03aa49c8",
     likes: [
@@ -86,7 +87,7 @@ const activeQuestions = [
   {
     answered: null,
     asked: "2021-01-28T13:24:47.498Z",
-    author: {id: "5f6686aa845cbd520ceb599a", nickname: "Jayne"},
+    author: { id: "5f6686aa845cbd520ceb599a", nickname: "Jayne" },
     edited: "false",
     id: "81eeb0c9-b188-41b9-af8e-6b6a03aa49c8",
     likes: [
@@ -105,7 +106,7 @@ const activeQuestions = [
   {
     answered: null,
     asked: "2021-01-28T15:24:43.162Z",
-    author: {id: "5f6686aa845cbd520ceb599a", nickname: "Jayne"},
+    author: { id: "5f6686aa845cbd520ceb599a", nickname: "Jayne" },
     edited: "false",
     id: "81eeb0c9-b188-41b9-af8e-6b6a03aa49c8",
     likes: [
@@ -124,7 +125,7 @@ const activeQuestions = [
   {
     answered: null,
     asked: "2021-01-28T16:24:47.498Z",
-    author: {id: "5f6686aa845cbd520ceb599a", nickname: "Jayne"},
+    author: { id: "5f6686aa845cbd520ceb599a", nickname: "Jayne" },
     edited: "false",
     id: "81eeb0c9-b188-41b9-af8e-6b6a03aa49c8",
     likes: [
@@ -140,4 +141,4 @@ const activeQuestions = [
     ],
     text: "666",
   },
-]
+];

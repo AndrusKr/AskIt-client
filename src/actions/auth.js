@@ -5,7 +5,7 @@ import {
   GET_AUTH_USER,
   GET_AUTH_USER_FAILED,
   GET_AUTH_USER_SUCCESS,
-} from '../constants/types';
+} from "../constants/types";
 
 export const makeAuthRequest = (nickname) => ({
   type: AUTH_REQUEST,

@@ -2,17 +2,16 @@ import React from "react";
 import Spinner from "../../layout/Spinner";
 import QuestionItem from "./QuestionItem";
 
-const AnsweredQuestionsLists = ({answeredQuestions, loading}) => {
-
+const AnsweredQuestionsLists = ({ answeredQuestions, loading }) => {
   if (loading) {
-    return <Spinner/>
+    return <Spinner />;
   }
 
   if (!answeredQuestions.size) {
     return (
       <h4>
         <span>
-          There is NO answered questions yet🙃 <br/>
+          There is NO answered questions yet🙃 <br />
           -> How about rushing the speaker?😜
         </span>
       </h4>
@@ -21,7 +20,7 @@ const AnsweredQuestionsLists = ({answeredQuestions, loading}) => {
 
   return [...answeredQuestions]
     .sort((q1, q2) => Date.parse(q1.answered) - Date.parse(q2.answered))
-    .map((q) => <QuestionItem question={q} key={q.id}/>)
+    .map((q) => <QuestionItem question={q} key={q.id} />);
 };
 
 export default AnsweredQuestionsLists;

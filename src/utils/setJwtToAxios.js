@@ -1,11 +1,11 @@
-import axios from "axios"
+import axios from "axios";
 
 const setJwtToAxios = (jwt) => {
   if (jwt) {
-    axios.defaults.headers.common["Authorization"] = "Bearer " + jwt
+    axios.defaults.headers.common.Authorization = `Bearer ${jwt}`;
   } else {
-    delete axios.defaults.headers.common["Authorization"]
+    delete axios.defaults.headers.common.Authorization;
   }
-}
+};
 
-export default setJwtToAxios
+export default setJwtToAxios;

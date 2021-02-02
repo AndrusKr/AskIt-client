@@ -1,4 +1,8 @@
-import {SET_QUESTION_ARROW, SET_QUESTION_ARROW_TIMER, SET_THEME_MODE} from "../constants/types";
+import {
+  SET_QUESTION_ARROW,
+  SET_QUESTION_ARROW_TIMER,
+  SET_THEME_MODE,
+} from "../constants/types";
 
 export const setThemeMode = (theme) => ({
   type: SET_THEME_MODE,
