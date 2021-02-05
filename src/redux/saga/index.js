@@ -6,6 +6,7 @@ export default function* rootSaga() {
   yield all([
     auth.authSuccessSaga(),
     auth.getUserDataSaga(),
+    auth.authAdminSuccessSaga(),
     questions.putQuestionsSaga(),
   ]);
 }

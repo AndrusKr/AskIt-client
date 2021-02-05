@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { setFooter } from "../../actions/language";
+import { setFooter } from "../../redux/actions/language";
 
 const Footer = () => {
   const footer = useRef(null);

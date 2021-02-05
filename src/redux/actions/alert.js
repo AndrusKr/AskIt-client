@@ -6,7 +6,7 @@ import {
   SET_ERROR_SHOWED,
   SET_ERROR_TIMER,
   SET_SEVERITY_STATUS,
-} from "../constants/types";
+} from "../../constants/types";
 
 export const setErrorShowed = (isErrorShowed) => ({
   type: SET_ERROR_SHOWED,

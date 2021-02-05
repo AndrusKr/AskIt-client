@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
-import { getJwt } from "../../selectors/auth";
+import { getJwt } from "../../redux/selectors/auth";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const jwt = useSelector(getJwt);

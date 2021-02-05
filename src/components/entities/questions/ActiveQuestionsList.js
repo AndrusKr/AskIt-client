@@ -1,6 +1,7 @@
 import React from "react";
 import Spinner from "../../layout/Spinner";
 import QuestionItem from "./QuestionItem";
+import { prepareQuestionOrder, questionFilter } from "../../../utils/helpers";
 
 const ActiveQuestionsLists = ({ activeQuestions, loading }) => {
   if (loading) {
@@ -16,25 +17,13 @@ const ActiveQuestionsLists = ({ activeQuestions, loading }) => {
     );
   }
 
-  console.log([...activeQuestions]);
-
-  return [...activeQuestions]
-    .sort((q1, q2) => {
-      const q1Time = Date.parse(q1.asked);
-      const q2Time = Date.parse(q2.asked);
-      if (q1.likes.length < q2.likes.length) {
-        return 1;
-      } else if (q1.likes.length > q2.likes.length) {
-        return -1;
-      }
-      if (q1Time < q2Time) {
-        return -1;
-      } else if (q1Time > q2Time) {
-        return 1;
-      }
-      return 0;
-    })
-    .map((q) => <QuestionItem question={q} key={q.id} />);
+  // return [...activeQuestions]
+  //   .sort((q1, q2) => {
+  //     return questionFilter(q1, q2);
+  //   })
+  return prepareQuestionOrder(activeQuestions).map((q) => (
+    <QuestionItem question={q} key={q.id} />
+  ));
 };
 
 export default ActiveQuestionsLists;

@@ -60,3 +60,16 @@ export function questionFilter(q1, q2, displayedOption) {
   }
   return checkQuestionTime(q1Time, q2Time);
 }
+
+export function prepareQuestionOrder(questions) {
+  const pinnedItem = [...questions].find((i) => i.isPinned === true);
+  const preparedArr = [...questions].sort((q1, q2) => {
+    return questionFilter(q1, q2);
+  });
+
+  if (pinnedItem) {
+    return [pinnedItem, ...preparedArr.filter((i) => i.isPinned === false)];
+  }
+
+  return preparedArr;
+}

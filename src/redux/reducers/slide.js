@@ -1,7 +1,7 @@
 import {
   SET_DISPLAYED_OPTION,
   SET_OPEN_DISPLAY_OPTIONS,
-} from "../constants/types";
+} from "../../constants/types";
 
 export const defaultState = {
   displayedOption: null,

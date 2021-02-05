@@ -1,5 +1,5 @@
 import { takeEvery } from "redux-saga/effects";
-import { RECEIVED_QUESTION } from "../constants/types";
+import { RECEIVED_QUESTION } from "../../constants/types";
 
 // Add to cart saga
 export function* putQuestionsSaga() {

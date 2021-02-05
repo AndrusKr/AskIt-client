@@ -1,4 +1,4 @@
-import React, { Fragment, useState, forwardRef } from "react";
+import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -13,18 +13,20 @@ import IconButton from "@material-ui/core/IconButton";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Slide from "@material-ui/core/Slide";
-import { useDispatch } from "react-redux";
-import { changeQuestionLikes } from "../../../actions/questions";
-
-const Transition = forwardRef((props, ref) => {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeQuestionLikes,
+  setQuestionData,
+  removeQuestion,
+  setQuestionLoading,
+  setPinnedQuestion,
+  setUnpinQuestion,
+} from "../../../redux/actions/questions";
+import ModalWindow from "../../layout/modals/dialog";
+import { useModal } from "../../hooks/useModal";
+import { getIsAdmin } from "../../../redux/selectors/auth";
 
 const useStyles = makeStyles(() => ({
   likeButton: {
@@ -40,24 +42,39 @@ const useStyles = makeStyles(() => ({
 const QuestionItem = ({ question }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
+  const isUserAdmin = useSelector(getIsAdmin);
+  const [openModal, handleOpen, handleClose] = useModal();
+  const [isUpArrowShown, setIsUpArrowShown] = useState(false);
 
   const {
-    author: { id: authorID, nickname: authorNickname },
+    author: { id: authorID, nickname: authorNickname, isAdmin },
     text,
     likes,
     asked,
     answered,
-    // edited,
+    id,
+    isPinned,
   } = question;
-  const getLiked = () => likes.includes("CURRENT_USER_ID");
+
   const isOwner = authorID === "CURRENT_USER_ID";
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleMouseOver = () => setIsUpArrowShown(true);
+  const handleMouseLeave = () => setIsUpArrowShown(false);
+  const handlePinQuestion = () => {
+    if (isPinned) {
+      return dispatch(setUnpinQuestion(id));
+    }
+    return dispatch(setPinnedQuestion(id));
   };
-  const handleClose = () => {
-    setOpen(false);
+
+  const handleEdit = () =>
+    dispatch(setQuestionData({ text, isEditActive: true, id }));
+
+  const handleDelete = () => {
+    // TODO: here should be saga (API call to the server) for delete the question
+    dispatch(setQuestionLoading(true));
+    dispatch(removeQuestion(id));
+    handleClose();
   };
 
   const fmtTime = (timeStr) =>
@@ -69,16 +86,25 @@ const QuestionItem = ({ question }) => {
     }).format(new Date(timeStr));
 
   const onLike = () => {
-    getLiked()
-      ? likes.splice(likes.indexOf("CURRENT_USER_ID"), 1)
-      : likes.push("CURRENT_USER_ID");
-    question.likes = likes;
+    if (likes.includes("CURRENT_USER_ID")) {
+      question.likes = likes.filter(
+        (_, idx) => likes.indexOf("CURRENT_USER_ID") !== idx
+      );
+    } else {
+      question.likes = [...likes, "CURRENT_USER_ID"];
+    }
+
     dispatch(changeQuestionLikes(question));
   };
 
   return (
     <Fragment>
-      <ListItem alignItems="flex-start">
+      <ListItem
+        alignItems="flex-start"
+        onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseLeave}
+        className={isPinned && "pinned-question"}
+      >
         <Grid container>
           <Grid container wrap="nowrap">
             <Grid item>
@@ -88,7 +114,12 @@ const QuestionItem = ({ question }) => {
             </Grid>
             <Grid item>
               <ListItemText
-                primary={<b>{authorNickname}</b>}
+                primary={
+                  <b>
+                    {authorNickname}{" "}
+                    {isAdmin && <span className={"admin-title"}>Admin</span>}
+                  </b>
+                }
                 secondary={
                   <Typography variant="caption" color="textSecondary">
                     {answered !== null
@@ -99,41 +130,35 @@ const QuestionItem = ({ question }) => {
               />
             </Grid>
 
-            {isOwner && !answered && (
+            {(isOwner || isUserAdmin) && !answered && (
               <Grid item>
-                <IconButton edge="end" aria-label="edit">
+                <IconButton edge="end" aria-label="edit" onClick={handleEdit}>
                   <EditIcon />
                   {/* https://github.com/mui-org/material-ui/blob/master/docs/src/pages/components/dialogs/FullScreenDialog.js */}
                 </IconButton>
                 <IconButton edge="end" aria-label="delete" onClick={handleOpen}>
                   <DeleteIcon />
                 </IconButton>
-                <Dialog
-                  open={open}
-                  TransitionComponent={Transition}
-                  keepMounted
-                  onClose={handleClose}
-                  aria-labelledby="alert-dialog-slide-title"
-                  aria-describedby="alert-dialog-slide-description"
-                >
-                  <DialogTitle id="alert-dialog-slide-title">
-                    {"Are you sure this question?"}
-                  </DialogTitle>
-                  <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                      &quot;{text}&quot;
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                      Cancel
-                    </Button>
-                    <Button onClick={handleClose} color="secondary">
-                      Delete
-                    </Button>
-                  </DialogActions>
-                </Dialog>
+                <ModalWindow
+                  openModal={openModal}
+                  handleCloseModal={handleClose}
+                  submitChange={handleDelete}
+                  dialogTitle="Are you sure you want to delete this question"
+                  buttonName="Delete"
+                  contentText={text}
+                  buttonType="secondary"
+                />
               </Grid>
+            )}
+            {isUserAdmin && (
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                onClick={handlePinQuestion}
+                className={isUpArrowShown ? "" : "edit-close-icon-hidden"}
+              >
+                {isPinned ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+              </IconButton>
             )}
           </Grid>
           <Grid container>{text}</Grid>

@@ -2,17 +2,23 @@ import { applyMiddleware, compose, createStore } from "redux";
 import { combineReducers } from "redux-immutable";
 import createSagaMiddleware from "redux-saga";
 import { Map, Record } from "immutable";
-import auth, { defaultState as defaultStateAuth } from "./reducers/auth";
-import alert, { defaultState as defaultStateAlert } from "./reducers/alert";
+import auth, { defaultState as defaultStateAuth } from "./redux/reducers/auth";
+import alert, {
+  defaultState as defaultStateAlert,
+} from "./redux/reducers/alert";
 import questions, {
   defaultState as defaultStateQuestions,
-} from "./reducers/questions";
+} from "./redux/reducers/questions";
 import languages, {
   defaultState as defaultStateLanguages,
-} from "./reducers/language";
-import common, { defaultState as defaultStateCommon } from "./reducers/common";
-import slide, { defaultState as defaultStateSlide } from "./reducers/slide";
-import saga from "./saga";
+} from "./redux/reducers/language";
+import common, {
+  defaultState as defaultStateCommon,
+} from "./redux/reducers/common";
+import slide, {
+  defaultState as defaultStateSlide,
+} from "./redux/reducers/slide";
+import saga from "./redux/saga";
 
 const sagaMiddleware = createSagaMiddleware();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // use redux chrome devtools

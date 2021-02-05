@@ -28,6 +28,22 @@ const useStyles = makeStyles(() => ({
     color: "fff",
     cursor: "pointer",
   },
+  avatar: {
+    width: 25,
+    height: 25,
+    margin: "0 10px",
+    color: "black",
+  },
+  profile: {
+    display: "flex",
+    alignItems: "center",
+    color: "black",
+  },
+  editName: {
+    marginLeft: "10px",
+    cursor: "pointer",
+    color: "black",
+  },
 }));
 
 const HideOnScroll = ({ trigger, children }) => (

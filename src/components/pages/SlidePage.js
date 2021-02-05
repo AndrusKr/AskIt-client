@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { getActiveQuestions } from "../../selectors/questions";
+import { getActiveQuestions } from "../../redux/selectors/questions";
 import { getMockActiveQuestions } from "../../mock/common";
 import LastQuestion from "../layout/slides/LastQuestion";
 import SlideList from "../layout/slides/SlideList";
