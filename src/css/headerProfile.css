@@ -5,3 +5,37 @@
 .input-user-name {
   font-size: 20px !important;
 }
+
+.user-list-container {
+  width: 40vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.user-list-dialog {
+  margin: auto;
+  max-height: 80vh;
+}
+
+.user-list-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.bun-icon {
+  color: red;
+}
+
+.user-list-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 20px;
+}
+
+.user-list-close-icon {
+  cursor: pointer;
+}
+
+.user-list-close-icon:hover {
+  color: #3F51B5;
+}

@@ -35,6 +35,66 @@ export const getUserData = () => fetchData(currentUser);
 
 export const getMockActiveQuestions = () => activeQuestions;
 
+const usersList = [
+  {
+    nickname: "Andrus",
+    isAdmin: true,
+    isBanned: false,
+  },
+  {
+    nickname: "Jack",
+    isAdmin: false,
+    isBanned: false,
+  },
+  {
+    nickname: "John",
+    isAdmin: false,
+    isBanned: false,
+  },
+  {
+    nickname: "Jimmy",
+    isAdmin: true,
+    isBanned: false,
+  },
+  {
+    nickname: "Ales",
+    isAdmin: true,
+    isBanned: false,
+  },
+  {
+    nickname: "Donald",
+    isAdmin: false,
+    isBanned: false,
+  },
+  {
+    nickname: "Bill",
+    isAdmin: false,
+    isBanned: false,
+  },
+  {
+    nickname: "Alesichka",
+    isAdmin: false,
+    isBanned: false,
+  },
+  {
+    nickname: "Jinna",
+    isAdmin: false,
+    isBanned: false,
+  },
+  {
+    nickname: "Bro",
+    isAdmin: false,
+    isBanned: false,
+  },
+  {
+    nickname: "Ilya",
+    isAdmin: false,
+    isBanned: false,
+  },
+]
+
+export const getUsersList = () => fetchData(usersList);
+
 export const activeQuestions = [
   {
     answered: null,

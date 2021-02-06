@@ -2,7 +2,7 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { Help } from "@material-ui/icons";
 import DarkModeToggle from "../DarkModeToggle";
-import ProfileSettings from "../profile/ProfileSettings";
+import ProfileSettings from "../../entities/profile/ProfileSettings";
 
 function UserHeader({ classes }) {
   return (

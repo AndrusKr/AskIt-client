@@ -2,28 +2,33 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormControl, Input, MenuItem, Select } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import { AccountCircle, Edit, CheckCircle } from "@material-ui/icons";
+import { AccountCircle, Edit, CheckCircle, People } from "@material-ui/icons";
 import { getLanguage } from "../../../redux/selectors/language";
 import {
   getCurrentUser,
+  getIsAdmin,
   getIsAuthenticated,
 } from "../../../redux/selectors/auth";
 import { setLanguage } from "../../../redux/actions/language";
 import translatorService from "../../../services/translatorService";
 import { supportedLanguages } from "../../../constants/language";
 import { setUserName } from "../../../redux/actions/auth";
-import ModalWindow from "../modals/dialog";
+import ModalWindow from "../../layout/modals/dialog";
 import { useModal } from "../../hooks/useModal";
+import IconButton from "@material-ui/core/IconButton";
+import UserList from "./userList";
 
 const ProfileSettings = ({ classes }) => {
   const dispatch = useDispatch();
   const currentLanguage = useSelector(getLanguage);
   const { nickname } = useSelector(getCurrentUser);
   const isAuthenticated = useSelector(getIsAuthenticated);
+  const isAdmin = useSelector(getIsAdmin);
   const [isInputActive, setIsInputActive] = useState(false);
   const [inputValue, setInputValue] = useState(nickname);
   const nicknameLabelRef = useRef(null);
   const nicknameRef = useRef(null);
+  const [isUserListOpened, setIsUserListOpened] = useState(false);
   const [openModal, handleOpen, handleClose] = useModal();
 
   useEffect(() => {});
@@ -77,6 +82,14 @@ const ProfileSettings = ({ classes }) => {
 
   return (
     <>
+      {isAdmin && (
+        <IconButton
+          className={classes.avatar}
+          onClick={() => setIsUserListOpened(!isUserListOpened)}
+        >
+          <People />
+        </IconButton>
+      )}
       <FormControl>
         <Select
           value={currentLanguage}
@@ -131,6 +144,10 @@ const ProfileSettings = ({ classes }) => {
         submitChange={submitChangeName}
         dialogTitle="Are you sure you want to change your name?"
         buttonName="Change"
+      />
+      <UserList
+        isUserListOpened={isUserListOpened}
+        setIsUserListOpened={setIsUserListOpened}
       />
     </>
   );

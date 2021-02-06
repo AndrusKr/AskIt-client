@@ -18,6 +18,9 @@ import common, {
 import slide, {
   defaultState as defaultStateSlide,
 } from "./redux/reducers/slide";
+import user, {
+  defaultState as defaultStateUser,
+} from "./redux/reducers/user";
 import saga from "./redux/saga";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -31,6 +34,7 @@ export const initialState = Map({
   languages: new Record(defaultStateLanguages)(),
   common: new Record(defaultStateCommon)(),
   slide: new Record(defaultStateSlide)(),
+  user: new Record(defaultStateUser)(),
 });
 
 const rootReducer = combineReducers({
@@ -40,6 +44,7 @@ const rootReducer = combineReducers({
   languages,
   common,
   slide,
+  user,
 });
 
 export default () => ({
