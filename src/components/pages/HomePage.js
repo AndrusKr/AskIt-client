@@ -4,13 +4,13 @@ import socketClient from "../../utils/socketClient";
 import { getAuthUser } from "../../actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { SUCCESS } from "../../constants/alerts";
-import { getCurrentUserNickname } from "../../selectors/auth";
+import { getNickname } from "../../selectors/auth";
 import Spinner from "../layout/Spinner";
 import { useAlert } from "../hooks/useAlert";
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const nickname = useSelector(getCurrentUserNickname());
+  const nickname = useSelector(getNickname);
   const [loading, setLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const showAlert = useAlert();
