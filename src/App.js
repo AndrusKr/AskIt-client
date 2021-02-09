@@ -5,7 +5,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Header from "./components/layout/Header";
@@ -27,7 +27,7 @@ import { darkTheme, lightTheme } from "./components/themes/themes";
 import { getThemeMode } from "./redux/selectors/common";
 import { ADMIN, INDEX, SIGN_UP, SLIDE } from "./constants/routes";
 import { useAsyncCall } from "./components/hooks/useAsyncCall";
-import {getUsersListRequest} from "./redux/actions/user";
+import { getUsersListRequest } from "./redux/actions/user";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -36,20 +36,24 @@ const App = () => {
   // const [isLoading, setLoading] = useState(/*false*/ true);
   const isLoading = useAsyncCall(
     translatorService.init,
-    currentLang ? currentLang : EN,
+    currentLang ? currentLang : EN
     // getUsersListRequest,
   );
 
-  useEffect(() => {
-    dispatch(getUsersListRequest());
-    // (async () => {
-    //   // setLoading(true);
-    //   await translatorService.init(currentLang ? currentLang : EN);
-    //   setLoading(false);
-    //   console.log('APP currentLang', currentLang)
-    // })();
-
-  }, [/*isLoading, currentLang*/]);
+  useEffect(
+    () => {
+      dispatch(getUsersListRequest());
+      // (async () => {
+      //   // setLoading(true);
+      //   await translatorService.init(currentLang ? currentLang : EN);
+      //   setLoading(false);
+      //   console.log('APP currentLang', currentLang)
+      // })();
+    },
+    [
+      /*isLoading, currentLang*/
+    ]
+  );
 
   if (isLoading) {
     return <Spinner />;

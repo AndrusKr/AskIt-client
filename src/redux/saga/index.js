@@ -9,6 +9,7 @@ export default function* rootSaga() {
     auth.getUserDataSaga(),
     auth.authAdminSuccessSaga(),
     user.usersListRequestSaga(),
+    user.bunUserRequestSaga(),
     questions.putQuestionsSaga(),
   ]);
 }

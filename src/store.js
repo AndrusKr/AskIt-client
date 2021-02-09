@@ -18,9 +18,7 @@ import common, {
 import slide, {
   defaultState as defaultStateSlide,
 } from "./redux/reducers/slide";
-import user, {
-  defaultState as defaultStateUser,
-} from "./redux/reducers/user";
+import user, { defaultState as defaultStateUser } from "./redux/reducers/user";
 import saga from "./redux/saga";
 
 const sagaMiddleware = createSagaMiddleware();

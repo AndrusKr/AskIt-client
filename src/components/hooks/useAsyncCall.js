@@ -19,7 +19,7 @@ export const useAsyncCall = (initialAction, initialData = null, initCall) => {
         // console.log('eusers', eusers)
         // throw new Error('Hi, ALes!!!')
       } catch (error) {
-        console.log('error', error)
+        console.log("error", error);
         showAlert(ERROR, error.message);
       }
 

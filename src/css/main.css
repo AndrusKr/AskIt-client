@@ -21,4 +21,17 @@ main {
     color: #fff;
 }
 
+.switch-modes-helper {
+    background: #FAFAFA;
+    color: #363537;
+    transition: all 0.25s linear;
+    /*gradient: linear-gradient(#39598A, #79D7ED);*/
+}
+
+#switch-modes-helper {
+    background: #FAFAFA;
+    color: #363537;
+    transition: all 0.25s linear;
+    /*gradient: linear-gradient(#39598A, #79D7ED);*/
+}
 

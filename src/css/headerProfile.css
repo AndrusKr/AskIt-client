@@ -7,22 +7,12 @@
 }
 
 .user-list-container {
-  width: 40vh;
+  height: 60vh;
   overflow-y: scroll;
-  overflow-x: hidden;
-}
-
-.user-list-dialog {
-  margin: auto;
-  max-height: 80vh;
 }
 
 .user-list-container::-webkit-scrollbar {
   width: 5px;
-}
-
-.bun-icon {
-  color: red;
 }
 
 .user-list-title {
@@ -32,10 +22,30 @@
   margin: 15px 20px;
 }
 
-.user-list-close-icon {
+.user-list-close-icon, .bun-icon, .unbun-icon {
   cursor: pointer;
+}
+
+.bun-icon {
+  color: red;
+}
+
+.unbun-icon {
+  color: rgb(0 255 20);
 }
 
 .user-list-close-icon:hover {
   color: #3F51B5;
+}
+
+.banned-user {
+  background: #8a5858;
+}
+
+.user-bar {
+  overflow-y: hidden;
+}
+
+.user-bar-title {
+  padding: 15px;
 }

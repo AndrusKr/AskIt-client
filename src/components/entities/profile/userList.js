@@ -1,58 +1,36 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import List from "@material-ui/core/List";
-import {
-  Dialog,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-} from "@material-ui/core";
-import Avatar from "@material-ui/core/Avatar";
+import { Dialog } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
-import { getUsersList } from "../../../redux/selectors/user";
+import { getAlphabeticUsersList } from "../../../redux/selectors/user";
+import UserBarTabs from "./UserBarTabs";
+import UserRowData from "./UserRowData";
 
 function UserList({ isUserListOpened, setIsUserListOpened }) {
-  const usersList = useSelector(getUsersList);
+  const usersList = useSelector(getAlphabeticUsersList);
 
   return (
     <Dialog
       open={isUserListOpened}
-      // onClose={this.handleClose}
-      className={"user-list-dialog"}
       onBackdropClick={() => setIsUserListOpened(false)}
     >
-      <h2 className={"user-list-title"}>
+      <h2 className={"user-list-title switch-modes-helper"}>
         List of users{" "}
         <CloseIcon
           onClick={() => setIsUserListOpened(false)}
-          className={"user-list-close-icon"}
+          className={"user-list-close-icon switch-modes-helper"}
         />
       </h2>
+      <UserBarTabs />
 
-      <List component="nav" className={"user-list-container"}>
+      <List
+        component="nav"
+        className={"user-list-container switch-modes-helper"}
+      >
         {[...usersList].map((i) => {
-          return (
-            <ListItem
-            // button
-            // className={""}
-            >
-              <ListItemAvatar>
-                <Avatar />
-              </ListItemAvatar>
-              <ListItemText
-                primary={`${i.nickname} ${i.isAdmin ? "admin" : ""}`}
-              />
-
-              <RemoveCircleOutlineIcon className={"bun-icon"} />
-            </ListItem>
-          );
+          return <UserRowData userData={i} />;
         })}
-
-        {/*<People />*/}
-        {/*<Typography variant="h3" >*/}
-        {/*  AskIt!*/}
-        {/*</Typography>*/}
       </List>
     </Dialog>
   );

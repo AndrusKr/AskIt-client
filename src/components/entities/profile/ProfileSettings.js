@@ -82,7 +82,7 @@ const ProfileSettings = ({ classes }) => {
 
   return (
     <>
-      {isAdmin && (
+      {isAdmin && isAuthenticated && (
         <IconButton
           className={classes.avatar}
           onClick={() => setIsUserListOpened(!isUserListOpened)}
