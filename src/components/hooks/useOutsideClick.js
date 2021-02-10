@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setIsDisplayOptionsOpened } from "../../actions/slide";
+import { setIsDisplayOptionsOpened } from "../../redux/actions/slide";
 
 export const useOutsideClick = (ref) => {
   const dispatch = useDispatch();

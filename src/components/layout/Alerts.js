@@ -10,13 +10,13 @@ import {
   getErrorShowed,
   getErrorTimer,
   getSeverityStatus,
-} from "../../selectors/alert";
+} from "../../redux/selectors/alert";
 import {
   setDurationContinuing,
   setErrorDurationTimer,
   setErrorShowed,
   setErrorTimer,
-} from "../../actions/alert";
+} from "../../redux/actions/alert";
 import { setSeverity } from "../../utils/helpers";
 
 const AlertMessage = () => {

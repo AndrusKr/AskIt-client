@@ -1,7 +1,8 @@
-import { SET_FOOTER, SET_LANGUAGE } from "../constants/types";
+import { SET_FOOTER, SET_LANGUAGE } from "../../constants/types";
+import { EN } from "../../constants/language";
 
 export const defaultState = {
-  currentLanguage: localStorage.getItem("language"),
+  currentLanguage: localStorage.getItem("language") || EN,
   footer: null,
 };
 

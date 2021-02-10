@@ -4,18 +4,18 @@ import Typography from "@material-ui/core/Typography";
 import HelpIcon from "@material-ui/icons/Help";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { getActiveQuestions } from "../../../selectors/questions";
+import { getActiveQuestions } from "../../../redux/selectors/questions";
 import { getMockActiveQuestions } from "../../../mock/common";
 import {
   setQuestionArrow,
   setQuestionArrowTimer,
-} from "../../../actions/common";
+} from "../../../redux/actions/common";
 import {
   getQuestionArrow,
   getQuestionArrowTimer,
-} from "../../../selectors/common";
-import { setIsDisplayOptionsOpened } from "../../../actions/slide";
-import { getIsDisplayOptionsOpened } from "../../../selectors/slide";
+} from "../../../redux/selectors/common";
+import { setIsDisplayOptionsOpened } from "../../../redux/actions/slide";
+import { getIsDisplayOptionsOpened } from "../../../redux/selectors/slide";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import SlideQuestionsDisplayOptions from "../slides/SlideQuestionsDisplayOptions";
 

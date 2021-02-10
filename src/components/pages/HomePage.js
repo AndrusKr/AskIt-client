@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import QuestionsPane from "../entities/questions/QuestionsPane";
 import socketClient from "../../utils/socketClient";
-import { getAuthUser } from "../../actions/auth";
+import { getAuthUser } from "../../redux/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { SUCCESS } from "../../constants/alerts";
-import { getNickname } from "../../selectors/auth";
+import { getNickname } from "../../redux/selectors/auth";
 import Spinner from "../layout/Spinner";
 import { useAlert } from "../hooks/useAlert";
 

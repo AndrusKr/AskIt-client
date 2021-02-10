@@ -8,6 +8,10 @@ export const getAnsweredQuestions = (state) =>
 export const getCurrent = (state) => state.get("questions").current;
 export const getQuestionLoading = (state) => state.get("questions").loading;
 export const getQuestionError = (state) => state.get("questions").error;
+export const getEditedText = (state) => state.get("questions").editedText;
+export const getIsEditActive = (state) => state.get("questions").isEditActive;
+export const getEditedQuestionId = (state) =>
+  state.get("questions").editedQuestionId;
 
 export const getFilteredAnsweredQuestions = createSelector(
   [getActiveQuestions],

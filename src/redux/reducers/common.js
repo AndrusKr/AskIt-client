@@ -2,7 +2,7 @@ import {
   SET_QUESTION_ARROW,
   SET_QUESTION_ARROW_TIMER,
   SET_THEME_MODE,
-} from "../constants/types";
+} from "../../constants/types";
 
 export const defaultState = {
   themeMode: localStorage.getItem("theme"),

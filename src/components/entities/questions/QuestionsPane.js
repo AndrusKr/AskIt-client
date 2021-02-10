@@ -12,9 +12,12 @@ import {
   getActiveQuestions,
   getAnsweredQuestions,
   getQuestionLoading,
-} from "../../../selectors/questions";
-import { putQuestions, setQuestionLoading } from "../../../actions/questions";
-import { getErrorShowed } from "../../../selectors/alert";
+} from "../../../redux/selectors/questions";
+import {
+  putQuestions,
+  setQuestionLoading,
+} from "../../../redux/actions/questions";
+import { getErrorShowed } from "../../../redux/selectors/alert";
 
 const useStyles = makeStyles(() => ({
   listSubheader: {
@@ -36,6 +39,19 @@ const QuestionsPane = () => {
   const sendQuestion = (question) =>
     socketClient.sendMsg("process-question", question);
 
+  // const onReceivedQuestion = (receivedQuestion) => {
+  //   dispatch(setQuestionLoading(true));
+  //   dispatch(putQuestions(JSON.parse(receivedQuestion.body)));
+  // };
+
+  // const isLoading = useAsyncCall(
+  //   () => socketClient.subscribeTopic("questions", onReceivedQuestion),
+  //   // {
+  //   //   action: "questions",
+  //   //   handler: onReceivedQuestion,
+  //   // }
+  // );
+
   useEffect(() => {
     const onReceivedQuestion = (receivedQuestion) => {
       dispatch(setQuestionLoading(true));
@@ -43,7 +59,7 @@ const QuestionsPane = () => {
     };
 
     (async () => {
-      if (loading) {
+      if (socketClient.isConnected) {
         await socketClient.subscribeTopic("questions", onReceivedQuestion);
         dispatch(setQuestionLoading(false));
       }

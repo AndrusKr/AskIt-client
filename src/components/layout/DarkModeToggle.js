@@ -3,8 +3,8 @@ import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import BrightnessIcon from "@material-ui/icons/Brightness3";
 import IconButton from "@material-ui/core/IconButton";
 import { useDispatch, useSelector } from "react-redux";
-import { getThemeMode } from "../../selectors/common";
-import { setThemeMode } from "../../actions/common";
+import { getThemeMode } from "../../redux/selectors/common";
+import { setThemeMode } from "../../redux/actions/common";
 
 const DarkModeToggle = (props) => {
   const dispatch = useDispatch();

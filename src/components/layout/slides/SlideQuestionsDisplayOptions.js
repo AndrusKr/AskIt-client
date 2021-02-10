@@ -5,12 +5,12 @@ import React from "react";
 import {
   setDisplayedOption,
   setIsDisplayOptionsOpened,
-} from "../../../actions/slide";
+} from "../../../redux/actions/slide";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDisplayedOption,
   getIsDisplayOptionsOpened,
-} from "../../../selectors/slide";
+} from "../../../redux/selectors/slide";
 
 const SlideQuestionsDisplayOptions = ({
   handleMouseOver,

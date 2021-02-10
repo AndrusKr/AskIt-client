@@ -7,6 +7,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "test2": "jest",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
@@ -19,6 +20,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
+    "bad-words": "^3.0.4",
     "http-proxy-middleware": "^1.0.5",
     "i18next": "^19.8.4",
     "immutable": "^4.0.0-rc.12",
@@ -39,13 +41,16 @@
     "websocket": "^1.0.32"
   },
   "devDependencies": {
-    "prettier": "^2.2.1",
+    "@babel/preset-env": "^7.12.13",
+    "@babel/preset-react": "^7.12.13",
     "babel-eslint": "^10.1.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-react": "^7.22.0"
+    "eslint-plugin-react": "^7.22.0",
+    "prettier": "^2.2.1",
+    "react-test-renderer": "^17.0.1"
   },
   "eslintConfig": {
     "extends": "react-app"

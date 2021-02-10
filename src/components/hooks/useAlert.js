@@ -4,8 +4,8 @@ import {
   setErrorMessage,
   setErrorShowed,
   setSeverityStatus,
-} from "../../actions/alert";
-import { getErrorCounter } from "../../selectors/alert";
+} from "../../redux/actions/alert";
+import { getErrorCounter } from "../../redux/selectors/alert";
 
 export const useAlert = () => {
   const dispatch = useDispatch();
