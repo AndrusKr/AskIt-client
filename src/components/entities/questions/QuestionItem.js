@@ -27,6 +27,7 @@ import {
 import ModalWindow from "../../layout/modals/dialog";
 import { useModal } from "../../hooks/useModal";
 import { getIsAdmin } from "../../../redux/selectors/auth";
+import { getUserStatus } from "../../../redux/selectors/user";
 
 const useStyles = makeStyles(() => ({
   likeButton: {
@@ -43,6 +44,7 @@ const QuestionItem = ({ question }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const isUserAdmin = useSelector(getIsAdmin);
+  const isBlocked = useSelector(getUserStatus);
   const [openModal, handleOpen, handleClose] = useModal();
   const [isUpArrowShown, setIsUpArrowShown] = useState(false);
 
@@ -130,7 +132,7 @@ const QuestionItem = ({ question }) => {
               />
             </Grid>
 
-            {(isOwner || isUserAdmin) && !answered && (
+            {((isOwner && !isBlocked) || isUserAdmin) && !answered && (
               <Grid item>
                 <IconButton edge="end" aria-label="edit" onClick={handleEdit}>
                   <EditIcon />
@@ -164,7 +166,7 @@ const QuestionItem = ({ question }) => {
           <Grid container>{text}</Grid>
           <Grid container justify="flex-end">
             <Button
-              disabled={isOwner}
+              disabled={isOwner || isBlocked}
               variant="outlined"
               className={
                 likes.includes("CURRENT_USER_ID")

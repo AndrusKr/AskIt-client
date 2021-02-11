@@ -18,6 +18,7 @@ import {
   setQuestionLoading,
 } from "../../../redux/actions/questions";
 import { getErrorShowed } from "../../../redux/selectors/alert";
+import { getIsSocketConnected } from "../../../redux/selectors/common";
 
 const useStyles = makeStyles(() => ({
   listSubheader: {
@@ -35,6 +36,7 @@ const QuestionsPane = () => {
   const answeredQuestions = useSelector(getAnsweredQuestions);
   const loading = useSelector(getQuestionLoading);
   const isErrorShowed = useSelector(getErrorShowed);
+  const isSocketConnected = useSelector(getIsSocketConnected);
 
   const sendQuestion = (question) =>
     socketClient.sendMsg("process-question", question);
@@ -57,14 +59,18 @@ const QuestionsPane = () => {
       dispatch(setQuestionLoading(true));
       dispatch(putQuestions(JSON.parse(receivedQuestion.body)));
     };
+    console.log("useEffect socketClient.isConnected", socketClient.isConnected);
 
     (async () => {
-      if (socketClient.isConnected) {
+      console.log("async");
+      console.log("isSocketConnected", isSocketConnected);
+      if (isSocketConnected) {
+        console.log("if");
         await socketClient.subscribeTopic("questions", onReceivedQuestion);
         dispatch(setQuestionLoading(false));
       }
     })();
-  }, []);
+  }, [isSocketConnected]);
 
   return (
     <Fragment>

@@ -13,10 +13,11 @@ import {
   setAuthSuccess,
 } from "../actions/auth";
 // real API calls
-// import { getUserData, adminLogIn, signUp } from "../../api/auth";
+import { getUserData, adminLogIn, signUp } from "../../api/auth";
 // there are mock API calls
-import { getUserData, adminLogIn, signUp } from "../../mock/common";
+// import { getUserData, adminLogIn, signUp } from "../../mock/common";
 import { getJwt } from "../selectors/auth";
+import { setUserStatus } from "../actions/user";
 
 export function* authSuccessSaga() {
   yield takeEvery(AUTH_REQUEST, function* (action) {
@@ -37,6 +38,8 @@ export function* getUserDataSaga() {
       const jwt = yield select(getJwt);
       const response = yield call(getUserData, jwt);
       yield put(getAuthUserSuccess(response));
+      console.log("response.isBlocked SAGA", response);
+      yield put(setUserStatus(response.isBlocked));
     } catch (err) {
       console.log("err", err);
       yield put(getAuthUserFailed(err));

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -33,7 +33,7 @@ const App = () => {
   const dispatch = useDispatch();
   const currentLang = useSelector(getLanguage);
   const theme = useSelector(getThemeMode);
-  // const [isLoading, setLoading] = useState(/*false*/ true);
+  // const [isLoading, setLoading] = useState(false /*true*/);
   const isLoading = useAsyncCall(
     translatorService.init,
     currentLang ? currentLang : EN
@@ -44,10 +44,10 @@ const App = () => {
     () => {
       dispatch(getUsersListRequest());
       // (async () => {
-      //   // setLoading(true);
+      //   setLoading(true);
       //   await translatorService.init(currentLang ? currentLang : EN);
       //   setLoading(false);
-      //   console.log('APP currentLang', currentLang)
+      //   console.log("APP currentLang", currentLang);
       // })();
     },
     [
@@ -59,6 +59,7 @@ const App = () => {
     return <Spinner />;
   }
 
+  console.log("APP=========");
   return (
     <Router>
       <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>

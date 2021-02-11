@@ -11,7 +11,8 @@ import {
 export const defaultState = {
   id: null,
   nickname: "",
-  isAdmin: true /*false*/,
+  // isAdmin: true,
+  isAdmin: false,
   jwt: localStorage.getItem("jwt"),
   isAuthenticated: !!localStorage.getItem("jwt"),
   error: null,

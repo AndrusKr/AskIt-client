@@ -16,11 +16,13 @@ function SlideList({ activeQuestionsPrepared }) {
           // .sort((q1, q2) => {
           //   return questionFilter(q1, q2, displayedOption);
           // })
-          prepareQuestionOrder(activeQuestionsPrepared, displayedOption).map((q) => (
-            <div className={"slide"} key={q.text}>
-              <SlideQuestion question={q} key={q.text} />
-            </div>
-          ))
+          prepareQuestionOrder(activeQuestionsPrepared, displayedOption).map(
+            (q) => (
+              <div className={"slide"} key={q.text}>
+                <SlideQuestion question={q} key={q.text} />
+              </div>
+            )
+          )
         }
       </GridList>
     </div>

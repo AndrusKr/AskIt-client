@@ -29,6 +29,7 @@ import {
 } from "../../redux/actions/questions";
 import profanityFilter from "../../services/profanityFilter";
 import { getIsAdmin } from "../../redux/selectors/auth";
+import { getUserStatus } from "../../redux/selectors/user";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -61,6 +62,7 @@ const BottomInput = ({ sendQuestion, loading }) => {
   const [symbolsAmount, setSymbolsAmount] = useState(MAX_MESSAGE_LIMIT);
   const [editQuestionText, setEditQuestionText] = useState(editedText);
   const isAdmin = useSelector(getIsAdmin);
+  const isBlocked = useSelector(getUserStatus);
   const showAlert = useAlert();
 
   useEffect(() => {
@@ -162,7 +164,11 @@ const BottomInput = ({ sendQuestion, loading }) => {
   };
 
   return (
-    <AppBar position="fixed" color="primary" className={classes.appBar}>
+    <AppBar
+      position="fixed"
+      color="primary"
+      className={`${classes.appBar} switch-modes-helper`}
+    >
       <Toolbar>
         <form noValidate className={classes.form}>
           <Grid container>
@@ -177,7 +183,7 @@ const BottomInput = ({ sendQuestion, loading }) => {
                   isEditActive ? "Edit message" : "Write Your question here..."
                 }
                 multiline
-                disabled={loading}
+                disabled={loading || isBlocked}
                 value={isEditActive ? editQuestionText : questionText}
                 onChange={onQuestionTextChange}
                 onKeyPress={onKeyPress}
@@ -204,7 +210,7 @@ const BottomInput = ({ sendQuestion, loading }) => {
               type="submit"
               onClick={onSubmit}
               edge="end"
-              disabled={symbolsAmount < 0}
+              disabled={symbolsAmount < 0 || isBlocked}
               aria-label="send"
             >
               <Telegram />

@@ -1,10 +1,16 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { USERS_LIST_REQUEST } from "../../constants/types";
+import { BAN_USER_REQUEST, USERS_LIST_REQUEST } from "../../constants/types";
 // API CALL
-// import { getUsersList } from "../../api/user";
+// import {bunUser, getUsersList} from "../../api/user";
 // MOCK API CALL
-import { getUsersList } from "../../mock/common";
-import { setUsersListFailed, setUsersListSucceed } from "../actions/user";
+import { getUsersList, bunUser } from "../../mock/common";
+import {
+  banUserFailed,
+  banUserSucceed,
+  setUsersListFailed,
+  setUsersListSucceed,
+  setUserStatus,
+} from "../actions/user";
 
 export function* usersListRequestSaga() {
   yield takeEvery(USERS_LIST_REQUEST, function* () {
@@ -14,6 +20,21 @@ export function* usersListRequestSaga() {
     } catch (err) {
       console.log("err", err);
       yield put(setUsersListFailed(err));
+    }
+  });
+}
+
+export function* bunUserRequestSaga() {
+  yield takeEvery(BAN_USER_REQUEST, function* (action) {
+    try {
+      // TODO: use when API is ready
+      // const response = yield call(bunUser, action.payload);
+      // use now, just change state in redux
+      yield put(banUserSucceed(action.payload));
+      yield put(setUserStatus(action.payload));
+    } catch (err) {
+      console.log("err", err);
+      yield put(banUserFailed(err));
     }
   });
 }

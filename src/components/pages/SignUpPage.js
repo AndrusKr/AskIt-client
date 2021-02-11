@@ -88,6 +88,7 @@ const SignUpPage = (props) => {
             nickname="nickname"
             value={nickname}
             autoFocus
+            id={"switch-modes-helper"}
           />
           <PasswordInput
             setPassword={setPassword}

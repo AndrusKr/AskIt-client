@@ -10,8 +10,17 @@ class SocketClient {
   }
 
   async connect() {
+    // Refactor this shit
+    const jwt = localStorage.getItem("jwt");
+    // if (!jwt) {
+    //   return;
+    // }
+
     this.stompClient.configure({
       brokerURL: "ws://localhost:8080/stomp",
+      connectHeaders: {
+        Authorization: `Bearer ${jwt}`,
+      },
       onConnect: (frame) => {
         // this.stompClient.subscribe(`/topic/questions`, msg => console.log(msg.body))
         // this.stompClient.publish({

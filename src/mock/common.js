@@ -10,6 +10,7 @@ export const authResponse = {
   id: 1,
   nickname: "Andrus",
   jwt: "qweqweqwe",
+  isBlocked: true /*false*/,
 };
 
 export const authAdminResponse = {
@@ -25,6 +26,7 @@ export const adminLogIn = () => fetchData(authAdminResponse);
 export const currentUser = {
   id: 1,
   nickname: "Andrus",
+  isBlocked: true /*false*/,
 };
 
 export const getUserData = () => fetchData(currentUser);
@@ -36,60 +38,72 @@ const usersList = [
     nickname: "Andrus",
     isAdmin: true,
     isBanned: false,
+    id: 1,
   },
   {
     nickname: "Jack",
     isAdmin: false,
     isBanned: false,
+    id: 2,
   },
   {
     nickname: "John",
     isAdmin: false,
     isBanned: false,
+    id: 3,
   },
   {
     nickname: "Jimmy",
     isAdmin: true,
     isBanned: false,
+    id: 4,
   },
   {
     nickname: "Ales",
     isAdmin: true,
     isBanned: false,
+    id: 5,
   },
   {
     nickname: "Donald",
     isAdmin: false,
     isBanned: false,
+    id: 6,
   },
   {
     nickname: "Bill",
     isAdmin: false,
     isBanned: false,
+    id: 7,
   },
   {
     nickname: "Alesichka",
     isAdmin: false,
     isBanned: false,
+    id: 8,
   },
   {
     nickname: "Jinna",
     isAdmin: false,
     isBanned: false,
+    id: 9,
   },
   {
     nickname: "Bro",
     isAdmin: false,
     isBanned: false,
+    id: 10,
   },
   {
     nickname: "Ilya",
     isAdmin: false,
     isBanned: false,
+    id: 11,
   },
 ];
 
 export const getUsersList = () => fetchData(usersList);
+export const bunUser = (idx) => fetchData(idx);
 
 export const activeQuestions = [
   {
