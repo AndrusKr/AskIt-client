@@ -6,6 +6,16 @@ import {
   WARNING,
 } from "../constants/alerts";
 
+// Description of password checking
+// (?=^.{6,}$) - String is > 5 chars
+// (?=.*[0-9]) - Contains a digit
+// (?=.*[A-Z]) - Contains an uppercase letter
+// (?=.*[a-z]) - Contains a lowercase letter
+// (?=.*[^A-Za-z0-9]) - A character not being alphanumeric
+const passwordRegExp = new RegExp(
+  /(?=^.{9,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*/
+);
+
 export const setSeverity = (severity) => {
   switch (severity) {
     case ERROR:
@@ -72,4 +82,8 @@ export function prepareQuestionOrder(questions, displayedOption) {
   }
 
   return preparedArr;
+}
+
+export function validatePassword(password) {
+  return passwordRegExp.test(password);
 }

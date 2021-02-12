@@ -7,3 +7,9 @@ export const logIn = async (nickname, password) =>
 
 export const singIn = async (nickname) =>
   axios.post("/api/auth/sign-up", { nickname });
+
+export const checkAdminCredentials = async (data) =>
+  axios.post("/api/admin/creds", { ...data });
+
+export const changeAdminCredentials = async (data) =>
+  axios.post("/api/admin/change", { ...data });

@@ -8,6 +8,7 @@ export default function* rootSaga() {
     auth.authSuccessSaga(),
     auth.getUserDataSaga(),
     auth.authAdminSuccessSaga(),
+    auth.authCheckCredentialsSaga(),
     user.usersListRequestSaga(),
     user.bunUserRequestSaga(),
     questions.putQuestionsSaga(),

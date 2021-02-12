@@ -45,7 +45,6 @@ export default (state, action) => {
       return state.set("error", action.payload);
 
     case SET_USER_STATUS:
-      console.log("REDUCER", action.payload);
       return state.set("isBlocked", action.payload);
 
     default: {

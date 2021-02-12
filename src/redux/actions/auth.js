@@ -5,6 +5,9 @@ import {
   AUTH_FAILED,
   AUTH_REQUEST,
   AUTH_SUCCESS,
+  CHECK_CREDENTIALS_FAILED,
+  CHECK_CREDENTIALS_REQUEST,
+  CHECK_CREDENTIALS_SUCCEED,
   GET_AUTH_USER,
   GET_AUTH_USER_FAILED,
   GET_AUTH_USER_SUCCESS,
@@ -57,5 +60,20 @@ export const setAdminAuthSuccess = (data) => ({
 
 export const setAdminAuthFailed = (error) => ({
   type: AUTH_ADMIN_FAILED,
+  payload: error,
+});
+
+export const checkCredentialsRequest = (data) => ({
+  type: CHECK_CREDENTIALS_REQUEST,
+  payload: data,
+});
+
+export const checkCredentialsSuccess = (data) => ({
+  type: CHECK_CREDENTIALS_SUCCEED,
+  payload: data,
+});
+
+export const checkCredentialsFailed = (error) => ({
+  type: CHECK_CREDENTIALS_FAILED,
   payload: error,
 });

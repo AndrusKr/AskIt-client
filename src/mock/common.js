@@ -23,6 +23,24 @@ export const authAdminResponse = {
   },
 };
 
+const credentials = {
+  login: "Andrus",
+  password: "qweasdzxc",
+};
+
+export const checkAdminCredentials = async (userCreds) => {
+  const result = JSON.stringify(credentials) === JSON.stringify(userCreds);
+  if (result) {
+    return await fetchData(result);
+  }
+  throw new Error("Password or login is incorrect!");
+};
+
+export const changeAdminCredentials = async (userCreds) => {
+  return fetchData("OK!");
+  // throw new Error("Password or login is incorrect!");
+};
+
 export const singIn = () => fetchData(authResponse);
 
 export const logIn = () => fetchData(authAdminResponse);

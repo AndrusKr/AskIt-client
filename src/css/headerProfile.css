@@ -22,6 +22,10 @@
   margin: 15px 20px;
 }
 
+.user-list-close-icon {
+  margin-left: 25px;
+}
+
 .user-list-close-icon, .bun-icon, .unbun-icon {
   cursor: pointer;
 }
@@ -48,4 +52,35 @@
 
 .user-bar-title {
   padding: 15px;
+}
+
+.password-input {
+  border: 1px solid #414141;
+}
+
+.password-input:hover {
+  border: 1px solid #535353;
+}
+
+.credentials-container {
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.credentials-container > div {
+  margin: 20px 0;
+}
+
+#component-error-text {
+  color: red;
+}
+
+.creds-title, .error-title {
+  margin-bottom: 0;
+}
+
+.error-title {
+  text-align: center;
+  color: #ff0000;
 }

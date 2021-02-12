@@ -16,7 +16,8 @@ import { setUserName } from "../../../redux/actions/auth";
 import ModalWindow from "../../layout/modals/dialog";
 import { useModal } from "../../hooks/useModal";
 import IconButton from "@material-ui/core/IconButton";
-import UserList from "./userList";
+import UserList from "./UserList";
+import ChangeCredentialsWindow from "../../layout/modals/credentials";
 
 const ProfileSettings = ({ classes }) => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const ProfileSettings = ({ classes }) => {
   const nicknameLabelRef = useRef(null);
   const nicknameRef = useRef(null);
   const [isUserListOpened, setIsUserListOpened] = useState(false);
+  const [isCredentialsOpened, setIsCredentialsOpened] = useState(false);
   const [openModal, handleOpen, handleClose] = useModal();
 
   useEffect(() => {});
@@ -47,6 +49,11 @@ const ProfileSettings = ({ classes }) => {
   const handleCloseModal = () => {
     handleClose();
     setIsInputActive(false);
+  };
+
+  const changeCredentials = () => {
+    if (!isAdmin) return;
+    setIsCredentialsOpened(true);
   };
 
   const editNickname = () => setIsInputActive(true);
@@ -112,7 +119,10 @@ const ProfileSettings = ({ classes }) => {
           variant={nickname.length > 10 ? "h7" : "h6"}
           className={`${classes.profile} ${!isInputActive && "user-name"}`}
         >
-          <AccountCircle className={classes.avatar} />
+          <AccountCircle
+            className={`${classes.avatar} ${isAdmin && "bun-icon"}`}
+            onClick={changeCredentials}
+          />
           {!isInputActive && nickname}
 
           {isInputActive && (
@@ -144,6 +154,10 @@ const ProfileSettings = ({ classes }) => {
         submitChange={submitChangeName}
         dialogTitle="Are you sure you want to change your name?"
         buttonName="Change"
+      />
+      <ChangeCredentialsWindow
+        isCredentialsOpened={isCredentialsOpened}
+        setIsCredentialsOpened={setIsCredentialsOpened}
       />
       <UserList
         isUserListOpened={isUserListOpened}

@@ -2,26 +2,22 @@ import React from "react";
 import { useSelector } from "react-redux";
 import List from "@material-ui/core/List";
 import { Dialog } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
 import { getAlphabeticUsersList } from "../../../redux/selectors/user";
 import UserBarTabs from "./UserBarTabs";
 import UserRowData from "./UserRowData";
+import ModalTitle from "./ModalTitle";
 
 function UserList({ isUserListOpened, setIsUserListOpened }) {
   const usersList = useSelector(getAlphabeticUsersList);
+  const closeModal = () => setIsUserListOpened(false);
 
   return (
-    <Dialog
-      open={isUserListOpened}
-      onBackdropClick={() => setIsUserListOpened(false)}
-    >
-      <h2 className={"user-list-title switch-modes-helper"}>
-        List of users{" "}
-        <CloseIcon
-          onClick={() => setIsUserListOpened(false)}
-          className={"user-list-close-icon switch-modes-helper"}
-        />
-      </h2>
+    <Dialog open={isUserListOpened} onBackdropClick={closeModal}>
+      <ModalTitle
+        title={"List of users"}
+        closeModal={closeModal}
+        classes={"switch-modes-helper"}
+      />
       <UserBarTabs />
 
       <List

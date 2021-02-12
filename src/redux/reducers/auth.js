@@ -3,6 +3,8 @@ import {
   AUTH_ADMIN_SUCCESS,
   AUTH_FAILED,
   AUTH_SUCCESS,
+  CHECK_CREDENTIALS_FAILED,
+  CHECK_CREDENTIALS_SUCCEED,
   GET_AUTH_USER_FAILED,
   GET_AUTH_USER_SUCCESS,
   SET_USER_NAME,
@@ -16,6 +18,7 @@ export const defaultState = {
     nickname: "",
   },
   isAuthenticated: !!localStorage.getItem("jwt"),
+  login: "",
   error: null,
 };
 
@@ -78,6 +81,12 @@ export default (state, action) => {
           nickname: "",
         })
         .set("error", action.payload);
+
+    // case CHECK_CREDENTIALS_SUCCEED:
+    //   return state.set("isRightCredentials", true);
+
+    // case CHECK_CREDENTIALS_FAILED:
+    //   return state.set("credentialsError", action.payload);
 
     default: {
       return state;
