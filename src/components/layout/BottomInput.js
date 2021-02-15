@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BottomInput = ({ sendQuestion, loading }) => {
+const BottomInput = ({ sendQuestion }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const footer = useSelector(getFooter);
@@ -183,7 +183,7 @@ const BottomInput = ({ sendQuestion, loading }) => {
                   isEditActive ? "Edit message" : "Write Your question here..."
                 }
                 multiline
-                disabled={loading || isBlocked}
+                disabled={isBlocked}
                 value={isEditActive ? editQuestionText : questionText}
                 onChange={onQuestionTextChange}
                 onKeyPress={onKeyPress}
@@ -224,7 +224,6 @@ const BottomInput = ({ sendQuestion, loading }) => {
 
 BottomInput.propTypes = {
   sendQuestion: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
 };
 
 export default BottomInput;

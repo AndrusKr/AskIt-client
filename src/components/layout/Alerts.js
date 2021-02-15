@@ -51,14 +51,14 @@ const AlertMessage = () => {
         setErrorTimer(
           setTimeout(() => {
             closeErrorsAndDurations();
-          }, 2000)
+          }, 5000)
         )
       );
       dispatch(
         setErrorDurationTimer(
           setTimeout(() => {
             dispatch(setDurationContinuing(true));
-          }, 1000)
+          }, 3000)
         )
       );
     }
@@ -74,7 +74,7 @@ const AlertMessage = () => {
       setErrorDurationTimer(
         setTimeout(() => {
           dispatch(setDurationContinuing(true));
-        }, 1000)
+        }, 3000)
       )
     );
 
@@ -83,7 +83,7 @@ const AlertMessage = () => {
       setErrorTimer(
         setTimeout(() => {
           closeErrorsAndDurations();
-        }, 2000)
+        }, 5000)
       )
     );
   };

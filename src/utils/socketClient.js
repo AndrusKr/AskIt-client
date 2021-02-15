@@ -9,9 +9,10 @@ class SocketClient {
     return !!this.stompClient.connected;
   }
 
-  async connect() {
+  async connect(jwt) {
     // Refactor this shit
-    const jwt = localStorage.getItem("jwt");
+    // const jwt = localStorage.getItem("jwt");
+    console.log("jwt CONNECT", jwt);
     // if (!jwt) {
     //   return;
     // }

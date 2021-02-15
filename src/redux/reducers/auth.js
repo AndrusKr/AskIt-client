@@ -11,11 +11,11 @@ import {
 export const defaultState = {
   id: null,
   nickname: "",
-  // isAdmin: true,
   isAdmin: false,
   jwt: localStorage.getItem("jwt"),
   isAuthenticated: !!localStorage.getItem("jwt"),
   error: null,
+  isSignup: false,
 };
 
 export default (state, action) => {
@@ -26,7 +26,8 @@ export default (state, action) => {
         .set("nickname", action.payload.nickname)
         .set("jwt", action.payload.jwt)
         .set("isAuthenticated", true)
-        .set("isAdmin", false);
+        .set("isAdmin", false)
+        .set("isSignup", true);
 
     case AUTH_FAILED:
       localStorage.removeItem("jwt");
@@ -35,7 +36,8 @@ export default (state, action) => {
         .set("nickname", "")
         .set("jwt", null)
         .set("isAuthenticated", false)
-        .set("error", action.payload);
+        .set("error", action.payload)
+        .set("isSignup", false);
 
     case GET_AUTH_USER_SUCCESS:
       return state
@@ -54,7 +56,8 @@ export default (state, action) => {
         .set("nickname", action.payload.nickname)
         .set("jwt", action.payload.jwt)
         .set("isAuthenticated", true)
-        .set("isAdmin", true);
+        .set("isAdmin", true)
+        .set("isSignup", true);
 
     case AUTH_ADMIN_FAILED:
       localStorage.removeItem("jwt");
@@ -64,7 +67,8 @@ export default (state, action) => {
         .set("jwt", null)
         .set("isAuthenticated", false)
         .set("isAdmin", false)
-        .set("error", action.payload);
+        .set("error", action.payload)
+        .set("isSignup", false);
 
     default: {
       return state;

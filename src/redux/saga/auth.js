@@ -23,8 +23,9 @@ export function* authSuccessSaga() {
   yield takeEvery(AUTH_REQUEST, function* (action) {
     try {
       const response = yield call(signUp, action.payload);
-      yield put(setAuthSuccess(response.data));
       localStorage.setItem("jwt", response.data.jwt);
+      localStorage.setItem("nickname", response.data.nickname);
+      yield put(setAuthSuccess(response.data));
     } catch (err) {
       console.log("err", err);
       yield put(setAuthFailed(err));

@@ -12,7 +12,7 @@
 
 .error-disappearing {
     opacity: 0;
-    transition: opacity 1000ms ease-in-out !important;
+    transition: opacity 2000ms ease-in-out !important;
 }
 
 .error-disappearing:hover {

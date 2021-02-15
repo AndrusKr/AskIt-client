@@ -1,7 +1,6 @@
 import {
   SET_QUESTION_ARROW,
   SET_QUESTION_ARROW_TIMER,
-  SET_SOCKET_CONNECTION,
   SET_THEME_MODE,
 } from "../../constants/types";
 
@@ -18,9 +17,4 @@ export const setQuestionArrow = (result) => ({
 export const setQuestionArrowTimer = (timer) => ({
   type: SET_QUESTION_ARROW_TIMER,
   payload: timer,
-});
-
-export const setIsSocketConnected = (flag) => ({
-  type: SET_SOCKET_CONNECTION,
-  payload: flag,
 });

@@ -26,40 +26,55 @@ import { GlobalStyles } from "./components/themes/global";
 import { darkTheme, lightTheme } from "./components/themes/themes";
 import { getThemeMode } from "./redux/selectors/common";
 import { ADMIN, INDEX, SIGN_UP, SLIDE } from "./constants/routes";
-import { useAsyncCall } from "./components/hooks/useAsyncCall";
 import { getUsersListRequest } from "./redux/actions/user";
+import socketClient from "./utils/socketClient";
+import { putQuestions } from "./redux/actions/questions";
+import { getIsSignup, getJwt } from "./redux/selectors/auth";
+import { useAlert } from "./components/hooks/useAlert";
+import { SUCCESS } from "./constants/alerts";
+import { getAuthUser } from "./redux/actions/auth";
 
 const App = () => {
   const dispatch = useDispatch();
   const currentLang = useSelector(getLanguage);
   const theme = useSelector(getThemeMode);
-  // const [isLoading, setLoading] = useState(false /*true*/);
-  const isLoading = useAsyncCall(
-    translatorService.init,
-    currentLang ? currentLang : EN
-    // getUsersListRequest,
-  );
+  const jwt = useSelector(getJwt);
+  const isSignup = useSelector(getIsSignup);
+  const showAlert = useAlert();
+  const [isLoading, setIsLoading] = useState(false);
+  const nickname = localStorage.getItem("nickname");
 
-  useEffect(
-    () => {
-      dispatch(getUsersListRequest());
-      // (async () => {
-      //   setLoading(true);
-      //   await translatorService.init(currentLang ? currentLang : EN);
-      //   setLoading(false);
-      //   console.log("APP currentLang", currentLang);
-      // })();
-    },
-    [
-      /*isLoading, currentLang*/
-    ]
-  );
+  useEffect(() => {
+    (async () => {
+      if (jwt) {
+        setIsLoading(true);
+
+        if (!isSignup) {
+          await translatorService.init(currentLang ? currentLang : EN);
+        }
+
+        dispatch(getUsersListRequest());
+        dispatch(getAuthUser());
+        const greetings = isSignup ? "Hello for the newcomer" : "Welcome back";
+        showAlert(SUCCESS, `${greetings}, ${nickname}!!!`);
+        await socketClient.connect(jwt);
+
+        const onReceivedQuestion = (receivedQuestion) => {
+          dispatch(putQuestions(JSON.parse(receivedQuestion.body)));
+        };
+
+        await socketClient.subscribeTopic("questions", onReceivedQuestion);
+        setIsLoading(false);
+      } else {
+        await translatorService.init(currentLang ? currentLang : EN);
+      }
+    })();
+  }, [jwt, isSignup]);
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  console.log("APP=========");
   return (
     <Router>
       <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>

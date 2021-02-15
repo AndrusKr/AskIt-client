@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { Fragment } from "react";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import BottomInput from "../../layout/BottomInput";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,14 +11,8 @@ import socketClient from "../../../utils/socketClient";
 import {
   getActiveQuestions,
   getAnsweredQuestions,
-  getQuestionLoading,
 } from "../../../redux/selectors/questions";
-import {
-  putQuestions,
-  setQuestionLoading,
-} from "../../../redux/actions/questions";
 import { getErrorShowed } from "../../../redux/selectors/alert";
-import { getIsSocketConnected } from "../../../redux/selectors/common";
 
 const useStyles = makeStyles(() => ({
   listSubheader: {
@@ -29,48 +23,14 @@ const useStyles = makeStyles(() => ({
 const QuestionsPane = () => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const dispatch = useDispatch();
   const activeQuestions = useSelector(
     /*getFilteredAnsweredQuestions*/ getActiveQuestions
   );
   const answeredQuestions = useSelector(getAnsweredQuestions);
-  const loading = useSelector(getQuestionLoading);
   const isErrorShowed = useSelector(getErrorShowed);
-  const isSocketConnected = useSelector(getIsSocketConnected);
 
   const sendQuestion = (question) =>
     socketClient.sendMsg("process-question", question);
-
-  // const onReceivedQuestion = (receivedQuestion) => {
-  //   dispatch(setQuestionLoading(true));
-  //   dispatch(putQuestions(JSON.parse(receivedQuestion.body)));
-  // };
-
-  // const isLoading = useAsyncCall(
-  //   () => socketClient.subscribeTopic("questions", onReceivedQuestion),
-  //   // {
-  //   //   action: "questions",
-  //   //   handler: onReceivedQuestion,
-  //   // }
-  // );
-
-  useEffect(() => {
-    const onReceivedQuestion = (receivedQuestion) => {
-      dispatch(setQuestionLoading(true));
-      dispatch(putQuestions(JSON.parse(receivedQuestion.body)));
-    };
-    console.log("useEffect socketClient.isConnected", socketClient.isConnected);
-
-    (async () => {
-      console.log("async");
-      console.log("isSocketConnected", isSocketConnected);
-      if (isSocketConnected) {
-        console.log("if");
-        await socketClient.subscribeTopic("questions", onReceivedQuestion);
-        dispatch(setQuestionLoading(false));
-      }
-    })();
-  }, [isSocketConnected]);
 
   return (
     <Fragment>
@@ -84,19 +44,13 @@ const QuestionsPane = () => {
         >
           {t("activeQuestions")}
         </ListSubheader>
-        <ActiveQuestionsList
-          activeQuestions={activeQuestions}
-          loading={loading}
-        />
+        <ActiveQuestionsList activeQuestions={activeQuestions} />
         <ListSubheader className={`${classes.listSubheader} questions-titles`}>
           {t("answeredQuestions")}
         </ListSubheader>
-        <AnsweredQuestionsList
-          answeredQuestions={answeredQuestions}
-          loading={loading}
-        />
+        <AnsweredQuestionsList answeredQuestions={answeredQuestions} />
       </List>
-      <BottomInput sendQuestion={sendQuestion} loading={loading} />
+      <BottomInput sendQuestion={sendQuestion} />
     </Fragment>
   );
 };
