@@ -46,9 +46,8 @@ const App = () => {
 
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
       if (jwt) {
-        setIsLoading(true);
-
         if (!isSignup) {
           await translatorService.init(currentLang ? currentLang : EN);
         }
@@ -66,12 +65,12 @@ const App = () => {
         };
 
         await socketClient.subscribeTopic("questions", onReceivedQuestion);
-        setIsLoading(false);
       } else {
         await translatorService.init(currentLang ? currentLang : EN);
       }
+      setIsLoading(false);
     })();
-  }, [jwt, isSignup, nickname]);
+  }, [jwt, isSignup]);
 
   if (isLoading) {
     return <Spinner />;
