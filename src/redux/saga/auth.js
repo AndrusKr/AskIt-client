@@ -18,24 +18,19 @@ import {
 import { getJwt } from "../selectors/auth";
 import { setUserStatus } from "../actions/user";
 // real API calls
-// import { singIn, logIn } from "../../api/auth";
-// import {checkAdminCredentials} from "../../api/auth";
+import { getUserData, adminLogIn, signUp, checkAdminCredentials } from "../../api/auth";
 // there are mock API calls
-import {
-  checkAdminCredentials,
-  getUserData,
-  logIn,
-  singIn,
-} from "../../mock/common";
+// import { getUserData, adminLogIn, signUp, checkAdminCredentials } from "../../mock/common";
+import { getJwt } from "../selectors/auth";
+import { setUserStatus } from "../actions/user";
 
 export function* authSuccessSaga() {
   yield takeEvery(AUTH_REQUEST, function* (action) {
     try {
-      const response = yield call(singIn, action.payload);
-      // TODO: remove the next line after server will work
-      response.currentUser.nickname = action.payload;
-      yield put(setAuthSuccess(response));
-      localStorage.setItem("jwt", "qweqweqwe");
+      const response = yield call(signUp, action.payload);
+      localStorage.setItem("jwt", response.data.jwt);
+      localStorage.setItem("nickname", response.data.nickname);
+      yield put(setAuthSuccess(response.data));
     } catch (err) {
       console.log("err", err);
       yield put(setAuthFailed(err));
@@ -61,9 +56,9 @@ export function* authAdminSuccessSaga() {
   yield takeEvery(AUTH_ADMIN_REQUEST, function* (action) {
     try {
       const { nickname, password } = action.payload;
-      const response = yield call(logIn, nickname, password);
+      const response = yield call(adminLogIn, nickname, password);
       // TODO: remove the next line after server will work
-      response.currentUser.nickname = action.payload.nickname;
+      response.nickname = action.payload.nickname;
       yield put(setAdminAuthSuccess(response));
       localStorage.setItem("jwt", "qweasdzxc");
     } catch (err) {

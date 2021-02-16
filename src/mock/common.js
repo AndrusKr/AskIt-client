@@ -7,21 +7,21 @@ function fetchData(data) {
 }
 
 export const authResponse = {
+  id: 1,
+  nickname: "Andrus",
   jwt: "qweqweqwe",
-  currentUser: {
-    id: 1,
-    nickname: "Andrus",
-  },
   isBlocked: true /*false*/,
 };
 
 export const authAdminResponse = {
+  id: 1,
+  nickname: "AndrusADMIN",
   jwt: "qweasdzxc",
-  currentUser: {
-    id: 1,
-    nickname: "AndrusADMIN",
-  },
 };
+
+export const signUp = () => fetchData(authResponse);
+
+export const adminLogIn = () => fetchData(authAdminResponse);
 
 const credentials = {
   login: "Andrus",
@@ -40,10 +40,6 @@ export const changeAdminCredentials = async (userCreds) => {
   return fetchData("OK!");
   // throw new Error("Password or login is incorrect!");
 };
-
-export const singIn = () => fetchData(authResponse);
-
-export const logIn = () => fetchData(authAdminResponse);
 
 export const currentUser = {
   id: 1,

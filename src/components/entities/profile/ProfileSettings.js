@@ -2,17 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormControl, Input, MenuItem, Select } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import { AccountCircle, Edit, CheckCircle, People } from "@material-ui/icons";
+import { AccountCircle, CheckCircle, Edit, People } from "@material-ui/icons";
 import { getLanguage } from "../../../redux/selectors/language";
 import {
-  getCurrentUser,
   getIsAdmin,
   getIsAuthenticated,
+  getNickname,
 } from "../../../redux/selectors/auth";
 import { setLanguage } from "../../../redux/actions/language";
 import translatorService from "../../../services/translatorService";
 import { supportedLanguages } from "../../../constants/language";
-import { setUserName } from "../../../redux/actions/auth";
+import { setUsername } from "../../../redux/actions/auth";
 import ModalWindow from "../../layout/modals/dialog";
 import { useModal } from "../../hooks/useModal";
 import IconButton from "@material-ui/core/IconButton";
@@ -22,7 +22,7 @@ import ChangeCredentialsWindow from "../../layout/modals/credentials";
 const ProfileSettings = ({ classes }) => {
   const dispatch = useDispatch();
   const currentLanguage = useSelector(getLanguage);
-  const { nickname } = useSelector(getCurrentUser);
+  const nickname = useSelector(getNickname);
   const isAuthenticated = useSelector(getIsAuthenticated);
   const isAdmin = useSelector(getIsAdmin);
   const [isInputActive, setIsInputActive] = useState(false);
@@ -66,7 +66,7 @@ const ProfileSettings = ({ classes }) => {
 
   const submitChangeName = () => {
     // TODO: here should be saga (API call to the server) for change the name (with check of an existing name)
-    dispatch(setUserName(inputValue));
+    dispatch(setUsername(inputValue));
     handleCloseModal();
   };
 

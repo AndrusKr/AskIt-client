@@ -1,12 +1,7 @@
 import React from "react";
-import Spinner from "../../layout/Spinner";
 import QuestionItem from "./QuestionItem";
 
-const AnsweredQuestionsLists = ({ answeredQuestions, loading }) => {
-  if (loading) {
-    return <Spinner />;
-  }
-
+const AnsweredQuestionsLists = ({ answeredQuestions }) => {
   if (!answeredQuestions.size) {
     return (
       <h4>

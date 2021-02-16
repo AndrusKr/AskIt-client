@@ -1,13 +1,8 @@
 import React from "react";
-import Spinner from "../../layout/Spinner";
 import QuestionItem from "./QuestionItem";
-import { prepareQuestionOrder, questionFilter } from "../../../utils/helpers";
+import { prepareQuestionOrder } from "../../../utils/helpers";
 
-const ActiveQuestionsLists = ({ activeQuestions, loading }) => {
-  if (loading) {
-    return <Spinner />;
-  }
-
+const ActiveQuestionsLists = ({ activeQuestions }) => {
   if (!activeQuestions.size) {
     return (
       <h4>
@@ -17,10 +12,6 @@ const ActiveQuestionsLists = ({ activeQuestions, loading }) => {
     );
   }
 
-  // return [...activeQuestions]
-  //   .sort((q1, q2) => {
-  //     return questionFilter(q1, q2);
-  //   })
   return prepareQuestionOrder(activeQuestions).map((q) => (
     <QuestionItem question={q} key={q.id} />
   ));

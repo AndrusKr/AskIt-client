@@ -11,76 +11,67 @@ import {
 } from "../../constants/types";
 
 export const defaultState = {
+  id: null,
+  nickname: "",
+  isAdmin: false,
   jwt: localStorage.getItem("jwt"),
-  isAdmin: true /*false*/,
-  currentUser: {
-    id: null,
-    nickname: "",
-  },
   isAuthenticated: !!localStorage.getItem("jwt"),
   login: "",
   error: null,
+  isSignup: false,
 };
 
 export default (state, action) => {
   switch (action.type) {
     case AUTH_SUCCESS:
       return state
+        .set("id", action.payload.id)
+        .set("nickname", action.payload.nickname)
         .set("jwt", action.payload.jwt)
         .set("isAuthenticated", true)
         .set("isAdmin", false)
-        .set("currentUser", {
-          id: action.payload.currentUser.id,
-          nickname: action.payload.currentUser.nickname,
-        });
+        .set("isSignup", true);
 
     case AUTH_FAILED:
       localStorage.removeItem("jwt");
       return state
+        .set("id", null)
+        .set("nickname", "")
         .set("jwt", null)
         .set("isAuthenticated", false)
-        .set("currentUser", {
-          id: null,
-          nickname: "",
-        })
-        .set("error", action.payload);
+        .set("error", action.payload)
+        .set("isSignup", false);
 
     case GET_AUTH_USER_SUCCESS:
-      return state.set("currentUser", {
-        id: action.payload.id,
-        nickname: action.payload.nickname,
-      });
+      return state
+        .set("id", action.payload.id)
+        .set("nickname", action.payload.nickname);
 
     case GET_AUTH_USER_FAILED:
       return state.set("error", action.payload);
 
     case SET_USER_NAME:
-      return state.set("currentUser", {
-        ...state.get("currentUser"),
-        nickname: action.payload,
-      });
+      return state.set("nickname", action.payload);
 
     case AUTH_ADMIN_SUCCESS:
       return state
+        .set("id", action.payload.id)
+        .set("nickname", action.payload.nickname)
         .set("jwt", action.payload.jwt)
         .set("isAuthenticated", true)
         .set("isAdmin", true)
-        .set("currentUser", {
-          id: action.payload.currentUser.id,
-          nickname: action.payload.currentUser.nickname,
-        });
+        .set("isSignup", true);
 
     case AUTH_ADMIN_FAILED:
       localStorage.removeItem("jwt");
       return state
+        .set("id", null)
+        .set("nickname", "")
         .set("jwt", null)
         .set("isAuthenticated", false)
         .set("isAdmin", false)
-        .set("currentUser", {
-          id: null,
-          nickname: "",
-        })
-        .set("error", action.payload);
+        .set("error", action.payload)
+        .set("isSignup", false);
 
     // case CHECK_CREDENTIALS_SUCCEED:
     //   return state.set("isRightCredentials", true);

@@ -21,10 +21,11 @@ import CredsForm from "../entities/profile/CredsForm";
 const SignUpPage = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [password, setPassword] = useState("");
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
   const jwt = useSelector(getJwt);
   const showAlert = useAlert();
   const [nickname, setNickname] = useState("");
-  const [password, setPassword] = useState("");
   const isAdmin = window.location.pathname === ADMIN;
 
   if (jwt) {

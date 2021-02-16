@@ -43,7 +43,7 @@ export const getAuthUserFailed = (error) => ({
   payload: error,
 });
 
-export const setUserName = (name) => ({
+export const setUsername = (name) => ({
   type: SET_USER_NAME,
   payload: name,
 });

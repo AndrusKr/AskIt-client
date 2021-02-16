@@ -1,12 +1,17 @@
 import axios from "axios";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
+  "jwt"
+)}`;
 
-export const logIn = async (nickname, password) =>
-  axios.post("/api/auth/log-in", { nickname, password });
-
-export const singIn = async (nickname) =>
+export const signUp = async (nickname) =>
   axios.post("/api/auth/sign-up", { nickname });
+
+export const getUserData = async () => axios.post("/api/auth/user");
+
+export const adminLogIn = async (nickname, password) =>
+  axios.post("/api/auth/log-in", { nickname, password });
 
 export const checkAdminCredentials = async (data) =>
   axios.post("/api/admin/creds", { ...data });

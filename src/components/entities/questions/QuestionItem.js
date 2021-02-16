@@ -18,10 +18,10 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeQuestionLikes,
-  setQuestionData,
   removeQuestion,
-  setQuestionLoading,
   setPinnedQuestion,
+  setQuestionData,
+  setQuestionLoading,
   setUnpinQuestion,
 } from "../../../redux/actions/questions";
 import ModalWindow from "../../layout/modals/dialog";
