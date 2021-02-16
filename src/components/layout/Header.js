@@ -8,6 +8,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import SlideHeader from "./headerContent/SlideContent";
 import UserHeader from "./headerContent/UserHeader";
 import { SLIDE } from "../../constants/routes";
+import { useWindowLocation } from "../hooks/useWindowLocation";
 
 const useStyles = makeStyles(() => ({
   appBar: {
@@ -55,9 +56,10 @@ const HideOnScroll = ({ trigger, children }) => (
 export default function Header(props) {
   const classes = useStyles();
   const trigger = useScrollTrigger();
+  const currentLocation = useWindowLocation();
 
   const showHeader = () => {
-    if (window.location.pathname === SLIDE) {
+    if (currentLocation === SLIDE) {
       return <SlideHeader classes={classes} />;
     }
     return <UserHeader classes={classes} />;

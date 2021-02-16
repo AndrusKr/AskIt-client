@@ -40,8 +40,8 @@ const App = () => {
   const theme = useSelector(getThemeMode);
   const jwt = useSelector(getJwt);
   const isSignup = useSelector(getIsSignup);
-  const showAlert = useAlert();
   const [isLoading, setIsLoading] = useState(false);
+  const showAlert = useAlert();
   const nickname = localStorage.getItem("nickname");
 
   useEffect(() => {
@@ -56,7 +56,9 @@ const App = () => {
         dispatch(getUsersListRequest());
         dispatch(getAuthUser());
         const greetings = isSignup ? "Hello for the newcomer" : "Welcome back";
-        showAlert(SUCCESS, `${greetings}, ${nickname}!!!`);
+        if (window.location.pathname !== SLIDE) {
+          showAlert(SUCCESS, `${greetings}, ${nickname}!!!`);
+        }
         await socketClient.connect(jwt);
 
         const onReceivedQuestion = (receivedQuestion) => {
@@ -69,7 +71,7 @@ const App = () => {
         await translatorService.init(currentLang ? currentLang : EN);
       }
     })();
-  }, [jwt, isSignup]);
+  }, [jwt, isSignup, nickname]);
 
   if (isLoading) {
     return <Spinner />;

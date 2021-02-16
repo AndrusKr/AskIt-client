@@ -18,11 +18,14 @@ import {
 import { getJwt } from "../selectors/auth";
 import { setUserStatus } from "../actions/user";
 // real API calls
-import { getUserData, adminLogIn, signUp, checkAdminCredentials } from "../../api/auth";
+import {
+  getUserData,
+  adminLogIn,
+  signUp,
+  checkAdminCredentials,
+} from "../../api/auth";
 // there are mock API calls
 // import { getUserData, adminLogIn, signUp, checkAdminCredentials } from "../../mock/common";
-import { getJwt } from "../selectors/auth";
-import { setUserStatus } from "../actions/user";
 
 export function* authSuccessSaga() {
   yield takeEvery(AUTH_REQUEST, function* (action) {

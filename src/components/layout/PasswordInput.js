@@ -26,6 +26,7 @@ const PasswordInput = ({
   const classes = useStyles();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
 
+  // TODO: commented just for testing purposes
   // if (window.location.pathname !== ADMIN) {
   //   return "";
   // }

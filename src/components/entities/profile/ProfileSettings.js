@@ -22,7 +22,7 @@ import ChangeCredentialsWindow from "../../layout/modals/credentials";
 const ProfileSettings = ({ classes }) => {
   const dispatch = useDispatch();
   const currentLanguage = useSelector(getLanguage);
-  const nickname = useSelector(getNickname);
+  const nickname = useSelector(getNickname) || localStorage.getItem("nickname");
   const isAuthenticated = useSelector(getIsAuthenticated);
   const isAdmin = useSelector(getIsAdmin);
   const [isInputActive, setIsInputActive] = useState(false);
