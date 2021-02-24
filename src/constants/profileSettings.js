@@ -10,3 +10,5 @@ export const USER_FILTER = {
   [BLOCKED_USERS]: "Blocked users",
   [ACTIVE_USERS]: "Active users",
 };
+
+export const CLOSE_CREDENTIALS_TIME = 1000 * 60 * 20;

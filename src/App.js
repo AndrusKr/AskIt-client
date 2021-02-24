@@ -40,38 +40,51 @@ const App = () => {
   const theme = useSelector(getThemeMode);
   const jwt = useSelector(getJwt);
   const isSignup = useSelector(getIsSignup);
-  const [isLoading, setIsLoading] = useState(false);
+  // TODO: change to false
+  const [isLoading, setIsLoading] = useState(true);
   const showAlert = useAlert();
   const nickname = localStorage.getItem("nickname");
 
+  // TODO: remove
+  useEffect(() => {
+    setIsLoading(true);
+    (async () => await translatorService.init(currentLang ? currentLang : EN))();
+    setIsLoading(false);
+  }, [])
+
   useEffect(() => {
     (async () => {
-      setIsLoading(true);
-      if (jwt) {
-        if (!isSignup) {
-          await translatorService.init(currentLang ? currentLang : EN);
+      try {
+        // setIsLoading(true);
+        if (jwt) {
+          if (!isSignup) {
+            // await translatorService.init(currentLang ? currentLang : EN);
+          }
+
+          dispatch(getUsersListRequest());
+          // dispatch(getAuthUser());
+          const greetings = isSignup ? "Hello for the newcomer" : "Welcome back";
+          if (window.location.pathname !== SLIDE) {
+            showAlert(SUCCESS, `${greetings}, ${nickname}!!!`);
+          }
+          await socketClient.connect(jwt);
+
+          const onReceivedQuestion = (receivedQuestion) => {
+            dispatch(putQuestions(JSON.parse(receivedQuestion.body)));
+          };
+
+          await socketClient.subscribeTopic("questions", onReceivedQuestion);
+        } else {
+          // await translatorService.init(currentLang ? currentLang : EN);
         }
-
-        dispatch(getUsersListRequest());
-        dispatch(getAuthUser());
-        const greetings = isSignup ? "Hello for the newcomer" : "Welcome back";
-        if (window.location.pathname !== SLIDE) {
-          showAlert(SUCCESS, `${greetings}, ${nickname}!!!`);
-        }
-        await socketClient.connect(jwt);
-
-        const onReceivedQuestion = (receivedQuestion) => {
-          dispatch(putQuestions(JSON.parse(receivedQuestion.body)));
-        };
-
-        await socketClient.subscribeTopic("questions", onReceivedQuestion);
-      } else {
-        await translatorService.init(currentLang ? currentLang : EN);
+        // setIsLoading(false);
+      } catch (error) {
+        console.log("APP error", error)
       }
-      setIsLoading(false);
     })();
   }, [jwt, isSignup]);
 
+  console.log("isLoading", isLoading)
   if (isLoading) {
     return <Spinner />;
   }

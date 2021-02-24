@@ -5,16 +5,58 @@ import {
   SUCCESS,
   WARNING,
 } from "../constants/alerts";
+import { PASSWORD_ERROR, REPEAT_PASSWORD_ERROR } from "../constants/errors";
+import {TABLET_WIDTH} from "../constants/dom";
 
 // Description of password checking
-// (?=^.{6,}$) - String is > 5 chars
-// (?=.*[0-9]) - Contains a digit
-// (?=.*[A-Z]) - Contains an uppercase letter
-// (?=.*[a-z]) - Contains a lowercase letter
-// (?=.*[^A-Za-z0-9]) - A character not being alphanumeric
-const passwordRegExp = new RegExp(
-  /(?=^.{9,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*/
-);
+// String is > 9 chars
+const moreThanRegExp = /(?=^.{9,}$)/;
+// Contains a digit
+const containsDigitRegExp = /(?=.*[0-9])/;
+// Contains an uppercase letter
+const uppercaseLetterRegExp = /(?=.*[A-Z])/;
+// Contains a lowercase letter
+const lowercaseLetterRegExp = /(?=.*[a-z])/;
+// A character not being alphanumeric
+const notAlphanumeric = /(?=.*[^A-Za-z0-9])/;
+
+export function validatePassword(password) {
+  return {
+    isMoreThanError: moreThanRegExp.test(password),
+    isContainsDigitError: containsDigitRegExp.test(password),
+    isUppercaseLetterError: uppercaseLetterRegExp.test(password),
+    isLowercaseLetterError: lowercaseLetterRegExp.test(password),
+    isNoAlphanumericError: notAlphanumeric.test(password),
+  };
+}
+
+export function setObjErrors(obj, type) {
+  if (type === PASSWORD_ERROR) {
+    return {
+      isMoreThanError: !obj.isMoreThanError ? "String is > 9 chars" : false,
+      isContainsDigitError: !obj.isContainsDigitError
+        ? "Contains a digit"
+        : false,
+      isUppercaseLetterError: !obj.isUppercaseLetterError
+        ? "Contains an uppercase letter"
+        : false,
+      isLowercaseLetterError: !obj.isLowercaseLetterError
+        ? "Contains a lowercase letter"
+        : false,
+      isNoAlphanumericError: !obj.isNoAlphanumericError
+        ? "A character not being alphanumeric"
+        : false,
+    };
+  }
+
+  if (type === REPEAT_PASSWORD_ERROR) {
+    return { error: "Passwords are not equal!" };
+  }
+
+  return {};
+}
+
+export const checkObjValues = (obj) => Object.values(obj).every((val) => val);
 
 export const setSeverity = (severity) => {
   switch (severity) {
@@ -84,6 +126,4 @@ export function prepareQuestionOrder(questions, displayedOption) {
   return preparedArr;
 }
 
-export function validatePassword(password) {
-  return passwordRegExp.test(password);
-}
+export const isTablet = () => window.innerWidth < TABLET_WIDTH

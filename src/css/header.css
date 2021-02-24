@@ -1,7 +1,30 @@
 .question-select {
-    position: absolute !important;
-    z-index: 10;
-    top: 50px;
-    right: 270px;
-    background: aliceblue;
+  position: absolute !important;
+  z-index: 10;
+  top: 50px;
+  right: 270px;
+  background: aliceblue;
+}
+
+.label-title {
+  font-size: 45px;
+  color: #027bfd;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.icon-title {
+  width: 35px;
+  height: 35px;
+}
+
+@media (max-width: 540px) {
+  .label-title {
+    font-size: 20px;
+  }
+
+  .icon-title {
+    width: 20px;
+    height: 20px;
+  }
 }

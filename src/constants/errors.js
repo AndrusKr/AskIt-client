@@ -10,3 +10,6 @@ export const MIN_QUESTION_LENGTH_ERROR_MESSAGE =
   "The question must be at least 1 symbols";
 export const MAX_QUESTION_LENGTH_ERROR_MESSAGE =
   "The question must be less/equal than 160 symbols";
+
+export const PASSWORD_ERROR = "PASSWORD_ERROR";
+export const REPEAT_PASSWORD_ERROR = "REPEAT_PASSWORD_ERROR";

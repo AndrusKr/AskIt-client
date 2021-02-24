@@ -15,11 +15,6 @@ const useStyles = makeStyles(() => ({
     background: "white",
     boxShadow: "none",
   },
-  title: {
-    color: "#027bfd",
-    flexGrow: 1,
-    textAlign: "center",
-  },
   icon: {
     width: 35,
     height: 35,

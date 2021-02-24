@@ -2,10 +2,6 @@
   caret-color: transparent;
 }
 
-.input-user-name {
-  font-size: 20px !important;
-}
-
 .user-list-container {
   height: 60vh;
   overflow-y: scroll;
@@ -83,4 +79,36 @@
 .error-title {
   text-align: center;
   color: #ff0000;
+}
+
+
+
+.profile-nickname {
+  font-size: 20px !important;
+}
+
+.flag-container {
+  display: flex;
+  padding: 5px;
+}
+
+.flag-icon {
+  width: 23px;
+  margin: 5px;
+}
+
+.flag-icon:hover {
+  cursor: pointer;
+}
+
+.flag-icon-border {
+  border: thick solid #32a1ce;
+  border-radius: 50%;
+  width: 30px;
+}
+
+@media (max-width: 540px) {
+  .profile-nickname {
+    font-size: 14px !important;
+  }
 }

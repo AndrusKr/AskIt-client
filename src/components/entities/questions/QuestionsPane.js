@@ -38,14 +38,14 @@ const QuestionsPane = () => {
         <ListSubheader
           className={
             isErrorShowed
-              ? `${classes.listSubheader} questions-pane questions-pane-trans questions-titles`
-              : `${classes.listSubheader} questions-pane-trans questions-titles`
+              ? `${classes.listSubheader} questions-pane questions-pane-trans switch-modes-helper`
+              : `${classes.listSubheader} questions-pane-trans switch-modes-helper`
           }
         >
           {t("activeQuestions")}
         </ListSubheader>
         <ActiveQuestionsList activeQuestions={activeQuestions} />
-        <ListSubheader className={`${classes.listSubheader} questions-titles`}>
+        <ListSubheader className={`${classes.listSubheader} switch-modes-helper`}>
           {t("answeredQuestions")}
         </ListSubheader>
         <AnsweredQuestionsList answeredQuestions={answeredQuestions} />

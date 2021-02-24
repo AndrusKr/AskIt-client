@@ -1,17 +1,18 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
 import { Help } from "@material-ui/icons";
 import DarkModeToggle from "../DarkModeToggle";
 import ProfileSettings from "../../entities/profile/ProfileSettings";
+import { isTablet } from "../../../utils/helpers";
 
 function UserHeader({ classes }) {
+  console.log("isTablet", isTablet());
   return (
     <>
       <DarkModeToggle />
-      <Typography variant="h3" className={classes.title}>
-        <Help className={classes.icon} />
+      <div className={`label-title`}>
+        {!isTablet() && <Help className={classes.icon} />}
         AskIt!
-      </Typography>
+      </div>
       <ProfileSettings classes={classes} />
     </>
   );

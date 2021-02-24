@@ -123,7 +123,11 @@ const QuestionItem = ({ question }) => {
                   </b>
                 }
                 secondary={
-                  <Typography variant="caption" color="textSecondary">
+                  <Typography
+                    variant="caption"
+                    color="textSecondary"
+                    className={"switch-modes-helper"}
+                  >
                     {answered !== null
                       ? `Answered: ${fmtTime(answered)}`
                       : fmtTime(asked)}

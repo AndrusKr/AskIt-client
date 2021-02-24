@@ -178,7 +178,7 @@ const BottomInput = ({ sendQuestion }) => {
                 inputRef={textInputRef}
                 type="text"
                 name="questionText"
-                className={classes.inputText}
+                className={`${classes.inputText} switch-modes-helper`}
                 label={
                   isEditActive ? "Edit message" : "Write Your question here..."
                 }
@@ -190,11 +190,11 @@ const BottomInput = ({ sendQuestion }) => {
               />
             </Grid>
             <div
-              className={
+              className={`switch-modes-helper ${
                 symbolsAmount < 0
                   ? "symbols-amount-counter max-question-text-error"
                   : "symbols-amount-counter"
-              }
+              }`}
             >
               <HighlightOff
                 className={

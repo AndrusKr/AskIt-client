@@ -20,16 +20,17 @@ import { setUserStatus } from "../actions/user";
 // real API calls
 import {
   getUserData,
-  adminLogIn,
+  // adminLogIn,
   signUp,
   checkAdminCredentials,
 } from "../../api/auth";
 // there are mock API calls
-import // getUserData,
-// adminLogIn,
-// signUp,
-// checkAdminCredentials,
-"../../mock/common";
+import {
+  // getUserData,
+  adminLogIn,
+  // signUp,
+  // checkAdminCredentials,
+} from "../../mock/common";
 
 export function* authSuccessSaga() {
   yield takeEvery(AUTH_REQUEST, function* (action) {

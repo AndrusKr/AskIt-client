@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog } from "@material-ui/core";
 // TODO: change to API
 // import {changeAdminCredentials, checkAdminCredentials} from "../../../api/auth";
@@ -13,11 +13,18 @@ import {
   MAX_NAME_LENGTH_ERROR_MESSAGE,
   MIN_NAME_LENGTH,
   MIN_NAME_LENGTH_ERROR_MESSAGE,
+  PASSWORD_ERROR,
+  REPEAT_PASSWORD_ERROR,
 } from "../../../constants/errors";
-import { validatePassword } from "../../../utils/helpers";
+import {
+  checkObjValues,
+  setObjErrors,
+  validatePassword,
+} from "../../../utils/helpers";
 import { Transition } from "./dialog";
 import ModalTitle from "../../entities/profile/ModalTitle";
 import CredsForm from "../../entities/profile/CredsForm";
+import { CLOSE_CREDENTIALS_TIME } from "../../../constants/profileSettings";
 
 const ChangeCredentialsWindow = ({
   isCredentialsOpened,
@@ -31,9 +38,23 @@ const ChangeCredentialsWindow = ({
   const [login, setLogin] = useState("");
   const [newLogin, setNewLogin] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [repeatPasswordError, setRepeatPasswordError] = useState("");
+  const [passwordError, setPasswordError] = useState({});
+  const [repeatPasswordError, setRepeatPasswordError] = useState({});
   const [credsError, setCredsError] = useState("");
+  const [closeCredsTimer, setCloseCredsTimer] = useState(null);
+
+  useEffect(() => {
+    if (isCredentialsOpened && isPassedCheck) {
+      clearTimeout(closeCredsTimer);
+    }
+
+    if (!isCredentialsOpened && isPassedCheck) {
+      const timer = setTimeout(handleClose, CLOSE_CREDENTIALS_TIME);
+      setCloseCredsTimer(timer);
+    }
+
+    return () => clearTimeout(closeCredsTimer);
+  }, [isCredentialsOpened, isPassedCheck]);
 
   // close modal and clean everything
   const handleClose = () => {
@@ -43,9 +64,9 @@ const ChangeCredentialsWindow = ({
     setNewPassword("");
     setNewLogin("");
     setConfirmedNewPassword("");
-    setPasswordError("");
+    setPasswordError({});
     setLoginError("");
-    setRepeatPasswordError("");
+    setRepeatPasswordError({});
     setCredsError("");
     setIsPassedCheck(false);
   };
@@ -71,8 +92,8 @@ const ChangeCredentialsWindow = ({
     } else {
       // if we had some errors from previous time we should clean them before we start new check
       setLoginError("");
-      setPasswordError("");
-      setRepeatPasswordError("");
+      setPasswordError({});
+      setRepeatPasswordError({});
       // setState async action, to get right result for this action we should use block variable isErrorOccurred
       let isErrorOccurred;
 
@@ -86,13 +107,14 @@ const ChangeCredentialsWindow = ({
         isErrorOccurred = true;
       }
 
-      if (!validatePassword(newPassword)) {
-        setPasswordError("Weak password, you had better change it");
+      const passwordChecks = validatePassword(newPassword);
+      if (!checkObjValues(passwordChecks)) {
+        setPasswordError(setObjErrors(passwordChecks, PASSWORD_ERROR));
         isErrorOccurred = true;
       }
 
       if (newPassword !== confirmedNewPassword) {
-        setRepeatPasswordError("Passwords are not equal!");
+        setRepeatPasswordError(setObjErrors({}, REPEAT_PASSWORD_ERROR));
         isErrorOccurred = true;
       }
 
@@ -118,6 +140,8 @@ const ChangeCredentialsWindow = ({
   const closeModal = () => {
     handleClose();
   };
+
+  console.log("isPassedCheck", isPassedCheck);
 
   return (
     <Dialog

@@ -62,7 +62,10 @@ const PasswordInput = ({
           aria-describedby="component-error-text"
         />
         <FormHelperText id="component-error-text">
-          {errorMessage}
+          {errorMessage &&
+            Object.values(errorMessage).map((i) => {
+              return <div>{i}</div>;
+            })}
         </FormHelperText>
       </FormControl>
     </>
