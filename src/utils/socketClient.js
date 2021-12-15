@@ -10,13 +10,6 @@ class SocketClient {
   }
 
   async connect(jwt) {
-    // Refactor this shit
-    // const jwt = localStorage.getItem("jwt");
-    console.log("jwt CONNECT", jwt);
-    // if (!jwt) {
-    //   return;
-    // }
-
     this.stompClient.configure({
       brokerURL: "ws://localhost:8080/stomp",
       connectHeaders: {

@@ -64,7 +64,7 @@ const SignUpPage = (props) => {
       direction="column"
       alignItems="center"
       justify="center"
-      style={{ minHeight: "90vh" }}
+      style={{ minHeight: "90vh", minWidth: "100%" }}
     >
       <Grid item xs={11}>
         <Typography component="h1" variant="h3" align="center">
