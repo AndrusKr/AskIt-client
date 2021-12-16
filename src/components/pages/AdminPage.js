@@ -1,5 +1,8 @@
 import React from "react";
+import SignUpPage from "./SignUpPage";
 
-const AdminPage = () => <div>Admin page</div>;
+const AdminPage = () => {
+  return <SignUpPage />;
+};
 
 export default AdminPage;

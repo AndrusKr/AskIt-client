@@ -1,0 +1,37 @@
+.slide-container {
+    margin: 70px 100px 10px;
+    max-height: 60vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.slide-container::-webkit-scrollbar {
+    width: 0;
+}
+
+.slide {
+    background: #1a73e8;
+    margin-bottom: 20px;
+    border-radius: 15px;
+}
+
+.last-slide {
+    margin: 0 100px;
+}
+
+.last-question-title {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.slide-arrow {
+    vertical-align: middle;
+    opacity: 1;
+    transition: opacity 1000ms ease-in-out !important;
+}
+
+.slide-arrow-disappearing {
+    vertical-align: middle;
+    opacity: 0;
+    transition: opacity 1000ms ease-in-out !important;
+}

@@ -1,16 +1,8 @@
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-}
-
-main {
-  margin-top: 70px;
-}
-
-footer {
-  margin-top: auto;
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
+@import "./alerts.css";
+@import "./footer.css";
+@import "./questions.css";
+@import "./main.css";
+@import "./slide.css";
+@import "./slideQuestion.css";
+@import "./header.css";
+@import "./headerProfile.css";

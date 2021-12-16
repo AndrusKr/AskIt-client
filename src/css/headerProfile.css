@@ -1,0 +1,86 @@
+.user-name {
+  caret-color: transparent;
+}
+
+.input-user-name {
+  font-size: 20px !important;
+}
+
+.user-list-container {
+  height: 60vh;
+  overflow-y: scroll;
+}
+
+.user-list-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.user-list-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 20px;
+}
+
+.user-list-close-icon {
+  margin-left: 25px;
+}
+
+.user-list-close-icon, .bun-icon, .unbun-icon {
+  cursor: pointer;
+}
+
+.bun-icon {
+  color: red;
+}
+
+.unbun-icon {
+  color: rgb(0 255 20);
+}
+
+.user-list-close-icon:hover {
+  color: #3F51B5;
+}
+
+.banned-user {
+  background: #8a5858;
+}
+
+.user-bar {
+  overflow-y: hidden;
+}
+
+.user-bar-title {
+  padding: 15px;
+}
+
+.password-input {
+  border: 1px solid #414141;
+}
+
+.password-input:hover {
+  border: 1px solid #535353;
+}
+
+.credentials-container {
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.credentials-container > div {
+  margin: 20px 0;
+}
+
+#component-error-text {
+  color: red;
+}
+
+.creds-title, .error-title {
+  margin-bottom: 0;
+}
+
+.error-title {
+  text-align: center;
+  color: #ff0000;
+}

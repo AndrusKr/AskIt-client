@@ -1,15 +1,12 @@
-import React from "react"
-import QuestionsPane from "../entities/questions/QuestionsPane"
-import QuestionsState from "../../context/questions/QuestionsState"
+import React from "react";
+import QuestionsPane from "../entities/questions/QuestionsPane";
 
 const HomePage = () => {
   return (
-    <QuestionsState>
-      <main>
-        <QuestionsPane />
-      </main>
-    </QuestionsState>
-  )
-}
+    <main>
+      <QuestionsPane />
+    </main>
+  );
+};
 
-export default HomePage
+export default HomePage;

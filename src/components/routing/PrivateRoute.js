@@ -1,25 +1,18 @@
-import React, { useContext } from "react";
-import { Route, Redirect } from "react-router-dom";
-import AuthContext from "../../context/auth/authContext";
+import React from "react";
+import { useSelector } from "react-redux";
+import { Redirect, Route } from "react-router-dom";
+import { getJwt } from "../../redux/selectors/auth";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const authContext = useContext(AuthContext);
-  // check out why they are not seen!!!
-  const { isAuthenticated, loading } = authContext;
-  // console.log(authContext)
+  const jwt = useSelector(getJwt);
+
   return (
-    // <Route
-      // {...rest}
-      // render={(props) =>
-      //   !isAuthenticated && !loading ? (
-      //   // !localStorage.getItem("login") ? (
-      //     <Redirect to="/signin" />
-      //   ) : (
-          // <Component {...props} />
-      //   )
-      // }
-    // />
-          <Component />
+    <Route
+      {...rest}
+      render={(props) =>
+        !jwt ? <Redirect to="/sign-up" /> : <Component {...props} />
+      }
+    />
   );
 };
 
