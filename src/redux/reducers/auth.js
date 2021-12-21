@@ -9,6 +9,7 @@ import {
   GET_AUTH_USER_SUCCESS,
   SET_USER_NAME,
 } from "../../constants/types";
+import axios from "axios";
 
 export const defaultState = {
   id: null,
@@ -24,6 +25,7 @@ export const defaultState = {
 export default (state, action) => {
   switch (action.type) {
     case AUTH_SUCCESS:
+      axios.defaults.headers.common.Authorization = `Bearer ${action.payload.jwt  }`;
       return state
         .set("id", action.payload.id)
         .set("nickname", action.payload.nickname)
