@@ -105,7 +105,7 @@ const QuestionItem = ({ question }) => {
         alignItems="flex-start"
         onMouseOver={handleMouseOver}
         onMouseLeave={handleMouseLeave}
-        className={isPinned && "pinned-question"}
+        className={isPinned ? "pinned-question": ""}
       >
         <Grid container>
           <Grid container wrap="nowrap">
@@ -164,7 +164,7 @@ const QuestionItem = ({ question }) => {
             )}
           </Grid>
           <Grid container>{text}</Grid>
-          <Grid container justify="flex-end">
+          <Grid container justifyContent="flex-end">
             <Button
               disabled={isOwner || isBlocked}
               variant="outlined"

@@ -18,7 +18,7 @@ import { ADMIN } from "../../constants/routes";
 import { validatePassword } from "../../utils/helpers";
 import CredsForm from "../entities/profile/CredsForm";
 
-const SignUpPage = (props) => {
+const SignUpPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [password, setPassword] = useState("");
@@ -63,7 +63,7 @@ const SignUpPage = (props) => {
       spacing={0}
       direction="column"
       alignItems="center"
-      justify="center"
+      justifyContent="center"
       style={{ minHeight: "90vh", minWidth: "100%" }}
     >
       <Grid item xs={11}>

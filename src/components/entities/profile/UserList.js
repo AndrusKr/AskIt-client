@@ -12,7 +12,7 @@ function UserList({ isUserListOpened, setIsUserListOpened }) {
   const closeModal = () => setIsUserListOpened(false);
 
   return (
-    <Dialog open={isUserListOpened} onBackdropClick={closeModal}>
+    <Dialog open={isUserListOpened} onClose={closeModal}>
       <ModalTitle
         title={"List of users"}
         closeModal={closeModal}
