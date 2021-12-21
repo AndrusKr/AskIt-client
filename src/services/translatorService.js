@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next";
 import by from "../languages/by.json";
 import en from "../languages/en.json";
 import ru from "../languages/ru.json";
-import { BY, EN, RU } from "../constants/language";
+import {BY, EN, RU} from "../constants/language";
 
 class TranslatorService {
   /**
@@ -34,6 +34,7 @@ class TranslatorService {
       fallbackLng: en,
       react: {
         transKeepBasicHtmlNodesFor: ["br", "i", "span", "b"],
+        useSuspense: true,
       },
     });
   }
