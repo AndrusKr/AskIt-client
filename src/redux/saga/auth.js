@@ -3,11 +3,11 @@ import {
   AUTH_ADMIN_REQUEST,
   AUTH_REQUEST,
   CHECK_CREDENTIALS_REQUEST,
-  GET_AUTH_USER,
+  USER_SIGN_OUT_REQUEST,
 } from "../../constants/types";
 import {
-  checkCredentialsFailed,
-  checkCredentialsSuccess,
+  setUserSignOutFailed,
+  setUserSignOutSuccess,
   getAuthUserFailed,
   getAuthUserSuccess,
   setAdminAuthFailed,
@@ -22,7 +22,7 @@ import {
   getUserData,
   adminLogIn,
   signUp,
-  checkAdminCredentials,
+  signOut,
 } from "../../api/auth";
 // there are mock API calls
 import // getUserData,
@@ -45,8 +45,22 @@ export function* authSuccessSaga() {
   });
 }
 
-export function* getUserDataSaga() {
-  yield takeEvery(GET_AUTH_USER, function* () {
+export function* userSignOutSuccessSaga() {
+  yield takeEvery(USER_SIGN_OUT_REQUEST, function* (action) {
+    try {
+      const response = yield call(signOut);
+      localStorage.removeItem("jwt");
+      localStorage.removeItem("nickname");
+      yield put(setUserSignOutSuccess(response.data));
+    } catch (err) {
+      console.log("err", err);
+      yield put(setUserSignOutFailed(err));
+    }
+  });
+}
+
+export function* getSignedInUserDataSaga() {
+  yield takeEvery(GET_SIGNED_IN_USER_DATA_REQUEST, function* () {
     try {
       const jwt = yield select(getJwt);
       const response = yield call(getUserData, jwt);

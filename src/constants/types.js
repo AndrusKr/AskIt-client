@@ -1,7 +1,8 @@
-export const AUTH_REQUEST = "AUTH_REQUEST";
-export const AUTH_SUCCESS = "AUTH_SUCCESS";
-export const AUTH_FAILED = "AUTH_FAILED";
-export const GET_AUTH_USER = "GET_AUTH_USER";
+// USER SIGN OUT
+export const USER_SIGN_OUT_REQUEST = "USER_SIGN_OUT_REQUEST";
+export const USER_SIGN_OUT_SUCCESS = "USER_SIGN_OUT_SUCCESS";
+export const USER_SIGN_OUT_FAILED = "USER_SIGN_OUT_FAILED";
+
 export const IS_LOADING = "IS_LOADING";
 export const REMOVE_ALERT = "REMOVE_ALERT";
 export const SET_ALERT = "SET_ALERT";

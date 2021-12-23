@@ -8,7 +8,7 @@ axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
 export const signUp = async (nickname) =>
   axios.post("/api/auth/sign-up", { nickname });
 
-export const getUserData = async () => axios.post("/api/auth/user");
+export const signOut = async () => axios.post("/api/auth/sign-out");
 
 export const adminLogIn = async (nickname, password) =>
   axios.post("/api/auth/log-in", { nickname, password });

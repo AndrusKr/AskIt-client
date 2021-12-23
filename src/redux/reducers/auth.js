@@ -8,6 +8,8 @@ import {
   GET_AUTH_USER_FAILED,
   GET_AUTH_USER_SUCCESS,
   SET_USER_NAME,
+  USER_SIGN_OUT_SUCCESS,
+  USER_SIGN_OUT_FAILED,
 } from "../../constants/types";
 import axios from "axios";
 
@@ -25,7 +27,8 @@ export const defaultState = {
 export default (state, action) => {
   switch (action.type) {
     case AUTH_SUCCESS:
-      axios.defaults.headers.common.Authorization = `Bearer ${action.payload.jwt  }`;
+    case USER_SIGN_OUT_FAILED:
+      axios.defaults.headers.common.Authorization = `Bearer ${action.payload.jwt}`;
       return state
         .set("id", action.payload.id)
         .set("nickname", action.payload.nickname)

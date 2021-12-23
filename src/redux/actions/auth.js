@@ -12,6 +12,9 @@ import {
   GET_AUTH_USER_FAILED,
   GET_AUTH_USER_SUCCESS,
   SET_USER_NAME,
+  USER_SIGN_OUT_FAILED,
+  USER_SIGN_OUT_REQUEST,
+  USER_SIGN_OUT_SUCCESS,
 } from "../../constants/types";
 
 export const makeAuthRequest = (nickname) => ({
@@ -24,8 +27,17 @@ export const setAuthSuccess = (data) => ({
   payload: data,
 });
 
-export const setAuthFailed = (error) => ({
-  type: AUTH_FAILED,
+export const userSignOutRequest = () => ({
+  type: USER_SIGN_OUT_REQUEST,
+});
+
+export const setUserSignOutSuccess = (data) => ({
+  type: USER_SIGN_OUT_SUCCESS,
+  payload: data,
+});
+
+export const setUserSignOutFailed = (error) => ({
+  type: USER_SIGN_OUT_FAILED,
   payload: error,
 });
 
