@@ -49,7 +49,7 @@ const QuestionItem = ({ question }) => {
   const [isUpArrowShown, setIsUpArrowShown] = useState(false);
 
   const {
-    author: { id: authorID, nickname: authorNickname, isAdmin },
+    author: { id: authorID, nickname: authorNickname },
     text,
     likes,
     asked,
@@ -105,7 +105,7 @@ const QuestionItem = ({ question }) => {
         alignItems="flex-start"
         onMouseOver={handleMouseOver}
         onMouseLeave={handleMouseLeave}
-        className={isPinned ? "pinned-question": ""}
+        className={isPinned ? "pinned-question" : ""}
       >
         <Grid container>
           <Grid container wrap="nowrap">
@@ -116,12 +116,7 @@ const QuestionItem = ({ question }) => {
             </Grid>
             <Grid item>
               <ListItemText
-                primary={
-                  <b>
-                    {authorNickname}{" "}
-                    {isAdmin && <span className={"admin-title"}>Admin</span>}
-                  </b>
-                }
+                primary={<b>{authorNickname} </b>}
                 secondary={
                   <Typography variant="caption" color="textSecondary">
                     {answered !== null
