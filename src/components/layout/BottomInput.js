@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { v4 as uuid } from "uuid";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -28,7 +27,6 @@ import {
   updateQuestion,
 } from "../../redux/actions/questions";
 import profanityFilter from "../../services/profanityFilter";
-import { getIsAdmin } from "../../redux/selectors/auth";
 import { getUserStatus } from "../../redux/selectors/user";
 
 const useStyles = makeStyles((theme) => ({
@@ -61,7 +59,6 @@ const BottomInput = ({ sendQuestion }) => {
   const [questionText, setQuestionText] = useState("");
   const [symbolsAmount, setSymbolsAmount] = useState(MAX_MESSAGE_LIMIT);
   const [editQuestionText, setEditQuestionText] = useState(editedText);
-  const isAdmin = useSelector(getIsAdmin);
   const isBlocked = useSelector(getUserStatus);
   const showAlert = useAlert();
 
@@ -128,27 +125,8 @@ const BottomInput = ({ sendQuestion }) => {
       setSymbolsAmount(MAX_MESSAGE_LIMIT - questionText.length);
     } else {
       sendQuestion({
-        id: uuid(),
-        author: {
-          id: "5f6686aa845cbd520ceb599a",
-          nickname: "Jayne",
-          isAdmin,
-        },
         text: questionText,
-        asked: new Date(),
-        likes: [
-          "5f6686aa75ad25fac6f523e8",
-          "5f6686aad7ec91be5633b806",
-          "5f6686aa149973deb1774e76",
-          "5f6686aa9844ff2a3d95ed50",
-          "5f6686aa9625e0d6c94dc89f",
-          "5f6686aa70020dce89700680",
-          "5f6686aae92b06b1f1b7c69b",
-          "5f6686aa8634ff8b9f0ed389",
-          "5f6686aa7e7b176a20e3c6ec",
-        ],
-        answered: null,
-        edited: false,
+        askTime: new Date(),
       });
       setQuestionText("");
       textInputRef.current.focus();

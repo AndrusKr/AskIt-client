@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getThemeMode } from "../../redux/selectors/common";
 import { setThemeMode } from "../../redux/actions/common";
 
-const DarkModeToggle = (props) => {
+const DarkModeToggle = () => {
   const dispatch = useDispatch();
   const theme = useSelector(getThemeMode);
   const isLight = theme === "light";
