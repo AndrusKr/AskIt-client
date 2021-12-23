@@ -1,13 +1,13 @@
 import {
-  AUTH_ADMIN_FAILED,
-  AUTH_ADMIN_SUCCESS,
-  AUTH_FAILED,
-  AUTH_SUCCESS,
+  ADMIN_LOG_IN_FAILED,
+  ADMIN_LOG_IN_SUCCESS,
   CHECK_CREDENTIALS_FAILED,
   CHECK_CREDENTIALS_SUCCEED,
-  GET_AUTH_USER_FAILED,
-  GET_AUTH_USER_SUCCESS,
+  GET_SIGNED_IN_USER_DATA_FAILED,
+  GET_SIGNED_IN_USER_DATA_SUCCESS,
   SET_USER_NAME,
+  USER_SIGN_IN_SUCCESS,
+  USER_SIGN_IN_FAILED,
   USER_SIGN_OUT_SUCCESS,
   USER_SIGN_OUT_FAILED,
 } from "../../constants/types";
@@ -26,7 +26,7 @@ export const defaultState = {
 
 export default (state, action) => {
   switch (action.type) {
-    case AUTH_SUCCESS:
+    case USER_SIGN_IN_SUCCESS:
     case USER_SIGN_OUT_FAILED:
       axios.defaults.headers.common.Authorization = `Bearer ${action.payload.jwt}`;
       return state
@@ -37,7 +37,8 @@ export default (state, action) => {
         .set("isAdmin", false)
         .set("isSignup", true);
 
-    case AUTH_FAILED:
+    case USER_SIGN_IN_FAILED:
+    case USER_SIGN_OUT_SUCCESS:
       localStorage.removeItem("jwt");
       return state
         .set("id", null)
@@ -47,18 +48,18 @@ export default (state, action) => {
         .set("error", action.payload)
         .set("isSignup", false);
 
-    case GET_AUTH_USER_SUCCESS:
+    case GET_SIGNED_IN_USER_DATA_SUCCESS:
       return state
         .set("id", action.payload.id)
         .set("nickname", action.payload.nickname);
 
-    case GET_AUTH_USER_FAILED:
+    case GET_SIGNED_IN_USER_DATA_FAILED:
       return state.set("error", action.payload);
 
     case SET_USER_NAME:
       return state.set("nickname", action.payload);
 
-    case AUTH_ADMIN_SUCCESS:
+    case ADMIN_LOG_IN_SUCCESS:
       return state
         .set("id", action.payload.id)
         .set("nickname", action.payload.nickname)
@@ -67,7 +68,7 @@ export default (state, action) => {
         .set("isAdmin", true)
         .set("isSignup", true);
 
-    case AUTH_ADMIN_FAILED:
+    case ADMIN_LOG_IN_FAILED:
       localStorage.removeItem("jwt");
       return state
         .set("id", null)

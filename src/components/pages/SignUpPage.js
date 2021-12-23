@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import { adminAuthRequest, makeAuthRequest } from "../../redux/actions/auth";
+import { adminLogInRequest, userSignInRequest } from "../../redux/actions/auth";
 import { getJwt } from "../../redux/selectors/auth";
 import {
   MAX_NAME_LENGTH,
@@ -50,10 +50,10 @@ const SignUpPage = () => {
         return showAlert(ERROR, errorMessage);
       }
 
-      return dispatch(adminAuthRequest({ nickname, password }));
+      return dispatch(adminLogInRequest({ nickname, password }));
     }
 
-    return dispatch(makeAuthRequest(nickname));
+    return dispatch(userSignInRequest(nickname));
   };
 
   return (

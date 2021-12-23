@@ -9,7 +9,7 @@ import {
   banUserSucceed,
   setUsersListFailed,
   setUsersListSucceed,
-  setUserStatus,
+  setSignedInUserStatus,
 } from "../actions/user";
 
 export function* usersListRequestSaga() {
@@ -30,8 +30,8 @@ export function* bunUserRequestSaga() {
       // TODO: use when API is ready
       // const response = yield call(bunUser, action.payload);
       // use now, just change state in redux
-      yield put(banUserSucceed(action.payload));
-      yield put(setUserStatus(action.payload));
+      yield put(banSignedInUserSucceed(action.payload));
+      yield put(setSignedInUserStatus(action.payload));
     } catch (err) {
       console.log("err", err);
       yield put(banUserFailed(err));

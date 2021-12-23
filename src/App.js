@@ -32,7 +32,7 @@ import { putQuestions } from "./redux/actions/questions";
 import { getIsSignup, getJwt } from "./redux/selectors/auth";
 import { useAlert } from "./components/hooks/useAlert";
 import { SUCCESS } from "./constants/alerts";
-import { getAuthUser } from "./redux/actions/auth";
+import { getSignedInUser } from "./redux/actions/auth";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ const App = () => {
         }
 
         dispatch(getUsersListRequest());
-        dispatch(getAuthUser());
+        dispatch(getSignedInUser());
         const greetings = isSignup ? "Hello for the newcomer" : "Welcome back";
         if (window.location.pathname !== SLIDE) {
           showAlert(SUCCESS, `${greetings}, ${nickname}!!!`);

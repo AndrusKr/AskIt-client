@@ -1,29 +1,34 @@
 import {
-  AUTH_ADMIN_FAILED,
-  AUTH_ADMIN_REQUEST,
-  AUTH_ADMIN_SUCCESS,
-  AUTH_FAILED,
-  AUTH_REQUEST,
-  AUTH_SUCCESS,
+  ADMIN_LOG_IN_FAILED,
+  ADMIN_LOG_IN_REQUEST,
+  ADMIN_LOG_IN_SUCCESS,
   CHECK_CREDENTIALS_FAILED,
   CHECK_CREDENTIALS_REQUEST,
   CHECK_CREDENTIALS_SUCCEED,
-  GET_AUTH_USER,
-  GET_AUTH_USER_FAILED,
-  GET_AUTH_USER_SUCCESS,
   SET_USER_NAME,
+  GET_SIGNED_IN_USER_DATA_FAILED,
+  GET_SIGNED_IN_USER_DATA_REQUEST,
+  GET_SIGNED_IN_USER_DATA_SUCCESS,
+  USER_SIGN_IN_FAILED,
+  USER_SIGN_IN_REQUEST,
+  USER_SIGN_IN_SUCCESS,
   USER_SIGN_OUT_FAILED,
   USER_SIGN_OUT_REQUEST,
   USER_SIGN_OUT_SUCCESS,
 } from "../../constants/types";
 
-export const makeAuthRequest = (nickname) => ({
-  type: AUTH_REQUEST,
+export const userSignInRequest = (nickname) => ({
+  type: USER_SIGN_IN_REQUEST,
   payload: nickname,
 });
 
-export const setAuthSuccess = (data) => ({
-  type: AUTH_SUCCESS,
+export const setUserSignInFailed = (error) => ({
+  type: USER_SIGN_IN_FAILED,
+  payload: error,
+});
+
+export const setUserSignInSuccess = (data) => ({
+  type: USER_SIGN_IN_SUCCESS,
   payload: data,
 });
 
@@ -41,17 +46,17 @@ export const setUserSignOutFailed = (error) => ({
   payload: error,
 });
 
-export const getAuthUser = () => ({
-  type: GET_AUTH_USER,
+export const getSignedInUser = () => ({
+  type: GET_SIGNED_IN_USER_DATA_REQUEST,
 });
 
-export const getAuthUserSuccess = (data) => ({
-  type: GET_AUTH_USER_SUCCESS,
+export const getSignedInUserSuccess = (data) => ({
+  type: GET_SIGNED_IN_USER_DATA_SUCCESS,
   payload: data,
 });
 
 export const getAuthUserFailed = (error) => ({
-  type: GET_AUTH_USER_FAILED,
+  type: GET_SIGNED_IN_USER_DATA_FAILED,
   payload: error,
 });
 
@@ -60,18 +65,18 @@ export const setUsername = (name) => ({
   payload: name,
 });
 
-export const adminAuthRequest = (data) => ({
-  type: AUTH_ADMIN_REQUEST,
+export const adminLogInRequest = (data) => ({
+  type: ADMIN_LOG_IN_REQUEST,
   payload: data,
 });
 
-export const setAdminAuthSuccess = (data) => ({
-  type: AUTH_ADMIN_SUCCESS,
+export const setAdminLogInSuccess = (data) => ({
+  type: ADMIN_LOG_IN_SUCCESS,
   payload: data,
 });
 
-export const setAdminAuthFailed = (error) => ({
-  type: AUTH_ADMIN_FAILED,
+export const setAdminLogInFailed = (error) => ({
+  type: ADMIN_LOG_IN_FAILED,
   payload: error,
 });
 

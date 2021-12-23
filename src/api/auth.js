@@ -13,6 +13,8 @@ export const signOut = async () => axios.post("/api/auth/sign-out");
 export const adminLogIn = async (nickname, password) =>
   axios.post("/api/auth/log-in", { nickname, password });
 
+export const getSignedInUserData = async () => axios.post("/api/auth/user");
+
 export const checkAdminCredentials = async (data) =>
   axios.post("/api/admin/creds", { ...data });
 

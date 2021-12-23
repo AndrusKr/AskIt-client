@@ -31,7 +31,7 @@ export const banUserRequest = (id) => ({
   payload: id,
 });
 
-export const banUserSucceed = (idx) => ({
+export const banSignedInUserSucceed = (idx) => ({
   type: BAN_USER_SUCCEED,
   payload: idx,
 });
@@ -46,7 +46,7 @@ export const setUsersTabIndex = (idx) => ({
   payload: idx,
 });
 
-export const setUserStatus = (status) => ({
+export const setSignedInUserStatus = (status) => ({
   type: SET_USER_STATUS,
   payload: status,
 });

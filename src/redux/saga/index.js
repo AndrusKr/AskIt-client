@@ -5,13 +5,13 @@ import * as user from "./user";
 
 export default function* rootSaga() {
   yield all([
-    auth.authSuccessSaga(),
-    auth.getUserDataSaga(),
+    auth.userSignInSuccessSaga(),
+    auth.userSignOutSuccessSaga(),
+    auth.getSignedInUserDataSaga(),
     auth.authAdminSuccessSaga(),
     auth.authCheckCredentialsSaga(),
     user.usersListRequestSaga(),
     user.bunUserRequestSaga(),
-    auth.userSignOutSuccessSaga(),
     questions.putQuestionsSaga(),
   ]);
 }

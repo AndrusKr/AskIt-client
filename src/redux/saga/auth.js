@@ -1,7 +1,8 @@
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import {
-  AUTH_ADMIN_REQUEST,
-  AUTH_REQUEST,
+  ADMIN_LOG_IN_REQUEST,
+  GET_SIGNED_IN_USER_DATA_REQUEST,
+  USER_SIGN_IN_REQUEST,
   CHECK_CREDENTIALS_REQUEST,
   USER_SIGN_OUT_REQUEST,
 } from "../../constants/types";
@@ -9,18 +10,18 @@ import {
   setUserSignOutFailed,
   setUserSignOutSuccess,
   getAuthUserFailed,
-  getAuthUserSuccess,
-  setAdminAuthFailed,
-  setAdminAuthSuccess,
-  setAuthFailed,
-  setAuthSuccess,
+  getSignedInUserSuccess,
+  setAdminLogInFailed,
+  setAdminLogInSuccess,
+  setUserSignInFailed,
+  setUserSignInSuccess,
 } from "../actions/auth";
 import { getJwt } from "../selectors/auth";
-import { setUserStatus } from "../actions/user";
+import { setSignedInUserStatus } from "../actions/user";
 // real API calls
 import {
-  getUserData,
   adminLogIn,
+  getSignedInUserData,
   signUp,
   signOut,
 } from "../../api/auth";
@@ -31,16 +32,16 @@ import // getUserData,
 // checkAdminCredentials,
 "../../mock/common";
 
-export function* authSuccessSaga() {
-  yield takeEvery(AUTH_REQUEST, function* (action) {
+export function* userSignInSuccessSaga() {
+  yield takeEvery(USER_SIGN_IN_REQUEST, function* (action) {
     try {
       const response = yield call(signUp, action.payload);
       localStorage.setItem("jwt", response.data.jwt);
       localStorage.setItem("nickname", response.data.nickname);
-      yield put(setAuthSuccess(response.data));
+      yield put(setUserSignInSuccess(response.data));
     } catch (err) {
       console.log("err", err);
-      yield put(setAuthFailed(err));
+      yield put(setUserSignInFailed(err));
     }
   });
 }
@@ -63,9 +64,9 @@ export function* getSignedInUserDataSaga() {
   yield takeEvery(GET_SIGNED_IN_USER_DATA_REQUEST, function* () {
     try {
       const jwt = yield select(getJwt);
-      const response = yield call(getUserData, jwt);
-      yield put(getAuthUserSuccess(response));
-      yield put(setUserStatus(response.isBlocked));
+      const response = yield call(getSignedInUserData, jwt);
+      yield put(getSignedInUserSuccess(response));
+      yield put(setSignedInUserStatus(response.isBlocked));
     } catch (err) {
       console.log("err", err);
       yield put(getAuthUserFailed(err));
@@ -74,17 +75,17 @@ export function* getSignedInUserDataSaga() {
 }
 
 export function* authAdminSuccessSaga() {
-  yield takeEvery(AUTH_ADMIN_REQUEST, function* (action) {
+  yield takeEvery(ADMIN_LOG_IN_REQUEST, function* (action) {
     try {
       const { nickname, password } = action.payload;
       const response = yield call(adminLogIn, nickname, password);
       // TODO: remove the next line after server will work
       response.nickname = action.payload.nickname;
-      yield put(setAdminAuthSuccess(response));
+      yield put(setAdminLogInSuccess(response));
       localStorage.setItem("jwt", "qweasdzxc");
     } catch (err) {
       console.log("err ADMIN", err);
-      yield put(setAdminAuthFailed(err));
+      yield put(setAdminLogInFailed(err));
     }
   });
 }
