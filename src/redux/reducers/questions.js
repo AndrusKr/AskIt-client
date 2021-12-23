@@ -16,7 +16,7 @@ import { activeQuestions } from "../../mock/common";
 export const defaultState = {
   questions: List(),
   //TODO: using mock data here
-  activeQuestions: List(activeQuestions),
+  activeQuestions: List(/*activeQuestions*/),
   answeredQuestions: List(),
   editedText: "",
   isEditActive: false,

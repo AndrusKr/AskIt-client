@@ -1,12 +1,12 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { BAN_USER_REQUEST, USERS_LIST_REQUEST } from "../../constants/types";
 // API CALL
-// import {bunUser, getUsersList} from "../../api/user";
+import { bunUser, getUsersList } from "../../api/user";
 // MOCK API CALL
-import { getUsersList, bunUser } from "../../mock/common";
+// import { getUsersList, bunUser } from "../../mock/common";
 import {
   banUserFailed,
-  banUserSucceed,
+  banSignedInUserSucceed,
   setUsersListFailed,
   setUsersListSucceed,
   setSignedInUserStatus,

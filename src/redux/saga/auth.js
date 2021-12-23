@@ -26,11 +26,7 @@ import {
   signOut,
 } from "../../api/auth";
 // there are mock API calls
-import // getUserData,
-// adminLogIn,
-// signUp,
-// checkAdminCredentials,
-"../../mock/common";
+import "../../mock/common";
 
 export function* userSignInSuccessSaga() {
   yield takeEvery(USER_SIGN_IN_REQUEST, function* (action) {
