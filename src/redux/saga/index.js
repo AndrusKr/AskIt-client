@@ -12,6 +12,6 @@ export default function* rootSaga() {
     auth.authCheckCredentialsSaga(),
     user.usersListRequestSaga(),
     user.bunUserRequestSaga(),
-    questions.putQuestionsSaga(),
+    // questions.putQuestionsSaga(),
   ]);
 }

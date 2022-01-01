@@ -11,7 +11,7 @@ import {
   SET_UNPIN_QUESTION,
   UPDATE_QUESTION,
 } from "../../constants/types";
-import { activeQuestions } from "../../mock/common";
+// import { activeQuestions } from "../../mock/common";
 
 export const defaultState = {
   questions: List(),
