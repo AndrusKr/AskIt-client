@@ -63,9 +63,9 @@ export function questionFilter(q1, q2, displayedOption) {
     return checkQuestionTime(q1Time, q2Time, displayedOption);
   }
 
-  if (q1.likes.length < q2.likes.length) {
+  if (q1?.likes?.length < q2?.likes?.length) {
     return 1;
-  } else if (q1.likes.length > q2.likes.length) {
+  } else if (q1?.likes?.length > q2?.likes?.length) {
     return -1;
   }
   return checkQuestionTime(q1Time, q2Time);
