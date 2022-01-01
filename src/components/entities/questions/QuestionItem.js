@@ -26,10 +26,13 @@ import {
 } from "../../../redux/actions/questions";
 import ModalWindow from "../../layout/modals/dialog";
 import { useModal } from "../../hooks/useModal";
-import { getIsAdmin } from "../../../redux/selectors/auth";
+import { getAuthId, getIsAdmin } from "../../../redux/selectors/auth";
 import { getUserStatus } from "../../../redux/selectors/user";
 
 const useStyles = makeStyles(() => ({
+  avatar: {
+    backgroundColor: ({ isOwner }) => (isOwner ? "#027bfd" : ""),
+  },
   likeButton: {
     color: "gray",
     borderRadius: 20,
@@ -41,24 +44,25 @@ const useStyles = makeStyles(() => ({
 }));
 
 const QuestionItem = ({ question }) => {
-  const classes = useStyles();
+  const {
+    id,
+    text,
+    askTime,
+    answerTime,
+    lastEditedAt,
+    likedUserIds,
+    isPinned,
+    author: { authorId, authorNickname },
+  } = question;
+
+  const authUserId = useSelector(getAuthId);
+  const isOwner = authorId === authUserId;
+  const classes = useStyles({ isOwner });
   const dispatch = useDispatch();
   const isUserAdmin = useSelector(getIsAdmin);
   const isBlocked = useSelector(getUserStatus);
   const [openModal, handleOpen, handleClose] = useModal();
   const [isUpArrowShown, setIsUpArrowShown] = useState(false);
-
-  const {
-    author: { id: authorID, nickname: authorNickname },
-    text,
-    likes,
-    asked,
-    answered,
-    id,
-    isPinned,
-  } = question;
-
-  const isOwner = authorID === "CURRENT_USER_ID";
 
   const handleMouseOver = () => setIsUpArrowShown(true);
   const handleMouseLeave = () => setIsUpArrowShown(false);
@@ -88,12 +92,12 @@ const QuestionItem = ({ question }) => {
     }).format(new Date(timeStr));
 
   const onLike = () => {
-    if (likes.includes("CURRENT_USER_ID")) {
-      question.likes = likes.filter(
-        (_, idx) => likes.indexOf("CURRENT_USER_ID") !== idx
+    if (likedUserIds.includes(authUserId)) {
+      question.likes = likedUserIds.filter(
+        (_, idx) => likedUserIds.indexOf(authUserId) !== idx
       );
     } else {
-      question.likes = [...likes, "CURRENT_USER_ID"];
+      question.likes = [...likedUserIds, authUserId];
     }
 
     dispatch(changeQuestionLikes(question));
@@ -111,23 +115,30 @@ const QuestionItem = ({ question }) => {
           <Grid container wrap="nowrap">
             <Grid item>
               <ListItemAvatar>
-                <Avatar>{authorNickname.charAt(0)}</Avatar>
+                <Avatar className={classes.avatar}>
+                  {authorNickname.charAt(0)}
+                </Avatar>
               </ListItemAvatar>
             </Grid>
             <Grid item>
               <ListItemText
                 primary={<b>{authorNickname} </b>}
                 secondary={
-                  <Typography variant="caption" color="textSecondary">
-                    {answered !== null
-                      ? `Answered: ${fmtTime(answered)}`
-                      : fmtTime(asked)}
-                  </Typography>
+                  <>
+                    <Typography variant="caption" color="textSecondary">
+                      {answerTime !== null
+                        ? `Answered: ${fmtTime(answerTime)}`
+                        : fmtTime(askTime)}
+                    </Typography>
+                    <Typography variant="caption" color="textSecondary">
+                      {lastEditedAt && `Edited: ${fmtTime(lastEditedAt)}`}
+                    </Typography>
+                  </>
                 }
               />
             </Grid>
 
-            {((isOwner && !isBlocked) || isUserAdmin) && !answered && (
+            {((isOwner && !isBlocked) || isUserAdmin) && !answerTime && (
               <Grid item>
                 <IconButton edge="end" aria-label="edit" onClick={handleEdit}>
                   <EditIcon />
@@ -164,14 +175,14 @@ const QuestionItem = ({ question }) => {
               disabled={isOwner || isBlocked}
               variant="outlined"
               className={
-                likes.includes("CURRENT_USER_ID")
+                likedUserIds.includes(authUserId)
                   ? `${classes.likeButton} ${classes.likeButtonClicked}`
                   : classes.likeButton
               }
               startIcon={<ThumbUpIcon />}
               onClick={onLike}
             >
-              {likes.length}
+              {likedUserIds.length}
             </Button>
           </Grid>
         </Grid>

@@ -1,17 +1,22 @@
 import {
-  CHANGE_QUESTIONS_LIKES,
+  QUESTION_LIKES_CHANGED,
   IS_LOADING,
-  RECEIVED_QUESTION,
-  REMOVE_QUESTION,
+  ALL_QUESTIONS_RECEIVED,
+  NEW_QUESTION_RECEIVED,
+  QUESTION_REMOVED,
   SET_EDIT_QUESTION_TEXT,
   SET_PIN_QUESTION,
-  SET_QUESTIONS_LOADING,
   SET_UNPIN_QUESTION,
-  UPDATE_QUESTION,
+  QUESTION_UPDATED,
 } from "../../constants/types";
 
-export const putQuestions = (questions) => ({
-  type: RECEIVED_QUESTION,
+export const addNewQuestion = (question) => ({
+  type: NEW_QUESTION_RECEIVED,
+  payload: question,
+});
+
+export const setAllQuestions = (questions) => ({
+  type: ALL_QUESTIONS_RECEIVED,
   payload: questions,
 });
 
@@ -21,17 +26,17 @@ export const setQuestionLoading = (isLoaded) => ({
 });
 
 export const changeQuestionLikes = (question) => ({
-  type: CHANGE_QUESTIONS_LIKES,
+  type: QUESTION_LIKES_CHANGED,
   payload: question,
 });
 
 export const removeQuestion = (question) => ({
-  type: REMOVE_QUESTION,
+  type: QUESTION_REMOVED,
   payload: question,
 });
 
 export const updateQuestion = (data) => ({
-  type: UPDATE_QUESTION,
+  type: QUESTION_UPDATED,
   payload: data,
 });
 

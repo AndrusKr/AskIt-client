@@ -1,15 +1,15 @@
 import { List } from "immutable";
 import {
-  CHANGE_QUESTIONS_LIKES,
-  GET_LATEST_QUESTIONS,
+  QUESTION_LIKES_CHANGED,
   IS_LOADING,
   QUESTIONS_ERROR,
-  RECEIVED_QUESTION,
-  REMOVE_QUESTION,
+  ALL_QUESTIONS_RECEIVED,
+  NEW_QUESTION_RECEIVED,
+  QUESTION_REMOVED,
   SET_EDIT_QUESTION_TEXT,
   SET_PIN_QUESTION,
   SET_UNPIN_QUESTION,
-  UPDATE_QUESTION,
+  QUESTION_UPDATED,
 } from "../../constants/types";
 // import { activeQuestions } from "../../mock/common";
 
@@ -29,7 +29,7 @@ export const defaultState = {
 
 export default (state, action) => {
   switch (action.type) {
-    case RECEIVED_QUESTION:
+    case NEW_QUESTION_RECEIVED:
       return state
         .set(
           "activeQuestions",
@@ -37,7 +37,20 @@ export default (state, action) => {
         )
         .set("loading", false);
 
-    case CHANGE_QUESTIONS_LIKES:
+    case ALL_QUESTIONS_RECEIVED:
+      return state
+        .set("questions", action.payload)
+        .set(
+          "activeQuestions",
+          List(action.payload.filter((q) => q.answerTime === null))
+        )
+        .set(
+          "answeredQuestions",
+          List(action.payload.filter((q) => q.answerTime !== null))
+        )
+        .set("loading", false);
+
+    case QUESTION_LIKES_CHANGED:
       const updatedIdx = state
         .get("activeQuestions")
         .findIndex((i) => i.id === action.payload.id);
@@ -50,20 +63,7 @@ export default (state, action) => {
         )
         .set("loading", false);
 
-    case GET_LATEST_QUESTIONS:
-      return state
-        .set("questions", action.payload)
-        .set(
-          "activeQuestions",
-          List(action.payload.filter((q) => q.answered === null))
-        )
-        .set(
-          "answeredQuestions",
-          List(action.payload.filter((q) => q.answered !== null))
-        )
-        .set("loading", false);
-
-    case REMOVE_QUESTION:
+    case QUESTION_REMOVED:
       const removedIdx = state
         .get("activeQuestions")
         .findIndex((i) => i.id === action.payload);
@@ -71,7 +71,7 @@ export default (state, action) => {
         .set("activeQuestions", state.get("activeQuestions").delete(removedIdx))
         .set("loading", false);
 
-    case UPDATE_QUESTION:
+    case QUESTION_UPDATED:
       const editedIdx = state
         .get("activeQuestions")
         .findIndex((i) => i.id === action.payload.editedQuestionId);

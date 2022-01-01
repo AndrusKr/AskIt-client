@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import BottomInput from "../../layout/BottomInput";
@@ -30,7 +30,11 @@ const QuestionsPane = () => {
   const isErrorShowed = useSelector(getErrorShowed);
 
   const sendQuestion = (question) =>
-    socketClient.sendMsg("process-question", question);
+    socketClient.sendMsg("/question/create", question);
+
+  useEffect(() => {
+    socketClient.isConnected && socketClient.sendMsg("/questions/get");
+  }, [socketClient.isConnected]);
 
   return (
     <Fragment>

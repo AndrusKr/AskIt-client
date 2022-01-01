@@ -26,9 +26,8 @@ import { GlobalStyles } from "./components/themes/global";
 import { darkTheme, lightTheme } from "./components/themes/themes";
 import { getThemeMode } from "./redux/selectors/common";
 import { ADMIN, INDEX, SIGN_UP, SLIDE } from "./constants/routes";
-import { getUsersListRequest } from "./redux/actions/user";
 import socketClient from "./utils/socketClient";
-import { putQuestions } from "./redux/actions/questions";
+import { addNewQuestion, setAllQuestions } from "./redux/actions/questions";
 import { getIsSignup, getJwt } from "./redux/selectors/auth";
 import { useAlert } from "./components/hooks/useAlert";
 import { SUCCESS } from "./constants/alerts";
@@ -43,6 +42,18 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const showAlert = useAlert();
   const nickname = localStorage.getItem("nickname");
+  const onCreated = (q) => dispatch(addNewQuestion(q));
+  const onReceivedAll = (qs) => dispatch(setAllQuestions(qs));
+  const onDefault = () => console.log("onDefault");
+
+  const questionOperations = {
+    CREATE: onCreated,
+    READ_ALL: onReceivedAll,
+    UPDATE: onDefault,
+    DELETE: onDefault,
+    ERROR: onDefault,
+    default: onDefault,
+  };
 
   useEffect(() => {
     (async () => {
@@ -52,7 +63,6 @@ const App = () => {
           await translatorService.init(currentLang ? currentLang : EN);
         }
 
-        dispatch(getUsersListRequest());
         dispatch(getSignedInUser());
         const greetings = isSignup ? "Hello for the newcomer" : "Welcome back";
         if (window.location.pathname !== SLIDE) {
@@ -60,11 +70,15 @@ const App = () => {
         }
         await socketClient.connect(jwt);
 
-        const onReceivedQuestion = (receivedQuestion) => {
-          dispatch(putQuestions(JSON.parse(receivedQuestion.body)));
+        const onReceivedQuestionOperationFrame = ({ body }) => {
+          const { type, payload } = JSON.parse(body);
+          (questionOperations[type] || questionOperations.default)(payload);
         };
 
-        await socketClient.subscribeTopic("questions", onReceivedQuestion);
+        await socketClient.subscribeTopic(
+          "questions",
+          onReceivedQuestionOperationFrame
+        );
       } else {
         await translatorService.init(currentLang ? currentLang : EN);
       }
