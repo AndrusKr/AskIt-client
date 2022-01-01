@@ -61,7 +61,7 @@ export function* getSignedInUserDataSaga() {
     try {
       const jwt = yield select(getJwt);
       const response = yield call(getSignedInUserData, jwt);
-      yield put(getSignedInUserSuccess(response));
+      yield put(getSignedInUserSuccess(response.data));
       yield put(setSignedInUserStatus(response.isBlocked));
     } catch (err) {
       console.log("err", err);
