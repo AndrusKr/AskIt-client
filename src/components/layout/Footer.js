@@ -1,21 +1,22 @@
-import React, { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { setFooter } from "../../redux/actions/language";
+import { getIsAuthenticated } from "../../redux/selectors/auth";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+  footer: {
+    paddingBottom: ({ isAuthenticated }) => (isAuthenticated ? "90px" : "10px"),
+  },
+}));
 
 const Footer = () => {
-  const footer = useRef(null);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (footer && footer.current) {
-      dispatch(setFooter(footer.current));
-    }
-  }, [dispatch, footer]);
+  const isAuthenticated = useSelector(getIsAuthenticated);
+  const classes = useStyles({ isAuthenticated });
 
   return (
-    <footer ref={footer}>
+    <footer className={classes.footer}>
       <Container maxWidth="sm">
         <Typography variant="body1" align="center">
           © Andruś Kryvičenka

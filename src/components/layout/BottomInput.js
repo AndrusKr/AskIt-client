@@ -8,7 +8,6 @@ import TextField from "@material-ui/core/TextField";
 import { HighlightOff, Telegram } from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
 import { useDispatch, useSelector } from "react-redux";
-import { getFooter } from "../../redux/selectors/language";
 import {
   MAX_QUESTION_LENGTH_ERROR_MESSAGE,
   MIN_QUESTION_LENGTH_ERROR_MESSAGE,
@@ -29,7 +28,7 @@ import {
 import profanityFilter from "../../services/profanityFilter";
 import { getUserStatus } from "../../redux/selectors/user";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   appBar: {
     top: "auto",
     bottom: 0,
@@ -51,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 const BottomInput = ({ sendQuestion }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const footer = useSelector(getFooter);
   const editedText = useSelector(getEditedText);
   const isEditActive = useSelector(getIsEditActive);
   const editedQuestionId = useSelector(getEditedQuestionId);
@@ -63,15 +61,11 @@ const BottomInput = ({ sendQuestion }) => {
   const showAlert = useAlert();
 
   useEffect(() => {
-    if (footer) {
-      footer.style.paddingBottom = "90px";
-    }
-
     if (editedText) {
       setEditQuestionText(editedText);
       textInputRef.current.focus();
     }
-  }, [footer, editedText]);
+  }, [editedText]);
 
   useEffect(() => {
     if (editQuestionText === editedText && isEditActive) {
