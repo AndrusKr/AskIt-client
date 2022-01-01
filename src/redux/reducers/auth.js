@@ -20,13 +20,11 @@ export const defaultState = {
   isNew: false,
   login: "",
   error: null,
-  isSignup: false,
 };
 
 export default (state, action) => {
   switch (action.type) {
     case USER_SIGN_IN_SUCCESS:
-    case USER_SIGN_OUT_FAILED:
       axios.defaults.headers.common.Authorization = `Bearer ${action.payload.jwt}`;
       return state
         .set("id", action.payload.id)
@@ -51,7 +49,8 @@ export default (state, action) => {
     case GET_SIGNED_IN_USER_DATA_SUCCESS:
       return state
         .set("id", action.payload.id)
-        .set("nickname", action.payload.nickname);
+        .set("nickname", action.payload.nickname)
+        .set("isAuthenticated", true);
 
     case GET_SIGNED_IN_USER_DATA_FAILED:
       return state.set("error", action.payload);
@@ -65,8 +64,7 @@ export default (state, action) => {
         .set("nickname", action.payload.nickname)
         .set("jwt", action.payload.jwt)
         .set("isAuthenticated", true)
-        .set("isAdmin", true)
-        .set("isSignup", true);
+        .set("isAdmin", true);
 
     case ADMIN_LOG_IN_FAILED:
       localStorage.removeItem("jwt");
@@ -76,15 +74,7 @@ export default (state, action) => {
         .set("jwt", null)
         .set("isAuthenticated", false)
         .set("isAdmin", false)
-        .set("error", action.payload)
-        .set("isSignup", false);
-
-    // case CHECK_CREDENTIALS_SUCCEED:
-    //   return state.set("isRightCredentials", true);
-
-    // case CHECK_CREDENTIALS_FAILED:
-    //   return state.set("credentialsError", action.payload);
-
+        .set("error", action.payload);
     default: {
       return state;
     }

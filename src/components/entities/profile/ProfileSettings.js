@@ -6,7 +6,7 @@ import { CheckCircle, Edit, People } from "@material-ui/icons";
 import { getLanguage } from "../../../redux/selectors/language";
 import {
   getIsAdmin,
-  getIsAuthenticated,
+  getIsAuth,
   getNickname,
 } from "../../../redux/selectors/auth";
 import { setLanguage } from "../../../redux/actions/language";
@@ -24,7 +24,7 @@ const ProfileSettings = ({ classes }) => {
   const dispatch = useDispatch();
   const currentLanguage = useSelector(getLanguage);
   const nickname = useSelector(getNickname) || localStorage.getItem("nickname");
-  const isAuthenticated = useSelector(getIsAuthenticated);
+  const isAuthenticated = useSelector(getIsAuth);
   const isAdmin = useSelector(getIsAdmin);
   const [isInputActive, setIsInputActive] = useState(false);
   const [inputValue, setInputValue] = useState(nickname);

@@ -28,7 +28,7 @@ import { getThemeMode } from "./redux/selectors/common";
 import { ADMIN, INDEX, SIGN_UP, SLIDE } from "./constants/routes";
 import socketClient from "./utils/socketClient";
 import { addNewQuestion, setAllQuestions } from "./redux/actions/questions";
-import { getIsSignup, getJwt } from "./redux/selectors/auth";
+import { getIsAuth, getJwt } from "./redux/selectors/auth";
 import { getSignedInUser } from "./redux/actions/auth";
 
 const App = () => {
@@ -36,8 +36,13 @@ const App = () => {
   const currentLang = useSelector(getLanguage);
   const theme = useSelector(getThemeMode);
   const jwt = useSelector(getJwt);
-  const isSignup = useSelector(getIsSignup);
+  const isAuth = useSelector(getIsAuth);
   const [isLoading, setIsLoading] = useState(false);
+
+  const onReceivedQuestionOperationFrame = ({ body }) => {
+    const { type, payload } = JSON.parse(body);
+    (questionOperations[type] || questionOperations.default)(payload);
+  };
   const onCreated = (q) => dispatch(addNewQuestion(q));
   const onReceivedAll = (qs) => dispatch(setAllQuestions(qs));
   const onDefault = () => console.log("onDefault");
@@ -54,19 +59,10 @@ const App = () => {
   useEffect(() => {
     (async () => {
       setIsLoading(true);
+      await translatorService.init(currentLang ? currentLang : BY);
       if (jwt) {
-        if (!isSignup) {
-          await translatorService.init(currentLang ? currentLang : BY);
-        }
-
         dispatch(getSignedInUser());
         await socketClient.connect(jwt);
-
-        const onReceivedQuestionOperationFrame = ({ body }) => {
-          const { type, payload } = JSON.parse(body);
-          (questionOperations[type] || questionOperations.default)(payload);
-        };
-
         await socketClient.subscribeTopic(
           "questions",
           onReceivedQuestionOperationFrame
@@ -76,7 +72,7 @@ const App = () => {
       }
       setIsLoading(false);
     })();
-  }, [jwt, isSignup]);
+  }, [jwt, isAuth]);
 
   if (isLoading) {
     return <Spinner />;

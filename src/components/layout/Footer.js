@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { getIsAuthenticated } from "../../redux/selectors/auth";
+import { getIsAuth } from "../../redux/selectors/auth";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Footer = () => {
-  const isAuthenticated = useSelector(getIsAuthenticated);
+  const isAuthenticated = useSelector(getIsAuth);
   const classes = useStyles({ isAuthenticated });
 
   return (
