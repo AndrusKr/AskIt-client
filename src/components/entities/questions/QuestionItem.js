@@ -31,7 +31,7 @@ import { getUserStatus } from "../../../redux/selectors/user";
 
 const useStyles = makeStyles(() => ({
   avatar: {
-    backgroundColor: ({ isOwner }) => (isOwner ? "#027bfd" : ""),
+    backgroundColor: ({ isOwner }) => (isOwner ? "blue" : ""),
   },
   likeButton: {
     color: "gray",

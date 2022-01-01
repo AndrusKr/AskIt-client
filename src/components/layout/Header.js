@@ -16,11 +16,12 @@ const useStyles = makeStyles(() => ({
     boxShadow: "none",
   },
   title: {
-    color: "#027bfd",
+    color: "blue",
     flexGrow: 1,
     textAlign: "center",
   },
   icon: {
+    color: "blue",
     width: 35,
     height: 35,
   },
@@ -30,10 +31,10 @@ const useStyles = makeStyles(() => ({
     cursor: "pointer",
   },
   avatar: {
-    width: 25,
-    height: 25,
+    width: 30,
+    height: 30,
     margin: "0 10px",
-    color: "black",
+    background: "blue",
   },
   profile: {
     display: "flex",
@@ -53,7 +54,7 @@ const HideOnScroll = ({ trigger, children }) => (
   </Slide>
 );
 
-export default function Header(props) {
+export default function Header() {
   const classes = useStyles();
   const trigger = useScrollTrigger();
   const currentLocation = useWindowLocation();

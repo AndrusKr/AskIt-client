@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormControl, Input, MenuItem, Select } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import { AccountCircle, CheckCircle, Edit, People } from "@material-ui/icons";
+import { CheckCircle, Edit, People } from "@material-ui/icons";
 import { getLanguage } from "../../../redux/selectors/language";
 import {
   getIsAdmin,
@@ -18,6 +18,7 @@ import { useModal } from "../../hooks/useModal";
 import IconButton from "@material-ui/core/IconButton";
 import UserList from "./UserList";
 import ChangeCredentialsWindow from "../../layout/modals/credentials";
+import Avatar from "@material-ui/core/Avatar";
 
 const ProfileSettings = ({ classes }) => {
   const dispatch = useDispatch();
@@ -32,8 +33,6 @@ const ProfileSettings = ({ classes }) => {
   const [isUserListOpened, setIsUserListOpened] = useState(false);
   const [isCredentialsOpened, setIsCredentialsOpened] = useState(false);
   const [openModal, handleOpen, handleClose] = useModal();
-
-  useEffect(() => {});
 
   async function changeLanguage(e) {
     dispatch(setLanguage(e.target.value));
@@ -119,10 +118,13 @@ const ProfileSettings = ({ classes }) => {
           variant={nickname.length > 10 ? "h7" : "h6"}
           className={`${classes.profile} ${!isInputActive && "user-name"}`}
         >
-          <AccountCircle
+          <Avatar
             className={`${classes.avatar} ${isAdmin && "bun-icon"}`}
             onClick={changeCredentials}
-          />
+          >
+            {nickname.charAt(0)}
+          </Avatar>
+
           {!isInputActive && nickname}
 
           {isInputActive && (
