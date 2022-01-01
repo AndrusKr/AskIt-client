@@ -62,11 +62,13 @@ const App = () => {
       await translatorService.init(currentLang ? currentLang : BY);
       if (jwt) {
         dispatch(getSignedInUser());
-        await socketClient.connect(jwt);
-        await socketClient.subscribeTopic(
-          "questions",
-          onReceivedQuestionOperationFrame
-        );
+        if (!socketClient.isConnected) {
+          await socketClient.connect(jwt);
+          await socketClient.subscribeTopic(
+            "questions",
+            onReceivedQuestionOperationFrame
+          );
+        }
       } else {
         await translatorService.init(currentLang ? currentLang : BY);
       }
