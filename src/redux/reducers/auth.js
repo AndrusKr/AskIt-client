@@ -1,15 +1,13 @@
 import {
   ADMIN_LOG_IN_FAILED,
   ADMIN_LOG_IN_SUCCESS,
-  CHECK_CREDENTIALS_FAILED,
-  CHECK_CREDENTIALS_SUCCEED,
   GET_SIGNED_IN_USER_DATA_FAILED,
   GET_SIGNED_IN_USER_DATA_SUCCESS,
   SET_USER_NAME,
-  USER_SIGN_IN_SUCCESS,
   USER_SIGN_IN_FAILED,
-  USER_SIGN_OUT_SUCCESS,
+  USER_SIGN_IN_SUCCESS,
   USER_SIGN_OUT_FAILED,
+  USER_SIGN_OUT_SUCCESS,
 } from "../../constants/types";
 import axios from "axios";
 
@@ -19,6 +17,7 @@ export const defaultState = {
   isAdmin: false,
   jwt: localStorage.getItem("jwt"),
   isAuthenticated: !!localStorage.getItem("jwt"),
+  isNew: false,
   login: "",
   error: null,
   isSignup: false,
@@ -34,19 +33,20 @@ export default (state, action) => {
         .set("nickname", action.payload.nickname)
         .set("jwt", action.payload.jwt)
         .set("isAuthenticated", true)
-        .set("isAdmin", false)
-        .set("isSignup", true);
+        .set("isNew", true)
+        .set("isAdmin", false);
 
     case USER_SIGN_IN_FAILED:
     case USER_SIGN_OUT_SUCCESS:
+    case USER_SIGN_OUT_FAILED:
       localStorage.removeItem("jwt");
       return state
         .set("id", null)
         .set("nickname", "")
         .set("jwt", null)
         .set("isAuthenticated", false)
-        .set("error", action.payload)
-        .set("isSignup", false);
+        .set("isNew", false)
+        .set("error", action.payload);
 
     case GET_SIGNED_IN_USER_DATA_SUCCESS:
       return state
