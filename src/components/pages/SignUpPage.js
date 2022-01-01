@@ -77,7 +77,7 @@ const SignUpPage = () => {
           setPassword={setPassword}
           password={password}
           label={t("pleaseEnterYourNickname")}
-          passwordTitle={"Password"}
+          passwordTitle={t("password")}
           buttonName={t("letsGo")}
         />
       </Grid>
