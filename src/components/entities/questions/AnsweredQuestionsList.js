@@ -1,16 +1,11 @@
 import React from "react";
 import QuestionItem from "./QuestionItem";
+import { useTranslation } from "react-i18next";
 
 const AnsweredQuestionsLists = ({ answeredQuestions }) => {
+  const { t } = useTranslation();
   if (!answeredQuestions.size) {
-    return (
-      <h4>
-        <span>
-          There is NO answered questions yet🙃 <br />
-          -> How about rushing the speaker?😜
-        </span>
-      </h4>
-    );
+    return <h4>{t("noAnsweredQuestions")}</h4>;
   }
 
   return [...answeredQuestions]

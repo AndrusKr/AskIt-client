@@ -1,7 +1,18 @@
 {
   "activeQuestions": "Текущие вопросы",
   "answeredQuestions": "Отвеченные вопросы",
+  "displayOptions": "Варианты отображения",
+  "helloNewcomer": "Привет новобранцу",
   "hi": "Привет",
+  "latestQuestion": "Последний заданный вопрос:",
   "letsGo": "Погнали!",
-  "pleaseEnterYourNickname": "Пожалуйста, введите Ваш никツ"
+  "noActiveQuestions": "Тут пока что ⛔НЕТ заданных вопросов ¯\\_(ツ)_/¯ ➡️ Хей!;) Спроси что-нибудь первым!!!",
+  "noAnsweredQuestions": "Тут пока что ⛔НЕТ неотвеченных вопросов \uD83D\uDE43 ➡️ Как насчет того, чтобы поторопить спикера?\uD83D\uDE1C",
+  "popular": "Популярные",
+  "pleaseEnterYourNickname": "Пожалуйста, введите Ваш никツ",
+  "oldest": "Первые",
+  "recent": "Последние",
+  "total": "Всего",
+  "welcomeBack": "Добро пожаловать обратно",
+  "writeYourQuestionHere": "Напишите Ваш вопрос тут..."
 }

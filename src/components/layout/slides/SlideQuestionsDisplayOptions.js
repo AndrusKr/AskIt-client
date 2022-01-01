@@ -11,11 +11,13 @@ import {
   getDisplayedOption,
   getIsDisplayOptionsOpened,
 } from "../../../redux/selectors/slide";
+import { useTranslation } from "react-i18next";
 
 const SlideQuestionsDisplayOptions = ({
   handleMouseOver,
   handleMouseLeave,
 }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const isDisplayOptionsOpened = useSelector(getIsDisplayOptionsOpened);
   const displayedOption = useSelector(getDisplayedOption);
@@ -32,22 +34,24 @@ const SlideQuestionsDisplayOptions = ({
   return (
     <List
       component="nav"
-      subheader={<ListSubheader component="div">Display options</ListSubheader>}
+      subheader={
+        <ListSubheader component="div">{t("displayOptions")}</ListSubheader>
+      }
       className={"question-select"}
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
     >
       <ListItem button onClick={handleClick}>
-        <ListItemText primary="Popular" />
-        {displayedOption === "Popular" && <DoneIcon />}
+        <ListItemText primary={t("popular")} />
+        {displayedOption === t("popular") && <DoneIcon />}
       </ListItem>
       <ListItem button onClick={handleClick}>
-        <ListItemText primary="Oldest" />
-        {displayedOption === "Oldest" && <DoneIcon />}
+        <ListItemText primary={t("oldest")} />
+        {displayedOption === t("oldest") && <DoneIcon />}
       </ListItem>
       <ListItem button onClick={handleClick}>
-        <ListItemText primary="Recent" />
-        {displayedOption === "Recent" && <DoneIcon />}
+        <ListItemText primary={t("recent")} />
+        {displayedOption === t("recent") && <DoneIcon />}
       </ListItem>
     </List>
   );

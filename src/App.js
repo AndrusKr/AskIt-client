@@ -18,7 +18,7 @@ import SlidePage from "./components/pages/SlidePage";
 
 import translatorService from "./services/translatorService";
 import Spinner from "./components/layout/Spinner";
-import { EN } from "./constants/language";
+import { BY } from "./constants/language";
 import { getLanguage } from "./redux/selectors/language";
 import AlertMessage from "./components/layout/Alerts";
 
@@ -29,8 +29,6 @@ import { ADMIN, INDEX, SIGN_UP, SLIDE } from "./constants/routes";
 import socketClient from "./utils/socketClient";
 import { addNewQuestion, setAllQuestions } from "./redux/actions/questions";
 import { getIsSignup, getJwt } from "./redux/selectors/auth";
-import { useAlert } from "./components/hooks/useAlert";
-import { SUCCESS } from "./constants/alerts";
 import { getSignedInUser } from "./redux/actions/auth";
 
 const App = () => {
@@ -40,8 +38,6 @@ const App = () => {
   const jwt = useSelector(getJwt);
   const isSignup = useSelector(getIsSignup);
   const [isLoading, setIsLoading] = useState(false);
-  const showAlert = useAlert();
-  const nickname = localStorage.getItem("nickname");
   const onCreated = (q) => dispatch(addNewQuestion(q));
   const onReceivedAll = (qs) => dispatch(setAllQuestions(qs));
   const onDefault = () => console.log("onDefault");
@@ -60,14 +56,10 @@ const App = () => {
       setIsLoading(true);
       if (jwt) {
         if (!isSignup) {
-          await translatorService.init(currentLang ? currentLang : EN);
+          await translatorService.init(currentLang ? currentLang : BY);
         }
 
         dispatch(getSignedInUser());
-        const greetings = isSignup ? "Hello for the newcomer" : "Welcome back";
-        if (window.location.pathname !== SLIDE) {
-          showAlert(SUCCESS, `${greetings}, ${nickname}!!!`);
-        }
         await socketClient.connect(jwt);
 
         const onReceivedQuestionOperationFrame = ({ body }) => {
@@ -80,7 +72,7 @@ const App = () => {
           onReceivedQuestionOperationFrame
         );
       } else {
-        await translatorService.init(currentLang ? currentLang : EN);
+        await translatorService.init(currentLang ? currentLang : BY);
       }
       setIsLoading(false);
     })();

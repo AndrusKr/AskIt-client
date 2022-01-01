@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import HelpIcon from "@material-ui/icons/Help";
-import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { getActiveQuestions } from "../../../redux/selectors/questions";
 import { getMockActiveQuestions } from "../../../mock/common";
@@ -18,8 +17,11 @@ import { setIsDisplayOptionsOpened } from "../../../redux/actions/slide";
 import { getIsDisplayOptionsOpened } from "../../../redux/selectors/slide";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import SlideQuestionsDisplayOptions from "../slides/SlideQuestionsDisplayOptions";
+import { Sort } from "@material-ui/icons";
+import { useTranslation } from "react-i18next";
 
-function SlideHeader({ classes }) {
+const SlideHeader = ({ classes }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const activeQuestions = useSelector(getActiveQuestions);
   const isQuestionArrowShowed = useSelector(getQuestionArrow);
@@ -59,28 +61,28 @@ function SlideHeader({ classes }) {
       <Typography variant="h4" className={classes.slideHeader}>
         HTTP://321.123.123.534
       </Typography>
-      <Typography
-        ref={displaysOptions}
-        variant="h5"
+      <Typography variant="h5">
+        {t("total")} {activeQuestionsPrepared.length}
+      </Typography>
+      <Sort
         className={classes.slideHeader}
+        ref={displaysOptions}
         onClick={handleQuestionsClick}
         onMouseOver={onMouseOver}
         onMouseLeave={onMouseLeave}
       >
-        <QuestionAnswerIcon />
-        Recent questions ({activeQuestionsPrepared.length})
         <ArrowDropDownIcon
           className={
             isQuestionArrowShowed ? "slide-arrow" : "slide-arrow-disappearing"
           }
         />
-      </Typography>
+      </Sort>
       <SlideQuestionsDisplayOptions
         handleMouseOver={onMouseOver}
         handleMouseLeave={onMouseLeave}
       />
     </>
   );
-}
+};
 
 export default SlideHeader;

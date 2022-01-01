@@ -1,7 +1,18 @@
 {
   "activeQuestions": "Active Questions",
   "answeredQuestions": "Answered Questions",
+  "displayOptions": "Display options",
+  "helloNewcomer": "Hello for the newcomer",
   "hi": "Hi",
+  "latestQuestion": "Last question asked:",
   "letsGo": "Let's Go!",
-  "pleaseEnterYourNickname": "Please, enter Your Nicknameツ"
+  "noActiveQuestions": "There is ⛔NO active questions yet ¯\\_(ツ)_/¯ ➡️ Hey;) Be the first to add one!!!",
+  "noAnsweredQuestions": "There is ⛔NO answered questions yet \uD83D\uDE43 ➡️ How about rushing the speaker?\uD83D\uDE1C",
+  "popular": "Popular",
+  "pleaseEnterYourNickname": "Please, enter Your Nicknameツ",
+  "oldest": "Oldest",
+  "recent": "Recent",
+  "total": "Total",
+  "welcomeBack": "Welcome back",
+  "writeYourQuestionHere": "Write Your question here..."
 }

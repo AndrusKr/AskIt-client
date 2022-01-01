@@ -13,6 +13,9 @@ import {
   getAnsweredQuestions,
 } from "../../../redux/selectors/questions";
 import { getErrorShowed } from "../../../redux/selectors/alert";
+import { SUCCESS } from "../../../constants/alerts";
+import { useAlert } from "../../hooks/useAlert";
+import { getIsSignup, getNickname } from "../../../redux/selectors/auth";
 
 const useStyles = makeStyles(() => ({
   listSubheader: {
@@ -21,8 +24,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 const QuestionsPane = () => {
+  const showAlert = useAlert();
   const { t } = useTranslation();
   const classes = useStyles();
+  const isSignup = useSelector(getIsSignup);
+  const nickname = useSelector(getNickname);
   const activeQuestions = useSelector(
     /*getFilteredAnsweredQuestions*/ getActiveQuestions
   );
@@ -31,6 +37,11 @@ const QuestionsPane = () => {
 
   const sendQuestion = (question) =>
     socketClient.sendMsg("/question/create", question);
+
+  useEffect(() => {
+    const greetings = isSignup ? t("helloNewcomer") : t("welcomeBack");
+    showAlert(SUCCESS, `${greetings}, ${nickname}!!!`);
+  }, [isSignup]);
 
   useEffect(() => {
     socketClient.isConnected && socketClient.sendMsg("/questions/get");

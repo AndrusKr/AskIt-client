@@ -27,6 +27,7 @@ import {
 } from "../../redux/actions/questions";
 import profanityFilter from "../../services/profanityFilter";
 import { getUserStatus } from "../../redux/selectors/user";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles(() => ({
   appBar: {
@@ -49,6 +50,7 @@ const useStyles = makeStyles(() => ({
 
 const BottomInput = ({ sendQuestion }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const editedText = useSelector(getEditedText);
   const isEditActive = useSelector(getIsEditActive);
@@ -152,7 +154,7 @@ const BottomInput = ({ sendQuestion }) => {
                 name="questionText"
                 className={classes.inputText}
                 label={
-                  isEditActive ? "Edit message" : "Write Your question here..."
+                  isEditActive ? "Edit message" : t("writeYourQuestionHere")
                 }
                 multiline
                 disabled={isBlocked}
