@@ -80,7 +80,7 @@ const App = () => {
 
   return (
     <Router>
-      <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
         <GlobalStyles />
         <Header />
         <AlertMessage />

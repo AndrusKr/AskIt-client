@@ -9,7 +9,7 @@ import { setThemeMode } from "../../redux/actions/common";
 const DarkModeToggle = () => {
   const dispatch = useDispatch();
   const theme = useSelector(getThemeMode);
-  const isLight = theme === "light";
+  const isLight = theme === null || theme === "light";
 
   const toggleTheme = () => {
     dispatch(setThemeMode(isLight ? "dark" : "light"));
@@ -17,7 +17,7 @@ const DarkModeToggle = () => {
 
   return (
     <IconButton onClick={toggleTheme}>
-      {isLight ? <BrightnessIcon /> : <WbSunnyIcon className={"icon-sun"} />}
+      {isLight ? <BrightnessIcon /> : <WbSunnyIcon />}
     </IconButton>
   );
 };
